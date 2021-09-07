@@ -1,0 +1,6 @@
+Contact: mailto:yogendrarampuria@gmail.com
+Encryption: https://yogendra.me/pgp.asc
+Acknowledgments: https://yogendra.me/security.html#acknowledgment
+Preferred-Languages: en,hi
+Canonical: https://yogendra.me/.well-known/security.txt
+Policy: https://yogendra.me/security.html#policy
