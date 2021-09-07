@@ -37,7 +37,7 @@ All you need to do is execute 'initApplet' and 'init' method on the login page a
 1. That's it you can login now.
 1. Repeat step 2-5, every time you want to login.
 
-**[FIX UOB Login][1]**
+[FIX UOB Login][1]
 
 **Update**: Some users have reported issues with the bookmarklet. So, I am also posting javascript code that you can put as URL/Address of you bookmark to
 
