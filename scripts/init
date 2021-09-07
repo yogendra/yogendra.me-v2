@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+JAR_LOCATION=http://sourceforge.net/projects/plantuml/files/plantuml.jar/download
+
+function init_darwin(){
+  curl -L $JAR_LOCATION -o lib/plantuml.jar
+  brew install libtool
+  brew link libtool
+  brew install graphviz
+  brew link --overwrite graphviz
+}
+function init_linux(){
+  curl -L $JAR_LOCATION -o lib/plantuml.jar
+  sudo apt install graphviz
+}
+function init_linux_arm64(){
+  curl -L $JAR_LOCATION -o lib/plantuml.jar
+  sudo apt install graphviz
+}
