@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+file=${1?"Missing filename"}
+
+base=$(basename $file)
+dir=$(dirname $file)
+filename=${base%.*}
+page_bundle_dir=$dir/$filename
+
+cat <<EOF
+mkdir -p $page_bundle_dir
+mv $file $page_bundle_dir/index.md
+EOF
+
