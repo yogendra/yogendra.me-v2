@@ -25,4 +25,4 @@ Here's a list of books that I came across while doing some searching:
 - [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882): Best book for learning to code right
 - [The Design of Everyday Things](https://www.amazon.com/gp/product/0465067107)
 
-_Source:_ https://madstop.com/post/12932620637/development-books
+_Source:_ [MadShop](https://madstop.com/post/12932620637/development-books)
