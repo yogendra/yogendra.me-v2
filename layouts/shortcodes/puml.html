@@ -1,0 +1,9 @@
+{{- $location := .Get 0 }}
+{{- if or (hasPrefix $location "/") (hasPrefix $location "http") }}
+  {{- $location = $location | safeURL}}
+{{- else }}
+  {{- $location = printf "%s%s" $.Page.RelPermalink  $location | safeURL }}
+{{- end }}
+
+
+<img src="{{$location}}">
