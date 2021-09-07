@@ -1,0 +1,5 @@
+@startuml Test Sequence
+!pragma layout smetana
+A -> B : Hello
+A <- B : Hi There!
+@enduml

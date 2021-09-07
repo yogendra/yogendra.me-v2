@@ -42,6 +42,8 @@ A <- B : Hi There!
 @enduml
 ```
 
+{{< puml "sample/Test Sequence.png" >}}
+
 I guess I will have to wait for hugo to mature a bit more. I really liked the speed and simplicity of hugo. But lack of
 plugin support in processing really killed it!
 
