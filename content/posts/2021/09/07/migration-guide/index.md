@@ -1,5 +1,6 @@
 ---
 title: Migration Guide
+date: "2021-09-07"
 ---
 
 ## From Hexo to Hugo

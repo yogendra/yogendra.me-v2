@@ -4,8 +4,9 @@ meta: false
 actions: false
 comments: false
 layout: page
-aliases:
-- /security.html
+url: security.html
+# aliases:
+# - /security.html
 ---
 
 ## security.txt
