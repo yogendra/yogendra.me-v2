@@ -1,0 +1,6 @@
+[en]
+# Replace the default footer message with a localized message
+
+  title = "Chase your dreams"
+  LanguageName = "English"
+  weight = 1

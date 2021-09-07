@@ -1,0 +1,77 @@
+[[main]]
+  name = "Home"
+  url = ""
+  weight = -110
+
+[[main]]
+  name = "Projects"
+  url = "projects/"
+  weight = -109
+
+# # Submenus are done this way: parent -> identifier
+# [[main]]
+#   name = "Links"
+#   identifier = "Links"
+#   weight = -108
+# [[main]]
+#   parent = "Links"
+#   name = "LinkedIn"
+#   url = "https://www.linkedin.com/"
+# [[main]]
+#   parent = "Links"
+#   name = "Twitter"
+#   url = "https://twitter.com/"
+
+[[main]]
+  name = "About"
+  url = "about/"
+  weight = -107
+
+[[main]]
+  name = "Security"
+  url = "security.html"
+  weight = -106
+# social menu links
+
+[[social]]
+  name = "github"
+  type = "social"
+  weight = 1
+  url = "https://github.com/yogendra"
+[[social]]
+  name = "twitter"
+  weight = 2
+  url = "https://twitter.com/yogendra"
+[[social]]
+  name = "linkedin"
+  weight = 3
+  url = "https://www.linkedin.com/in/yogi"
+[[social]]
+  name = "rss"
+  weight = 4
+  url = "index.xml"
+
+# [[social]]
+#   name = "youtube"
+#   url = "https://www.youtube.com/c/YogendraRampuria"
+#   weight = 4
+
+#[[social]]
+#   name = "facebook"
+#   url = "https://www.facebook.com/yogendrarampuria"
+#   weight = 4
+
+# [[social]]
+#   name = "instagram"
+#   url = "https://instagram.com/ryogendra"
+#   weight = 4
+
+# [[social]]
+#   name = "stackoverflow"
+#   url = "https://stackoverflow.com/users/559158/yogi"
+#   weight = 4
+
+# [[social]]
+#   name = "gitlab"
+#   url = "https://gitlab.com/yogirampuria"
+#   weight = 4

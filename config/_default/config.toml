@@ -1,0 +1,34 @@
+baseURL = 'https://yogendra.me'
+languageCode = 'en-us'
+title = 'Chase Your Dreams'
+copyright = "Copyright © 2012–2021, Yogendra Rampuria; all rights reserved."
+defaultContentLanguage = "en"
+enableEmoji = true
+enableRobotsTXT = true
+
+# Pagination
+paginate = 10
+paginatePath = "page"
+disqusShortname = ""
+
+# Google analytics
+googleAnalytics = "UA-21164716-2"
+
+theme = "hugo-clarity"
+
+# [languages]
+# config/_default/languages.toml
+
+# [menus]
+# config/_default/menus/menu.xx.toml
+
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"
+
+
+
+[permalinks]
+  posts = "/:year/:month/:day/:title/"

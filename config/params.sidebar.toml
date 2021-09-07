@@ -1,0 +1,8 @@
+# Whether to show the recent posts or not (default: true)
+showRecent = true
+
+# Whether to show the taxonomies or not (default: true)
+showTaxonomy = true
+
+# How many posts to show on the sidebar (Default: 5)
+num_recent_posts = 5
