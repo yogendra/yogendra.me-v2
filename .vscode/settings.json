@@ -1,0 +1,8 @@
+{
+  "plantuml.render": "PlantUMLServer",
+  "markdown-pdf.plantumlServer": "https://www.plantuml.com/plantuml",
+  "plantuml.exportFormat": "png",
+  "plantuml.server": "https://www.plantuml.com/plantuml",
+  "markdown-preview-enhanced.plantumlServer": "https://www.plantuml.com/plantuml/svg",
+  "plantuml.exportOutDir": "."
+}
