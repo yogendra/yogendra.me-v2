@@ -12,7 +12,7 @@
 
 twitter = "@janedoe"
 largeTwitterCard = true # set to true if you want to show a large twitter card image. The default is a small twitter card image
-introDescription = "Technologist, perpetual student, teacher, continual incremental improvement."
+introDescription = "Software Engineer | OSS Advocate, User, Buyer and Seller"
 introURL = "about/" # set the url for the 'read more' button below the introDescription, or set to false to not show the button
 description = "Chase your dream" # set your site's description here. will be use for home page content meta tags (seo). Alternatively set this description in your homepage content file i.e content/_index.md. Whatever is set in the latter will take precedence
 
@@ -89,9 +89,9 @@ numberOfFeaturedPosts = 8
 since = 2012
 
 # tell hugo where you store your icons e.g favicons. This is useful if you're using an apache server and there are conflicts >> see issue https://github.com/chipzoller/hugo-clarity/issues/74. If this is applicable to you, be sure to copy the contents of https://github.com/chipzoller/hugo-clarity/tree/master/static/icons to your preferred icons directory
-iconsDir = "icons/" # without a leading forward slash
+iconsDir = "images/icons/" # without a leading forward slash
 
 # website author
 [author]
 name = "Yogi"
-photo = "images/yogi.png" #include this if you would like to show the author photo on the sidebar
+photo = "images/authors/yogi.jpg" #include this if you would like to show the author photo on the sidebar
