@@ -12,4 +12,4 @@ thumbnail: cpp-logo.png
 C++11 is the latest specification for C++. Have a look at some of the cool new features in it.
 <!--more-->
 
-{% slideshare GxUn4dWYuCvjwV %}
+{{<  slideshare GxUn4dWYuCvjwV >}}

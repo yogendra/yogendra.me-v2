@@ -26,7 +26,7 @@ Process of abstraction is as old as the mankind themself. Whenever I brain looks
 
 Get full Deck is [here](right-abstraction.pdf)
 
-{% youtube jGVm_-SYc5I %}
+{{<  youtube jGVm_-SYc5I >}}
 
 Today we are seeing an increasing number of enterprises opting to transform themselves into a "software driven business". They are recognizing software and software based services as a unique differentiator.
 

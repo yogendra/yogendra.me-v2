@@ -11,6 +11,6 @@ Stumbled upon these on internet. Good apps and good review vid.
 <!--more-->
 **Alfred for Mac OS X (but Spotlight is still my choice)**
 
-{% youtube NhjgInEVnjY %}
+{{<  youtube NhjgInEVnjY >}}
 
-{% youtube -TZqaEBejI %}
+{{<  youtube -TZqaEBejI >}}
