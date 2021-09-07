@@ -8,7 +8,7 @@ categories:
   - Technology
   - Programming
 date: 2014-01-10 10:09:46
-thumbnailImage: java.png
+thumbnail: java.png
 ---
 
 I don't like the whole concept of installers for my development tools like JDK, Eclipse, Netbeans, etc. I just keep a batch/shell script to setup my environment variables for JAVA_HOME, PATH and aliases.

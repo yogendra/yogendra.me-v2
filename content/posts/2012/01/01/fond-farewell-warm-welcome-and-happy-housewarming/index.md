@@ -6,7 +6,7 @@ categories:
 date: 2012-01-01 21:48:32
 tags:
   - greeting
-thumbnailImage: old-new.jpg
+thumbnail: old-new.jpg
 ---
 
 Its that time of the year when everyone looks back at the year gone by and look forward to the new year, in a new spirit. I too decided that I would make some changes and new commitments.

@@ -4,7 +4,7 @@ id: 198
 categories:
   - Project
 date: 2013-04-26 20:17:10
-thumbnailImage: netbeans.png
+thumbnail: netbeans.png
 ---
 
 After many many years of open source advocacy, I have finally created my own first open source project. I have really started small. Too small actually.

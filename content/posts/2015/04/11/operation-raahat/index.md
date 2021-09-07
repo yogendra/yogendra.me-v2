@@ -7,7 +7,7 @@ categories:
   - Inspirational
 date: 2015-04-11 13:10:58
 tags:
-thumbnailImage: vksingh.jpg
+thumbnail: vksingh.jpg
 ---
 
 In the past six months, a war for political dominance between the two sects of Muslims—Sunni and Zaidi Shia has intensified in Yemen, the Arab country in southwest Asia that has been imploding since 2011.

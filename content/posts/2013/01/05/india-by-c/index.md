@@ -6,7 +6,7 @@ categories:
   - Programming
 date: 2013-01-05 16:54:11
 tags:
-thumbnailImage: india-flag.png
+thumbnail: india-flag.png
 ---
 
 Map of India, drawn form C Code.

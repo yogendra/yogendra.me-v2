@@ -15,7 +15,7 @@ tags:
   - safari
   - uob
 date: 2012-01-08 18:15:50
-thumbnailImage: uh-oh.jpg
+thumbnail: uh-oh.jpg
 ---
 
 I have been suffering with login issues on [UOB](https://www.uob.com.sg/personal/index.html) internet banking site for as long as I can remember. I had to use Windows on a virtual machine to always login on UOB internet banking site.

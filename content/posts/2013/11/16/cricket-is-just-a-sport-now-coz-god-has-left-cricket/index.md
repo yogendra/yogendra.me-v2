@@ -5,7 +5,7 @@ categories:
   - Inspirational
 date: 2013-11-16 16:21:54
 tags:
-thumbnailImage: last-bow.png
+thumbnail: last-bow.png
 ---
 
 {% quote "- Sachin R. Tendulkar" %}

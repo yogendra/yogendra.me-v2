@@ -7,7 +7,7 @@ id: 359
 categories:
   - Personal
 date: 2016-10-30 16:47:35
-thumbnailImage: happy-diwali-2016-generic.jpg
+thumbnail: happy-diwali-2016-generic.jpg
 ---
 
 यह दिवाली आपकी...

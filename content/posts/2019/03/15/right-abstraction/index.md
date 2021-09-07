@@ -1,6 +1,6 @@
 ---
 title: Right Abstraction
-s: right-abstraction
+slug: right-abstraction
 date: 2019-03-15 22:25:31
 categories:
   - Talk
@@ -15,7 +15,9 @@ tags:
   - pas
   - pcf
   - cf
-thumbnailImage: house-line-drawing.jpg
+thumbnail: house-line-drawing.jpg
+# thumbnail: /images/test.png
+# thumbnail: "http://localhost:1313/images/test.png"
 ---
 
 Process of abstraction is as old as the mankind themself. Whenever I brain looks at a problem, it tries to simplify by abstracting all the non-contextual aspect. In computer science as well, we follow the same process of hiding details through layering.

@@ -6,7 +6,7 @@ tags:
   - technology
   - mobile
 
-thumbnailImage: certificate_small.png
+thumbnail: certificate_small.png
 ---
 
 First one in a while! I just (now) passed my Mobile Site Certifiation from

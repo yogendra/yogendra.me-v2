@@ -10,7 +10,7 @@ tags:
   - "blog"
   - "cd/ci"
   - "git"
-thumbnailImage: html-js-css.png
+thumbnail: html-js-css.png
 ---
 
 I am embarking on this new journey to use [Static Site Generator](https://www.staticgen.com/).

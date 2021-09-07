@@ -7,7 +7,7 @@ categories:
 date: 2015-04-29 19:02:56
 tags:
 layout: photo
-thumbnailImage: 1.jpg
+thumbnail: 1.jpg
 gallery:
   - 1.jpg "This was a moment of pure joy"
   - 2.jpg "No words can ever explain this moment. Thank you dear."

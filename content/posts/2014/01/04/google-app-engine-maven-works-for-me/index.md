@@ -9,7 +9,7 @@ tags:
   - FixMe
 id: 244
 date: 2014-01-04 02:23:58
-thumbnailImage: maven.png
+thumbnail: maven.png
 ---
 
 Google has released its App Engine SDK on Maven central as a zip. But its very large and causes a "**Error 503 backend read error**". <!--more-->

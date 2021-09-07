@@ -5,7 +5,7 @@ categories:
   - Inspirational
 date: 2012-12-21 16:07:09
 tags:
-thumbnailImage: cab-driver.jpg
+thumbnail: cab-driver.jpg
 
 ---
 One day I hopped in a taxi and we took off for the airport.

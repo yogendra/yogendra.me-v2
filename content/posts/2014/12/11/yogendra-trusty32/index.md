@@ -8,7 +8,7 @@ id: 277
 categories:
   - Technology
 date: 2014-12-11 23:08:49
-thumbnailImage: vagrant-ubuntu.png
+thumbnail: vagrant-ubuntu.png
 ---
 
 I have finally released my first vagrant box. Its been a long time coming, but it's here now. How to get it?

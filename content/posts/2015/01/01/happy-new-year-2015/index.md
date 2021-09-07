@@ -6,7 +6,7 @@ categories:
 date: 2015-01-01 00:58:51
 tags:
   - greeting
-thumbnailImage: happy-2015.jpg
+thumbnail: happy-2015.jpg
 ---
 
 Happy New Year to All

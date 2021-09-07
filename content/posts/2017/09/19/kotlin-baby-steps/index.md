@@ -6,7 +6,7 @@ category:
 - Programming
 tags:
 - kotlin
-thumbnailImage: https://kotlinlang.org/assets/images/open-graph/kotlin_250x250.png
+thumbnail: kotlin.png
 ---
 I was at [Kotlin SG Meetup](https://www.meetup.com/kotlinsg/events/243293562/) tonight. It had a lot of content. I will post more about that later.
 

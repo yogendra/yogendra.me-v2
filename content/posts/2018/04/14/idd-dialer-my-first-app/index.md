@@ -6,7 +6,7 @@ categories:
 tags:
   - android
   - app
-thumbnailImage: app-icon.png
+thumbnail: app-icon.png
 ---
 
 A simple utility app to assist in international calling.

@@ -7,7 +7,7 @@ id: 308
 categories:
   - Inspirational
 date: 2015-03-30 21:14:40
-thumbnailImage: greetings.jpg
+thumbnail: greetings.jpg
 ---
 
 राजस्थान दिवस री बधाई हो सा

@@ -5,7 +5,7 @@ categories:
   - Productivity
 date: 2015-04-25 16:00:58
 tags:
-thumbnailImage: brush.png
+thumbnail: brush.png
 ---
 
 We all need some ways to stay creative, isn't it?

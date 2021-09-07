@@ -4,7 +4,7 @@ categories:
   - Technology
 date: 2012-09-25 00:43:57
 tags:
-thumbnailImage: siii-icon.png
+thumbnail: siii-icon.png
 ---
 
 With local telcos slimming data bundle with phone plans and charging extra S\$2+ /gb, having radio on phone is great. Saves me 50megs a day. Or 1.5 gb a month.

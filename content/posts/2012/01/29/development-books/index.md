@@ -8,7 +8,7 @@ categories:
   - Technology
   - Programming
 date: 2012-01-29 00:57:18
-thumbnailImage: books.png
+thumbnail: books.png
 ---
 
 List of Books that I have been recommended and I would recommend

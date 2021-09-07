@@ -8,7 +8,7 @@ date: 2014-03-16 23:03:13
 tags:
   - greeting
   - celebration
-thumbnailImage: wpid-03169115.jpg
+thumbnail: wpid-03169115.jpg
 ---
 
 Colours of JOY - Best Moments in life...... Just Happen!

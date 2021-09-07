@@ -5,7 +5,7 @@ categories:
   - Productivity
 date: 2012-01-07 01:13:58
 tags:
-thumbnailImage: phone-stand.png
+thumbnail: phone-stand.png
 ---
 
 This one is an accidental discovery. I have been always looking for a good phone stand. One  that could hold my phone in a good angle.

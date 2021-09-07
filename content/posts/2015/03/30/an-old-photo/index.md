@@ -5,7 +5,7 @@ categories:
   - Jokes
 date: 2015-03-30 01:24:18
 tags:
-thumbnailImage: old-photo.jpg
+thumbnail: old-photo.jpg
 ---
 
 Lol

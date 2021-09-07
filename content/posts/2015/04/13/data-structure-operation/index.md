@@ -6,7 +6,7 @@ id: 313
 categories:
   - Technology
   - Programming
-thumbnailImage: logo.png
+thumbnail: logo.png
 date: 2015-04-13 00:58:00
 ---
 

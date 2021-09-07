@@ -3,7 +3,7 @@ title: "The New Begining"
 date: 2017-07-19 00:00:00
 updated: 2017-07-23
 draft: false
-thumbnailImage: the-new-begining.jpg
+thumbnail: the-new-begining.jpg
 ---
 
 {% quote "An Engineer" %}

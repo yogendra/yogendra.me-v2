@@ -8,7 +8,7 @@ id: 259
 categories:
   - Inspirational
 date: 2014-01-06 21:00:55
-thumbnailImage: dec-31.png
+thumbnail: dec-31.png
 ---
 
 फिर कोई पत्ता पेड़ से झड़ गया यारों,

@@ -8,7 +8,7 @@ id: 362
 categories:
   - Technology
 date: 2016-11-09 22:52:49
-thumbnailImage: icon-ssh.png
+thumbnail: icon-ssh.png
 ---
 
 Good list of commands to be SSH 'Yoda'. I like the tunnels and screen the most in these. They have been so useful over the years, for development and troubleshooting.

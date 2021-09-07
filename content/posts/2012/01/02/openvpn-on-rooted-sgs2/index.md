@@ -10,7 +10,7 @@ tags:
 id: 21
 categories:
   - Technology
-thumbnailImage: openvpn-logo.png
+thumbnail: openvpn-logo.png
 date: 2012-01-02 00:59:22
 ---
 

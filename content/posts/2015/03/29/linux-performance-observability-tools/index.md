@@ -5,7 +5,7 @@ categories:
   - Technology
 date: 2015-03-29 21:04:29
 tags:
-thumbnailImage: tools.png
+thumbnail: tools.png
 ---
 
 I use linux for all production deployments (Obviously). Here is a quick one image run down for all optimizations.

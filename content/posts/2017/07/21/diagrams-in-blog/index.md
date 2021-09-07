@@ -11,7 +11,7 @@ alias:
   - 2017/07/21/diagrams-in-hugo.html
   - 2017/07/21/diagrams-in-blog.html
 
-thumbnailImage: uml.png
+thumbnail: uml.png
 ---
 
 I use a text to diagram tool called [PlantUML](https://plantuml.com). It's perfect!

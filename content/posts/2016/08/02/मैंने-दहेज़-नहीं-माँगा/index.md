@@ -6,7 +6,7 @@ categories:
 date: 2016-08-02 12:48:59
 tags:
   - हिंदी
-thumbnailImage: frustrated-man.gif
+thumbnail: frustrated-man.gif
 ---
 
 साहब मैं थाने नहीं आउंगा,
