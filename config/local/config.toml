@@ -1,1 +1,2 @@
 baseURL = 'http://localhost:1313'
+publishDir = "public/local"

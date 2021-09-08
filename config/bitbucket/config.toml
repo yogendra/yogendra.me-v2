@@ -1,0 +1,2 @@
+baseURL = 'https://yogendra.bitbucket.io'
+publishDir = "public/bitbucket"

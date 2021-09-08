@@ -1,4 +1,6 @@
 baseURL = 'https://yogendra.me'
+publishDir = "public/default"
+
 languageCode = 'en-us'
 title = 'Chase Your Dreams'
 copyright = "Copyright © 2012–2021, Yogendra Rampuria; all rights reserved."
