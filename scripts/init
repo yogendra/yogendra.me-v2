@@ -1,18 +1,56 @@
 #!/usr/bin/env bash
-JAR_LOCATION=http://sourceforge.net/projects/plantuml/files/plantuml.jar/download
+PLATUML_JAR_LOCATION=http://sourceforge.net/projects/plantuml/files/plantuml.jar/download
 
-function init_darwin(){
-  curl -L $JAR_LOCATION -o lib/plantuml.jar
-  brew install libtool
-  brew link libtool
-  brew install graphviz
-  brew link --overwrite graphviz
+platform="darwin"
+arch="x64"
+
+function install_plantuml(){
+  if [ ! -f lib/plantuml.jar ]; then
+    curl -L $PLATUML_JAR_LOCATION -o lib/plantuml.jar
+  fi
+  install_graphviz_${platform}
 }
-function init_linux(){
-  curl -L $JAR_LOCATION -o lib/plantuml.jar
+
+function install_firebase(){
+  curl -sL firebase.tools | bash
+}
+
+function brew_install() {
+    if ! brew list $1 &>/dev/null; then
+      echo "\nInstalling $1"
+      brew install $1
+    fi
+    brew link -f --overwrite $1
+}
+
+
+function install_graphviz_darwin(){
+  brew_install libtool
+  brew_install graphviz
+}
+function install_jre_darwin(){
+  brew_install adoptopenjdk11-jre
+}
+function instll_jre_linux(){
+  sudo apt update
+  sudo apt install adoptopenjdk-11-hotspot
+}
+function install_graphviz_linux(){
   sudo apt install graphviz
 }
-function init_linux_arm64(){
-  curl -L $JAR_LOCATION -o lib/plantuml.jar
-  sudo apt install graphviz
+function init(){
+  install_firebase
+  install_plantuml
+  install_java
 }
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  platform="linux"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  platform="darwin"
+else
+  platform="unsupported"
+fi
+init
+
+

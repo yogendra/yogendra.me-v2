@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+OP=$1; shift
+
+PLATUML_JAR=${PLANTUML_JAR:=lib/platuml.jar}
+function prepare_plantuml(){
+  find ./content -type f \( -iname '*.puml' -o -iname '*.plantuml' \) | while read puml
+  do
+    filename=$(basename $puml)
+    dest=${filename%.*}
+    echo java -jar $PLANTUML_JAR -tpng -tsvg -o $dest  $puml
+  done
+}
+
+function prepare(){
+  prepare_plantuml
+}
+function build(){
+  prepare
+  hugo -DEF --cleanDestinationDir -e bitbucket
+  hugo -DEF --cleanDestinationDir -e gitlab
+  hugo -DEF --cleanDestinationDir -e github
+  hugo -DEF --cleanDestinationDir -e local
+}
+function publish(){
+  hugo
+}
+
+$OP $@
