@@ -1,0 +1,54 @@
+{
+  "hosting": {
+    "site": "yogendra-me-beta",
+    "public": "public/firebase-beta",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "redirects": [
+      {
+        "source": "/jumpbox",
+        "destination": "https://raw.githubusercontent.com/yogendra/pcf-tools/master/scripts/pcf-jumpbox-init.sh",
+        "type": 301
+      },
+      {
+        "source": "/keys",
+        "destination": "https://raw.githubusercontent.com/yogendra/dotfiles/master/.ssh/authorized_keys",
+        "type": 301
+      },
+      {
+        "source": "/minimal-vimrc",
+        "destination": "https://raw.githubusercontent.com/yogendra/dotfiles/master/.vimrc",
+        "type": 301
+      },
+      {
+        "source": "/setup-vim",
+        "destination": "https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/setup-vim.sh",
+        "type": 301
+      },
+      {
+        "source": "/k8s-workspace",
+        "destination": "https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/k8s-workspace.sh",
+        "type": 301
+      },
+      {
+        "source": "/k8s-profile",
+        "destination": "https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/k8s-profile.sh",
+        "type": 301
+      },
+      {
+        "source": "/dotfiles",
+        "destination": "https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/dotfiles-init.Linux.sh",
+        "type": 301
+      },
+      {
+        "source": "/dotfiles.Linux",
+        "destination": "https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/dotfiles-init.Linux.sh",
+        "type": 301
+      },
+      {
+        "source": "/dotfiles.Darwin",
+        "destination": "https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/dotfiles-init.Darwin.sh",
+        "type": 301
+      }
+    ]
+  }
+}
