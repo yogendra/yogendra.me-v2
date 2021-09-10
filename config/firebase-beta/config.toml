@@ -1,0 +1,3 @@
+baseURL = 'https://beta.yogendra.me'
+publishDir = "public/firebase-beta"
+x
