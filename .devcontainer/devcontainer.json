@@ -18,7 +18,8 @@
 		"davidanson.vscode-markdownlint",
 		"jebbs.plantuml",
 		"mushan.vscode-paste-image",
-		"bungcip.better-toml"
+		"bungcip.better-toml",
+		"github.github-vscode-theme"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
