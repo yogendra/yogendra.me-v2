@@ -23,7 +23,14 @@ function brew_install() {
     brew link -f --overwrite $1
 }
 
+function install_hugo_darwin(){
+  brew_install hugo
+}
 
+function install_hugo_linux(){
+  sudo apt update
+  sudo apt install hugo
+}
 function install_graphviz_darwin(){
   brew_install libtool
   brew_install graphviz
@@ -39,9 +46,10 @@ function install_graphviz_linux(){
   sudo apt install graphviz
 }
 function init(){
-  install_firebase
+  install_hugo_${platform}
+  install_firebase  
   install_plantuml
-  install_java
+  install_jre_${platform}
 }
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
