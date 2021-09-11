@@ -20,7 +20,8 @@
 		"jebbs.plantuml",
 		"mushan.vscode-paste-image",
 		"bungcip.better-toml",
-		"github.github-vscode-theme"
+		"github.github-vscode-theme",
+		"esbenp.prettier-vscode"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
