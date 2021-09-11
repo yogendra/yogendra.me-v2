@@ -13,4 +13,4 @@ Lets connet with our little ones. Hope this helps you, as much as it helped me.
 
 <!--more-->
 
-[![](parenting-lessons/words.jpg "Parenting Lessons")](parenting-lessons/words.jpg)
+[![](words.jpg "Parenting Lessons")](words.jpg)
