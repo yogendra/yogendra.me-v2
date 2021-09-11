@@ -13,16 +13,18 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: ./.github/actions/devcontainer-action
+      - name: Build Pages
+        uses: ./.github/actions/devcontainer-action
         with:
           entrypoint: scripts/ci
           args: build
-      - uses: ./.github/actions/devcontainer-action
+      - name: Publish to Firebase Beta
+        uses: ./.github/actions/devcontainer-action
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         with:
           entrypoint: firebase
-          args: deploy --only hosting:beta-yogendra-me 
+          args: deploy --only hosting:yogendra-me-beta
       # - uses: FirebaseExtended/action-hosting-deploy@v0
       #   with:
       #     repoToken: '${{ secrets.GITHUB_TOKEN }}'
