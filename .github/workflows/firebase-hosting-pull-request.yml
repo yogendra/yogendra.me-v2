@@ -9,8 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        submodules: true
       - uses: ./.github/actions/devcontainer-action
-        run: hugo -e firebase-beta
+        with:
+          entrypoint: scripts/ci
+          args: build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
