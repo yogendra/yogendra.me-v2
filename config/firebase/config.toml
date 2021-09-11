@@ -1,2 +1,2 @@
-baseURL = 'https://yogendra.github.io'
+baseURL = 'https://yogendra.me'
 publishDir = "public/firebase"
