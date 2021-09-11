@@ -1,7 +1,7 @@
 {
   "hosting": {
-    "site": "yogendra-me-beta",
-    "public": "public/firebase-beta",
+    "site": "yogendra-me",
+    "public": "public/firebase",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "redirects": [
       {

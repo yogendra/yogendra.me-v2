@@ -18,13 +18,13 @@ jobs:
         with:
           entrypoint: scripts/ci
           args: build
-      - name: Publish to Firebase Beta
+      - name: Publish to Firebase
         uses: ./.github/actions/devcontainer-action
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         with:
           entrypoint: firebase
-          args: deploy --only hosting:yogendra-me-beta
+          args: deploy --only hosting:yogendra-me
       # - uses: FirebaseExtended/action-hosting-deploy@v0
       #   with:
       #     repoToken: '${{ secrets.GITHUB_TOKEN }}'
