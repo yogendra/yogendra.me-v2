@@ -17,9 +17,15 @@ jobs:
         with:
           entrypoint: scripts/ci
           args: build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - uses: ./.github/actions/devcontainer-action
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}'
-          channelId: live
-          projectId: yogendra-me
+          entrypoint: firebase
+          args: deploy --only hosting:beta-yogendra-me 
+      # - uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     repoToken: '${{ secrets.GITHUB_TOKEN }}'
+      #     firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}'
+      #     channelId: live
+      #     projectId: yogendra-me
