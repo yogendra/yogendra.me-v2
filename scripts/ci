@@ -17,6 +17,8 @@ function prepare(){
 }
 function build(){
   prepare
+  hugo -DEF --cleanDestinationDir -e firebase-beta
+  hugo -DEF --cleanDestinationDir -e firebase
   hugo -DEF --cleanDestinationDir -e bitbucket
   hugo -DEF --cleanDestinationDir -e gitlab
   hugo -DEF --cleanDestinationDir -e github
