@@ -30,4 +30,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          external_repository: yogendra/yogendra.github.io
+          publish_branch: your-branch  # default: gh-pages
           publish_dir: ./public/github
+
