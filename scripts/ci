@@ -15,16 +15,29 @@ function prepare_plantuml(){
 function prepare(){
   prepare_plantuml
 }
+function deploy(){
+  build
+  publish
+}
 function build(){
   prepare
-  hugo -DEF --cleanDestinationDir -e firebase
-  hugo -DEF --cleanDestinationDir -e bitbucket
-  hugo -DEF --cleanDestinationDir -e gitlab
-  hugo -DEF --cleanDestinationDir -e github
-  hugo -DEF --cleanDestinationDir -e local
+  hugo --minify --cleanDestinationDir -e firebase
+  hugo --minify --cleanDestinationDir -e github
 }
 function publish(){
-  hugo
+  firebase deploy --only hosting
 }
 
+function build-beta(){
+  prepare
+  hugo --minify --cleanDestinationDir -e firebase-beta
+}
+function publish-beta(){
+  firebase deploy --only hosting:yogendra-me-beta
+}
+
+function deploy-beta(){
+  build-beta
+  publish-beta
+}
 $OP $@
