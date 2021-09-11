@@ -23,6 +23,6 @@ RUN \
 RUN \
   curl -sSL https://github.com/gohugoio/hugo/releases/download/v0.88.1/hugo_extended_0.88.1_Linux-64bit.tar.gz | tar -C /usr/local/bin -xzvf- hugo
 
-ADD entrypoint.sh /entrypoint.sh
+# ADD entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+# ENTRYPOINT ["/entrypoint.sh"]
