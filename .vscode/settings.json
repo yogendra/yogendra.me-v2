@@ -4,5 +4,7 @@
   "plantuml.exportFormat": "png",
   "plantuml.server": "https://www.plantuml.com/plantuml",
   "markdown-preview-enhanced.plantumlServer": "https://www.plantuml.com/plantuml/svg",
-  "plantuml.exportOutDir": "."
+  "plantuml.exportOutDir": ".",
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file"
 }
