@@ -23,11 +23,11 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         with:
-          entrypoint: firebase
-          args: deploy --only hosting:yogendra-me
-      # - uses: FirebaseExtended/action-hosting-deploy@v0
-      #   with:
-      #     repoToken: '${{ secrets.GITHUB_TOKEN }}'
-      #     firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}'
-      #     channelId: live
-      #     projectId: yogendra-me
+          entrypoint: scripts/ci
+          args: publish
+      - name: Publish to Github
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public/github
