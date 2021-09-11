@@ -2,3 +2,5 @@ public/
 resources/_gen/
 lib/
 .DS_Store
+.firebase/
+firebase-debug.log
