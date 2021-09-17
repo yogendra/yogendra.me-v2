@@ -95,3 +95,6 @@ iconsDir = "icons/" # without a leading forward slash
 [author]
 name = "Yogi"
 photo = "images/authors/yogi.jpg" #include this if you would like to show the author photo on the sidebar
+
+
+customCSS = ["css/custom.css"]
