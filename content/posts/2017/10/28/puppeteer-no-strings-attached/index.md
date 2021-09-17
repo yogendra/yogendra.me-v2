@@ -302,7 +302,7 @@ scrape();
 ## Thanks
 
 My father ([Shri. Noratan Rampuria][26]) has always been very supportive of my life and career choices. And he showed his support once again. He was there for my talk and had looked happy. Thanks papa 🙏!
-![][special-thanks]
+![Thanks Papa ::img-full][special-thanks]
 
 Many ex and current colleagues were also at the event and showed their support. Thanks folks🤝!
 
