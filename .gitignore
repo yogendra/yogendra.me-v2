@@ -4,3 +4,4 @@ lib/
 .DS_Store
 .firebase/
 firebase-debug.log
+.hugo_build.lock

@@ -16,7 +16,7 @@
       },
       {
         "source": "/minimal-vimrc",
-        "destination": "https://raw.githubusercontent.com/yogendra/dotfiles/master/.vimrc",
+        "destination": "https://raw.githubusercontent.com/yogendra/dotfiles/master/.vimrc.minimal",
         "type": 301
       },
       {

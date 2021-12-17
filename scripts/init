@@ -6,6 +6,7 @@ arch="x64"
 
 function install_plantuml(){
   if [ ! -f lib/plantuml.jar ]; then
+    mkdir -p lib/
     curl -L $PLATUML_JAR_LOCATION -o lib/plantuml.jar
   fi
   install_graphviz_${platform}
@@ -47,7 +48,7 @@ function install_graphviz_linux(){
 }
 function init(){
   install_hugo_${platform}
-  install_firebase  
+  install_firebase
   install_plantuml
   install_jre_${platform}
 }
