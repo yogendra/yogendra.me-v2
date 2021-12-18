@@ -4,7 +4,7 @@ date: 2018-04-14 12:49:18
 thumbnailImage: app-icon.png
 ---
 
-# [Direct APK Download Here][download]
+## [Direct APK Download Here][download]
 
 ![type-icon-right](app-icon.png "IDD")
 IDD Dialer is a simple utility application for Android. It simplifies usage of IDD service, Calling Cards, etc.
@@ -18,7 +18,7 @@ You could store the number as expected by the service provider, in addressbook. 
 This is _unacceptable_ in 2018. So, I made this app to just replace the phone number on-the-fly. No more storing cutom prefixed numbers.
 This application replaces `+` in the your outgoing number with another prefix.
 
-# How does it work?
+## How does it work?
 
 ![type-icon-right](settings.png "IDD Settings")
 
@@ -28,13 +28,13 @@ This app replaces `+` in the outgoing calls with the **prefix** that you supplie
 > - Prefix: 018
 > - Local ISD Code: 65
 
-# What Next?
+## What Next?
 
 I plan to opensource this project. Also, I plan to improve this application with better controls, wizards, etc. But I don't have a timeline for this. But keep your comments and feedback coming.
 
 Post your feedback here in comments.
 
-# [Direct APK Download Here][download]
+## [Direct APK Download Here][download]
 
 [Terms & Conditions][tnc] | [Privacy Policy][privacy-policy]
 
@@ -42,5 +42,5 @@ Post your feedback here in comments.
 [number-replace-image]: number-replace-image.png
 [icon]: app-icon.png
 [example-starhub]: example-starhub.png
-[privacy-policy]: /projects/idd/privacy_policy.html
-[tnc]: /projects/idd/terms_and_conditions.html
+[privacy-policy]: /projects/idd/privacy_policy
+[tnc]: /projects/idd/terms_and_conditions
