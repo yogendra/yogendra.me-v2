@@ -1,6 +1,9 @@
 ---
 title: Privacy Policy
 date: 2018-03-14
+aliases:
+  - /projects/idd/privacy_policy.html
+  - /projects/idd_provacy_policy
 ---
 
 [Back to App Home](https://yogendra.me/projects/idd)
