@@ -25,19 +25,19 @@ function brew_install() {
 }
 
 function install_hugo_darwin(){
-  brew_install hugo
+  brew_install hugo asciidoctor
 }
 
 function install_hugo_linux(){
   sudo apt update
-  sudo apt install hugo
+  sudo apt install hugo asciidoctor
 }
 function install_graphviz_darwin(){
   brew_install libtool
   brew_install graphviz
 }
 function install_jre_darwin(){
-  brew_install adoptopenjdk11-jre
+  brew_install temurin-17
 }
 function instll_jre_linux(){
   sudo apt update
