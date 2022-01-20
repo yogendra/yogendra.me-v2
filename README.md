@@ -1,6 +1,8 @@
 # Yogendra.Me
 
 [![Build Site](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish.yml)
+|
+[![Build Devcontainer](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish-devcontainer.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish-devcontainer.yml)
 
 ## Quickstart
 
