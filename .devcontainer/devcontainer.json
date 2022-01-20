@@ -5,7 +5,9 @@
 	// 	"dockerfile": "Dockerfile",
 	// 	"args": { "VARIANT": "hirsute" }
 	// },
-
+	"mounts": [
+		"source=/Users/yrampuria/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+	],
 	// Set *default* container specific settings.json values on container create.
 	"settings": {},
 
@@ -18,7 +20,8 @@
 		"mushan.vscode-paste-image",
 		"bungcip.better-toml",
 		"github.github-vscode-theme",
-		"esbenp.prettier-vscode"
+		"esbenp.prettier-vscode",
+		"streetsidesoftware.code-spell-checker"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
