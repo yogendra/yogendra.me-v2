@@ -19,9 +19,15 @@ RUN \
 
 RUN \
   curl -sSL firebase.tools | bash
+RUN \
+  sudo apt-get install -y asciidoctor
 
 RUN \
-  curl -sSL https://github.com/gohugoio/hugo/releases/download/v0.88.1/hugo_extended_0.88.1_Linux-64bit.tar.gz | tar -C /usr/local/bin -xzvf- hugo
+  curl -sSL https://github.com/gohugoio/hugo/releases/download/v0.92.0/hugo_0.92.0_Linux-ARM64.tar.gz | tar -C /usr/local/bin -xzvf- hugo
+
+RUN \
+  git config --global user.name "Yogi Rampuria" ;\
+  git config --global user.email "yogendrarampuria@gmail.com"
 
 # ADD entrypoint.sh /entrypoint.sh
 
