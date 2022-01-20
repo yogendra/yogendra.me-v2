@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
+set -Eeuo pipefail
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+PROJECT_DIR=$( cd $SCRIPT_DIR/..; pwd)
+
+
 OP=$1; shift
 
-PLATUML_JAR=${PLANTUML_JAR:=lib/platuml.jar}
+PLATUML_JAR=${PLANTUML_JAR:=${PROJECT_DIR}/lib/platuml.jar}
 function prepare_plantuml(){
-  find ./content -type f \( -iname '*.puml' -o -iname '*.plantuml' \) | while read puml
+  find $PROJECT_DIR/content -type f \( -iname '*.puml' -o -iname '*.plantuml' \) | while read puml
   do
     filename=$(basename $puml)
     dest=${filename%.*}
@@ -40,4 +45,22 @@ function deploy-beta(){
   build-beta
   publish-beta
 }
+
+function devcontainer-build(){
+  SCOPE_DIR=${PROJECT_DIR}/.devcontainer
+  DOCKERFILE=${SCOPE_DIR}/Dockerfile
+  IMAGE_NAME=ghcr.io/yogendra/yogendra-me-devcontainer
+
+  docker buildx build -t ${IMAGE_NAME}:latest-arm64 --platform=linux/arm64 -f ${DOCKERFILE} ${SCOPE_DIR}
+  docker push ${IMAGE_NAME}:latest-arm64
+
+  docker buildx build -t ${IMAGE_NAME}:latest-amd64 --platform=linux/amd64 -f ${DOCKERFILE} ${SCOPE_DIR}
+  docker push ${IMAGE_NAME}:latest-amd64
+
+  docker manifest create ${IMAGE_NAME}:latest \
+    --amend ${IMAGE_NAME}:latest-arm64 \
+    --amend ${IMAGE_NAME}:latest-amd64
+  docker manifest push ${IMAGE_NAME}:latest
+}
+
 $OP $@
