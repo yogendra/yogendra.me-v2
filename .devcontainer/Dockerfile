@@ -36,8 +36,8 @@ RUN  \
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
   apt-get update && \
   apt-get install -qqy  nodejs npm chromium-browser  && \
-  npm install -g firebase-tools \
-  elif [[ $TARGETPLATFORM == "linux/amd64" ]] ;\
+  npm install -g firebase-tools ;\
+  elif [ "$TARGETPLATFORM" = "linux/amd64" ] ; then \
   curl -sL https://firebase.tools | bash ;\
   fi
 
