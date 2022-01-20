@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:0-${VARIANT}
 RUN \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
-  apt-get -y install --no-install-recommends wget apt-transport-https gnupg
+  apt-get -y install --no-install-recommends wget apt-transport-https gnupg2
 
 RUN \
   wget -qO- https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public  | apt-key add - && \
