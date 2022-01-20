@@ -3,7 +3,10 @@ ARG VARIANT="hirsute"
 FROM mcr.microsoft.com/vscode/devcontainers/base:${VARIANT}
 ARG TARGETPLATFORM
 
-# [Optional] Uncomment this section to install additional OS packages.
+LABEL org.opencontainers.image.description Dev-container for Yogendra.Me Development
+LABEL org.opencontainers.image.source  https://github.com/yogendra/yogendra.me-v2/blob/main/.devcontainer/Dockerfile
+LABEL org.opencontainers.image.vendor Yogi Rampuria (@yogendra)
+LABEL org.opencontainers.image.title Yogendra.Me Dev-container
 
 # Install basic tools
 
