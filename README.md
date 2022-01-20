@@ -1,6 +1,6 @@
 # Yogendra.Me
 
-![Build and Deploy](https://github.com/yogendra/yogendra.me-v2/actions/workflows/merge.yml/badge.svg)
+[![Build Site](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish.yml)
 
 ## Quickstart
 
@@ -43,4 +43,10 @@ hugo serve
 
 ```bash
 devcontainer open
+```
+
+### Build devcontainer
+
+```bash
+scripts/ci devcontainer-build
 ```
