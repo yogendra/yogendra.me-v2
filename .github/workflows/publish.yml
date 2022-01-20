@@ -6,6 +6,8 @@ name: Build and Deploy
   push:
     branches:
       - main
+     paths:
+      - "!.devcontainer/**"
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -31,5 +33,5 @@ jobs:
         with:
           deploy_key: ${{ secrets.DEPLOY_KEY }}
           external_repository: yogendra/yogendra.github.io
-          publish_branch: main # default: gh-pages
+          publish_branch: main
           publish_dir: ./public/github
