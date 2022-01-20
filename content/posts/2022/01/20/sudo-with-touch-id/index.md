@@ -7,13 +7,14 @@ categories:
 tags:
   - mac
 ---
-Security and convinience are not best of the friends. Good password/pin practices are not convinient (long, different for each system, random). Biometric authentication is somewhat a good compromise.
+
+Security and convenience are not best of the friends. Good password/pin practices are not convenience (long, different for each system, random). Biometric authentication is somewhat a good compromise.
 
 <!-- more -->
 
-Logging into your machine is a very repeatative task. I do it enough time is a day to be annoyed of long passwords. Additionally, I work a lot on command line so I do find myself running commands with `sudo` a lot. Here is something that help me reduce some annoyance out of these.
+Logging into your machine is a very repetitive task. I do it enough time is a day to be annoyed of long passwords. Additionally, I work a lot on command line so I do find myself running commands with `sudo` a lot. Here is something that help me reduce some annoyance out of these.
 
-You can setup your mac (may be other fingerprint enabled linux system) to use fingerprint based authentication. Most Mac users use this for login purpose. But till today I did not think about useing fingerprint for `sudo` commands. After a quick search I stumbled on the original port on iMore.
+You can setup your mac (may be other fingerprint enabled linux system) to use fingerprint based authentication. Most Mac users use this for login purpose. But till today I did not think about using fingerprint for `sudo` commands. After a quick search I stumbled on the original port on iMore.
 
 _Original Post_
 https://www.imore.com/how-use-sudo-your-mac-touch-id
@@ -64,7 +65,7 @@ I can get away with the hassle by using a password manager.
 My personal favorite is [Safe In Cloud](https://www.safe-in-cloud.com).
 
 So, there is no way I can type it over and over again, every time I lock my machine
-or run commands with `sudo`. Additionally, I didnot want to put `NOPASSWD` in
+or run commands with `sudo`. Additionally, I didn't want to put `NOPASSWD` in
 `sudoers` config. I find that risky, as I run all sorts of random scripts on my
 machine. So, using TouchID instead of password seems like a safe thing.
 
