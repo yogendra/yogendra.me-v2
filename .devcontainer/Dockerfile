@@ -17,7 +17,19 @@ RUN \
 
 RUN \
   apt-get update && \
-  apt-get install -qqy --no-install-recommends wget apt-transport-https gnupg2 curl
+  apt-get install -qqy --no-install-recommends wget apt-transport-https gnupg2 curl direnv fzf 
+
+RUN \
+  echo 'eval "$(direnv hook bash)"' >> /home/vscode/.bashrc && \  
+  sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y && \
+  echo 'eval "$(starship init bash)"' >> /home/vscode/.bashrc && \
+  echo 'source /usr/share/doc/fzf/examples/completion.bash' >> /home/vscode/.bashrc && \
+  echo 'source /usr/share/doc/fzf/examples/key-bindings.bash' >> /home/vscode/.bashrc && \
+  mkdir /home/vscode/.config && \
+  chown vscode:vscode /home/vscode/.bashrc && \
+  curl -sSL https://raw.githubusercontent.com/yogendra/dotfiles/master/.config/starship.toml -o /home/vscode/.config/starship.toml 
+
+
 
 # Install hugo
 RUN \
@@ -29,7 +41,7 @@ RUN \
   apt-get update && \
   apt-get install -qqy asciidoctor
 
-# Install platuml
+# Install plantuml
 RUN  \
   apt-get update && \
   apt-get install -qqy default-jre graphviz  && \

@@ -28,7 +28,10 @@
 	"forwardPorts": [1313],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "hugo serve",
+	"postCreateCommand": [
+		"direnv allow",
+		"hugo serve"
+	],
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode"
