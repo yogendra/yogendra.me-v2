@@ -50,7 +50,7 @@ function devcontainer-build(){
   SCOPE_DIR=${PROJECT_DIR}/.devcontainer
   DOCKERFILE=${SCOPE_DIR}/Dockerfile
   IMAGE_NAME=ghcr.io/yogendra/yogendra-me-devcontainer
-  docker buildx build -t ${IMAGE_NAME}:latest --platform=linux/amd64 --platform=linux/arm64 -f ${DOCKERFILE} ${SCOPE_DIR}
+  docker buildx build -t ${IMAGE_NAME}:latest --platform=linux/amd64 --platform=linux/arm64 --push -f ${DOCKERFILE} ${SCOPE_DIR}
 }
 
 $OP $@
