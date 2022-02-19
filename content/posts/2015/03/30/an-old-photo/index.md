@@ -12,4 +12,4 @@ Lol
 
 <!--more -->
 
-[![](an-old-photo/old-photo.jpg "An Old Photo")](an-old-photo/old-photo.jpg)
+![An Old Photo](old-photo.jpg)

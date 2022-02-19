@@ -14,4 +14,4 @@ thumbnail: greetings.jpg
 
 <!--more-->
 
-[![](राजस्थान-दिवस-री-बधाई-हो-सा/greetings.jpg#center "राजस्थान दिवस री बधाई हो सा")](राजस्थान-दिवस-री-बधाई-हो-सा/greetings.jpg)
+![राजस्थान दिवस री बधाई हो सा](greetings.jpg)

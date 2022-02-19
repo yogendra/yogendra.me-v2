@@ -14,4 +14,4 @@ I always find myself pondering about this
 
 <!-- more -->
 
-[![](data-structure-operation/datastructures.png "Data Structure Operations")](data-structure-operation/datastructures.png)
+![Data Structure Operations](datastructures.png)

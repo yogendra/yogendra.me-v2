@@ -15,4 +15,4 @@ Colours of JOY - Best Moments in life...... Just Happen!
 
 <!--more-->
 
-![type-banner]("wpid-03169115.jpg" "Colours of JOY - Best Moments in life......  Just Happen!")
+![Colours of JOY - Best Moments in life......  Just Happen!]("wpid-03169115.jpg)

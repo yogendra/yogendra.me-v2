@@ -18,7 +18,7 @@ Since mid-last year, I started using a VPN service. Good for me, my VPN provide
 
 <!--more-->
 
-![type-banner](ovpnlogo.png "OpenVPN")
+![OpenVPN](openvpn-logo.png)
 
 I can only switch between L2TP and OpenVPN a limited number of time in a month. My provider do provide a good guide for getting OpenVPN up and running on a rooted android phone. But as we know "NO TWO DROIDS ARE SAME", I had to improvise to get it all up. I did manage to get VPN up in a sec but requests were not getting routed via VPN.
 
@@ -33,7 +33,7 @@ After all the reading around at regular places, I got this thing working. Here's
 1. A PC/Mac with [Android SDK](https://goo.gl/2qpr) (adb tool) and [Kies](https://goo.gl/dS1rv) **OR** [Terminal Emulator](https://goo.gl/G9Ids) **OR** [SSHDroid](https://goo.gl/J7agC) application in the phone
 1. 30 minutes of time to make all this work.
 
-![type-banner](openvpn-install.png "OpenVPN Install")
+![OpenVPN Install](openvpn-install.png)
 
 Once you have rooted your phone, install applications mentioned above as per your preference . Start "OpenVPN Installer" application and click "Install". Choose "**/system/xbin**" location for "**openvpn**". For "**ifconfig/route**" choose "**/system/xbin/bb**" for ifconfig/route.
 
@@ -68,7 +68,7 @@ Puh! congrats you are through with toughest part. Put your OpenVPN configuration
 
 Optional: Long press on your configuration name and choose "Preferences". Put Google DNS Server "**8.8.8.8**" in VPN DNS Server field and check "**Use VPN DNS Server**".
 
-![type-banner](openvpn-connected.png "OpenVPN Successfully Connected")
+![OpenVPN Successfully Connected](openvpn-connected.png)
 
 All set! Just click on "**OpenVPN**" on main screen and then click on your configuration name (might have to click twice). You will see the progress in the status bar and final message is "**Connection successful**". If you pull the notification bar down, you should see upload and download speeds.
 

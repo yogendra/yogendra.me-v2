@@ -6,9 +6,9 @@ draft: false
 thumbnail: the-new-begining.jpg
 ---
 
-{% quote "An Engineer" %}
+{{<blockquote author="An Engineer">}}
 If its not working, try restarting it
-{% endquote %}
+{{</blockquote>}}
 
 <!--more -->
 

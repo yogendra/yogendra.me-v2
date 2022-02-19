@@ -12,7 +12,7 @@ I use linux for all production deployments (Obviously). Here is a quick one imag
 
 <!--more-->
 
-[![](linux-performance-observability-tools/tools.png)](linux-performance-observability-tools/tools.png)
+![](tools.png)
 
 Source: [linux.com][linux-com]
 
