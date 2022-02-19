@@ -6,5 +6,10 @@
   "markdown-preview-enhanced.plantumlServer": "https://www.plantuml.com/plantuml/svg",
   "plantuml.exportOutDir": ".",
   "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "file"
+  "editor.formatOnSaveMode": "file",
+  "cSpell.words": [
+    "drawio",
+    "starhub",
+    "yogendra"
+  ]
 }
