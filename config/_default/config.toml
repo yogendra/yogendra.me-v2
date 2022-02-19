@@ -11,7 +11,7 @@ enableRobotsTXT = true
 # Pagination
 paginate = 10
 paginatePath = "page"
-disqusShortname = ""
+disqusShortname = "yogendrarampuria"
 
 # Google analytics
 googleAnalytics = "UA-21164716-2"
@@ -34,3 +34,4 @@ theme = "hugo-clarity"
 
 [permalinks]
   posts = "/:year/:month/:day/:title/"
+
