@@ -17,4 +17,4 @@ Docker VMWare is a base box with all goodness. See full information on [Github
 
 <!--more-->
 
-[![](vagrant-docker-basebox-for-vmware-vagrant/docker-vmware-vagrant.png "Docker + VMWare + Vagrant")](vagrant-docker-basebox-for-vmware-vagrant/docker-vmware-vagrant.png)
+![Docker + VMWare + Vagrant)](docker-vmware-vagrant.png)

@@ -14,7 +14,7 @@ thumbnail: happy-diwali-2016-generic.jpg
 
 <!--more-->
 
-[![][greetings] "दीपावली और नववर्ष की हार्दिक शुभकामनाए")][greetings]
+![दीपावली और नववर्ष की हार्दिक शुभकामनाए](happy-diwali-2016-generic.jpg)
 
 यह दिवाली आपकी, जीवन बने खुशियों का सागर।
 स्वस्थ तन-मन और धन से, भर उठे जीवन की गागर।
@@ -27,5 +27,3 @@ thumbnail: happy-diwali-2016-generic.jpg
 साथ में दीपक जले, 'नोरत' लगे नभ में प्रभाकर I
 
 ~ नोरतन
-
-[greetings]: शुभ-दीपावली/happy-diwali-2016-generic.jpg
