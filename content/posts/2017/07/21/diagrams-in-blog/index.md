@@ -52,9 +52,6 @@ generates plantuml files and svg locally. So overall page rendering is fast. Dow
 working locally. I have created a working Docker image ([yogendra/blog-toolbox:latest](https://hub.docker.com/yogendra/blog-toolbox))
 to help me work around this
 
-
-![Test Diagram.IO](test.drawio.svg)
-
 **Update**: Trying client side rendering
 
 [uml-diagram]: diagrams-in-blog/uml.png

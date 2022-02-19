@@ -24,3 +24,5 @@ test
 <!--more-->
 
 On this day, I woke up a Son, Brother, Husband, Brother In Law and Uncle. And Ashu woke up as Daughter, Sister, Wife, Sister In Law and Aunty. But, in a miraculous moment, I became a Father, she became a Mother and we both became Parents. We are blessed with a lovely **DAUGHTER**. It still feels like a dream. And if it is one,  I wish I never wake up.
+
+{{< gallery >}}

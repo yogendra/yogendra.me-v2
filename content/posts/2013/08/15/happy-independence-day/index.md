@@ -12,5 +12,9 @@ gallery:
   - wpid-IMG-20130815-WA0002.jpg "Happy Independence Day"
   - wpid-IMG-20130815-WA0000.jpg "Happy Independence Day"
 ---
+
 Happy Independence Data to All Indians.
+
 <!--more-->
+
+{{< gallery >}}

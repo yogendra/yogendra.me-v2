@@ -1,5 +1,5 @@
 ---
-title: 'House Building Trip - Phnom Penh, Cambodia'
+title: "House Building Trip - Phnom Penh, Cambodia"
 id: 187
 categories:
   - Philanthrophy
@@ -29,3 +29,5 @@ gallery:
 A memorable journey.
 
 <!--more -->
+
+{{< gallery >}}
