@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+PROJECT_DIR=$( cd ${SCRIPT_DIR}/.. ; pwd)
+
+
+function post (){
+  OP=$1; shift
+  if [[ $OP == "" ]]; then _show_help ; exit 1; fi
+  _post_${OP} $@
+
+}
+function _post_new(){
+  _post_create $@
+}
+function _post_create(){  
+  title=$(echo "$@"| tr '[:upper:]' '[:lower:]' | sed -r 's/[^a-zA-Z0-9]{1}/-/g')
+  (
+    cd $PROJECT_DIR
+    hugo new "posts/$(date +%Y'/'%m)/${title}.md"
+  )
+}
+
+function launch(){
+  devcontainer open $PROJECT_DIR
+}
+
+
+function help(){
+  _show_help
+  exit 0
+}
+function _show_help(){
+  cat<<EOF
+Launche blog editing
+  blog
+  OR
+  blog launch
+
+Create a new post
+  blog post create My Fancy Title
+
+EOF
+}
+OP=${1:-help}; shift
+$OP $@
