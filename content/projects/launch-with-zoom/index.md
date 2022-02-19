@@ -1,14 +1,15 @@
 ---
 title: Launch with Zoom
 date: 2018-04-14 12:49:18
-thumbnailImage: automator.png
+thumbnail: automator.png
+usePageBundles: true
 ---
 
 Simple Automator Workflow to Get rid of "Open zoom.us.app" on Mac
 
 <!--more-->
 
-![](2020-06-02-09-24-30.png)
+![](automator.png)
 
 ## How to Install
 
@@ -42,9 +43,11 @@ Simple Automator Workflow to Get rid of "Open zoom.us.app" on Mac
    - Shell: **/bin/bash**
    - Pass input: **as arguments**
 1. Put following script in the text box
+
    ```bash
    open $(echo $1 | sed -E 's#https://[a-zA-Z0-9]+.zoom.us/j/#zoommtg://zoom.us/join?confno=#g;s/\?pwd/\&pwd/')
    ```
+
 1. Save workflow (File > Save)
 1. Save quick action as: **Launch with Zoom**
 1. Quit Automator

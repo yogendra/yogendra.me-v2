@@ -1,5 +1,10 @@
 ---
 title: Terms & Conditions
+aliases:
+  - /projects/idd/terms-and-conditions
+  - /projects/idd/terms-and-conditions.html
+  - /projects/idd/terms_and_conditions.html
+  - /projects/idd/terms_and_conditions
 ---
 
 [Back to App Home](https://yogendra.me/projects/idd)
