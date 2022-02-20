@@ -7,5 +7,12 @@
   "plantuml.exportOutDir": ".",
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
-  "cSpell.words": ["drawio", "Rampuria", "starhub", "Viber", "yogendra"]
+  "cSpell.words": [
+    "devcontainer",
+    "drawio",
+    "Rampuria",
+    "starhub",
+    "Viber",
+    "yogendra"
+  ]
 }
