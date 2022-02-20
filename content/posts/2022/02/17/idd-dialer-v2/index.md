@@ -40,6 +40,6 @@ Pandemic has changed our habits. My 'old customers' asked about the app. I was s
 
 I can't promise what will happen next. But I want to make sure that any serious user/enthusiast has the chance to revive this project if I am unable to. So, I have open-sourced the app. It does not have any automated build/publish or much documentation. Any contributions are also welcome. Project is located in my [github].
 
-[idd dialer]: /projects/idd2
+[idd dialer]: /projects/idd-v2
 [call redirection service]: https://developer.android.com/reference/android/telecom/CallRedirectionService
 [github]: https://github.com/yogendra/idd
