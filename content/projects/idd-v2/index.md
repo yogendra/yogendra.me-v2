@@ -1,6 +1,6 @@
 ---
 title: IDD Dialer v2
-date: 2022-02-20 00:00
+date: 2022-02-17T10:44:29Z
 usePageBundles: true
 thumbnail: app-icon.png
 ---
