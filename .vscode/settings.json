@@ -7,10 +7,5 @@
   "plantuml.exportOutDir": ".",
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
-  "cSpell.words": [
-    "drawio",
-    "Rampuria",
-    "starhub",
-    "yogendra"
-  ]
+  "cSpell.words": ["drawio", "Rampuria", "starhub", "Viber", "yogendra"]
 }
