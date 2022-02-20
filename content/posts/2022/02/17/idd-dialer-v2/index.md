@@ -1,10 +1,15 @@
 ---
-title: "IDD Dial V2"
+title: "IDD Dialer V2"
 date: 2022-02-17T10:44:29Z
-draft: true
+draft: false
+thumbnail: app-icon.png
 ---
 
 I have release IDD Dialer v2. Complete rewrite of v1. It uses the standard Android call management service to dial IDD numbers. Check out the [project page][idd-dialer]
+
+<!-- more -->
+
+![IDD Dialer V2:right](app-icon.png)
 
 ## Why IDD Dialer?
 
@@ -35,6 +40,6 @@ Pandemic has changed our habits. My 'old customers' asked about the app. I was s
 
 I can't promise what will happen next. But I want to make sure that any serious user/enthusiast has the chance to revive this project if I am unable to. So, I have open-sourced the app. It does not have any automated build/publish or much documentation. Any contributions are also welcome. Project is located in my [github].
 
-[idd dialer]: /projects/idd
+[idd dialer]: /projects/idd2
 [call redirection service]: https://developer.android.com/reference/android/telecom/CallRedirectionService
 [github]: https://github.com/yogendra/idd
