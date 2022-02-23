@@ -2,7 +2,6 @@
 title: Launch with Zoom
 date: 2018-04-14 12:49:18
 thumbnail: automator.png
-usePageBundles: true
 ---
 
 Simple Automator Workflow to Get rid of "Open zoom.us.app" on Mac
