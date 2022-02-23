@@ -14,5 +14,22 @@
     "starhub",
     "Viber",
     "yogendra"
-  ]
+  ],
+
+  "terminal.integrated.defaultProfile.osx": "zsh",  
+  "terminal.integrated.defaultProfile.linux": "zsh",
+
+
+  "terminal.integrated.profiles.mac": {
+    "fish": {
+      "path": "/opt/homebrew/bin/zsh",
+      "args": ["-l"]
+    },
+  },
+  "terminal.integrated.profiles.linux": {
+    "fish": {
+      "path": "/usr/bin/zsh",
+      "args": ["-l"]
+    },
+  },
 }
