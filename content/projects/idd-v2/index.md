@@ -1,7 +1,6 @@
 ---
 title: IDD Dialer v2
 date: 2022-02-17T10:44:29Z
-usePageBundles: true
 thumbnail: app-icon.png
 ---
 
@@ -38,9 +37,7 @@ This app replaces `+` in the outgoing calls with the **prefix** that you supplie
 
 ## What Next?
 
-Full source code is available on [Github](https://github.com/yogendra/idd)
-
-Post your feedback here in comments.
+Full source code is available on [Github](https://github.com/yogendra/idd). Post your feedback here in comments.
 
 [![](google-play-badge.png)][google-play-link]
 
@@ -50,6 +47,6 @@ Post your feedback here in comments.
 [number-replace-image]: number-replace-image.png
 [icon]: app-icon.png
 [example-starhub]: example-starhub.png
-[privacy-policy]: privacy-policy
-[tnc]: terms-and-conditions
+[privacy-policy]: privacy
+[tnc]: tnc
 [google-play-link]: https://play.google.com/store/apps/details?id=me.yogendra.iddv2
