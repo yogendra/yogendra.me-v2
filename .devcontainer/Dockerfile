@@ -20,13 +20,14 @@ RUN \
   apt-get install -qqy --no-install-recommends wget apt-transport-https gnupg2 curl direnv fzf 
 
 RUN \
-  echo 'eval "$(direnv hook bash)"' >> /home/vscode/.bashrc && \  
+  echo 'eval "$(direnv hook bash)"' >> /home/vscode/.bash_profile && \  
   sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y && \
-  echo 'eval "$(starship init bash)"' >> /home/vscode/.bashrc && \
-  echo 'source /usr/share/doc/fzf/examples/completion.bash' >> /home/vscode/.bashrc && \
-  echo 'source /usr/share/doc/fzf/examples/key-bindings.bash' >> /home/vscode/.bashrc && \
-  mkdir /home/vscode/.config && \
-  chown vscode:vscode /home/vscode/.bashrc && \
+  echo 'eval "$(starship init bash)"' >> /home/vscode/.bash_profile && \
+  echo 'source /usr/share/doc/fzf/examples/completion.bash' >> /home/vscode/.bash_profile && \
+  echo 'source /usr/share/doc/fzf/examples/key-bindings.bash' >> /home/vscode/.bash_profile && \
+  chown -R vscode:vscode /home/vscode/.bash_profile && \
+  mkdir -p /home/vscode/.config && \
+  chown -R vscode:vscode /home/vscode/.config
   curl -sSL https://raw.githubusercontent.com/yogendra/dotfiles/master/.config/starship.toml -o /home/vscode/.config/starship.toml 
 
 
