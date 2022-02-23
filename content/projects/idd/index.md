@@ -1,7 +1,6 @@
 ---
 title: IDD Dialer
 date: 2018-04-14 12:49:18
-usePageBundles: true
 thumbnail: app-icon.png
 ---
 
@@ -42,5 +41,5 @@ Post your feedback here in comments.
 [number-replace-image]: number-replace-image.png
 [icon]: /projects/idd/app-icon.png
 [example-starhub]: example-starhub.png
-[privacy-policy]: /projects/idd/privacy-policy
-[tnc]: /projects/idd/terms-and-conditions
+[privacy-policy]: privacy
+[tnc]: tnc

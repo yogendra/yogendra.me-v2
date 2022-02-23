@@ -1,7 +1,10 @@
 ---
 title: Privacy Policy
-date: 2018-03-14
+date: 2018-04-14 12:49:18
+comments: false
+unlisted: true
 aliases:
+  - /project/idd/privacy
   - /projects/idd/privacy-policy
   - /projects/idd/privacy-policy.html
   - /projects/idd/privacy_policy.html

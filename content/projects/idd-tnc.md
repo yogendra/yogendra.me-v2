@@ -1,6 +1,10 @@
 ---
 title: Terms & Conditions
+date: 2018-04-14 12:49:18
+comments: false
+unlisted: true
 aliases:
+  - /project/idd/tnc
   - /projects/idd/terms-and-conditions
   - /projects/idd/terms-and-conditions.html
   - /projects/idd/terms_and_conditions.html
