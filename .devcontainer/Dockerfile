@@ -64,7 +64,7 @@ COPY --from=hugobuild /go/bin/hugo /usr/local/bin
 # Install asciidoctor, pandoc and docutils (rst)
 RUN \
   apt-get update && \
-  apt-get install -qqy asciidoctor pandoc python-docutils
+  apt-get install -qqy asciidoctor pandoc python3-docutils
 
 # Install plantuml
 RUN  \
