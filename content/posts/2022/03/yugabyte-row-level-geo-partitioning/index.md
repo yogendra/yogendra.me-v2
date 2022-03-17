@@ -6,9 +6,13 @@ tags:
   - yugabyte
 categories:
   - tutorial
+
+thumbnail: 00-row-geo-partition.png
 ---
 
-_Original Source: [YB Docs for Row Level Geo Partitioning](https://docs.yugabyte.com/latest/explore/multi-region-deployments/row-level-geo-partitioning/)_
+Lets have look at one of the most intresting features of YugabyteDB - Row Level Geo-distribution
+
+<!-- more -->
 
 I have joined Yugabyte a while back. I have gone through many demos/samples. But one thing that caught my attention very early on was the geo-pinning the data.
 
@@ -17,6 +21,7 @@ Here is my stab at this feature. I followed the documenation for most part. I ad
 
 Instead of working with actual cloud, I ran the whole setup on my machine. This will need about 2GB of free RAM. At its peak, there will be 3 master (100MB), 12 tserver(100MB) and 12 postgres (50MB) processes.
 I wanted to remove the network out of the picture to understand the data persistance portion of Yugabyte, hence the local machine cluster.
+![](00-row-geo-partition.png)
 
 ## Pre-requisites
 
@@ -196,16 +201,9 @@ You will require Yugabyte binaries for your platform. On Macs with Apple Silicon
    1. You can examine the cluster config JSON by clicking on **Home > Overview > (See full config)** [or click here](http://127.0.0.1:7000/cluster-config)
 
       <details>
-        <summary><b>Screenshot</b></summary>
+        <summary><b>Config</b></summary>
 
-      ![Cluster Config](02-cluster-config.png)
-
-      </details>
-
-      <details>
-        <summary><b>JSON</b></summary>
-
-      ```json
+      ```yaml
       version: 1
       replication_info {
         live_replicas {
@@ -717,7 +715,7 @@ You may exit **YSQL Shell** anytime by typing `\q<enter>`, `<ctrl>+d` or `quit;<
 
       1. Replication Config is same as the cluster level replication configuration.
 
-         ```json
+         ```yaml
          live_replicas {
            num_replicas: 3
            placement_blocks {
@@ -754,7 +752,7 @@ You may exit **YSQL Shell** anytime by typing `\q<enter>`, `<ctrl>+d` or `quit;<
 
       1. Replication config is not same as the cluster level config. Instead its same as `replica_placement` value in the `eu_central_1_tablespace` definition.
 
-         ```json
+         ```yaml
          live_replicas {
            num_replicas: 3
            placement_blocks {
@@ -1561,7 +1559,7 @@ Lets try to do a cross geo-transaction (`US` x `EU`) from a third geo (`India`).
 
 1. (Optional) Open [Master UI / Table List](http://127.0.0.1:7000/tables), click `bank_transactions_default`. In the "Replication Info" you see following json:
 
-   ```json
+   ```yaml
    live_replicas {
      num_replicas: 3
      placement_blocks {
@@ -1620,3 +1618,5 @@ Lets try to do a cross geo-transaction (`US` x `EU`) from a third geo (`India`).
 1. Watch [YFTT - YugabyteDB Friday Tech Talk](https://www.linkedin.com/company/yugabyte/events/)
 1. Get a free training and certification at [Yugabyte University](https://university.yugabyte.com)
 1. Sign Up for Free [Yugabyte Cloud](https://cloud.yugabyte.com) account
+
+_Original Source: [YB Docs for Row Level Geo Partitioning](https://docs.yugabyte.com/latest/explore/multi-region-deployments/row-level-geo-partitioning/)_
