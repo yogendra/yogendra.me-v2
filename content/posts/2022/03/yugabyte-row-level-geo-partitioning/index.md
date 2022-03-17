@@ -1616,7 +1616,7 @@ Lets try to do a cross geo-transaction (`US` x `EU`) from a third geo (`India`).
 ## Want to Learn More?
 
 1. Join DSS Asia on March 30-31. Rigister today at [asia.distributedsql.org](https://asia.distributedsql.org/)
-1. Join [Yugabyte - Community Slack](https://yugabyte.com/slack)
-1. Watch [YFTT - Yugabyte Friday Tech Talk](https://www.linkedin.com/company/yugabyte/events/)
+1. Join [YugabyteDB - Community Slack](https://yugabyte.com/slack) [alt](https://communityinviter.com/apps/yugabyte-db/register)
+1. Watch [YFTT - YugabyteDB Friday Tech Talk](https://www.linkedin.com/company/yugabyte/events/)
 1. Get a free training and certification at [Yugabyte University](https://university.yugabyte.com)
 1. Sign Up for Free [Yugabyte Cloud](https://cloud.yugabyte.com) account
