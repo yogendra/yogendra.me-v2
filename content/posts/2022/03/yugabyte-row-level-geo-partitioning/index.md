@@ -1,7 +1,7 @@
 ---
 title: "Yugabyte - Row Level Geo Partitioning"
 date: 2022-03-17T23:31:47+08:00
-draft: true
+draft: false
 tags:
   - yugabyte
 categories:
