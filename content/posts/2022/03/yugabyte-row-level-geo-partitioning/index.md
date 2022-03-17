@@ -8,12 +8,15 @@ categories:
   - tutorial
 
 thumbnail: 00-row-geo-partition.png
+toc: true
+description: Lets have look at one of the most interesting features of YugabyteDB - Row Level Geo-distribution
 ---
 
 Lets have look at one of the most interesting features of YugabyteDB - Row Level Geo-distribution
 
 <!-- more -->
 
+![::img-fit](00-row-geo-partition.png)
 I have joined Yugabyte a while back. I have gone through many demos/samples. But one thing that caught my attention very early on was the geo-pinning the data.
 
 This capability can simplify compliance of data privacy laws, data sovereignty laws, etc. It can make the overall architecture of the application very simple.
@@ -21,7 +24,6 @@ Here is my stab at this feature. I followed the documentation for most part. I a
 
 Instead of working with actual cloud, I ran the whole setup on my machine. This will need about 2GB of free RAM. At its peak, there will be 3 master (100MB), 12 tserver(100MB) and 12 postgres (50MB) processes.
 I wanted to remove the network out of the picture to understand the data persistance portion of Yugabyte, hence the local machine cluster.
-![](00-row-geo-partition.png)
 
 ## Pre-requisites
 
@@ -138,8 +140,7 @@ You will require Yugabyte binaries for your platform. On Macs with Apple Silicon
    yb-ctl status --data_dir $PWD/data
    ```
 
-   <details>
-     <summary><b>Output</b></summary>
+   **Output**
 
    ```log
    ----------------------------------------------------------------------------------------------------
@@ -187,21 +188,13 @@ You will require Yugabyte binaries for your platform. On Macs with Apple Silicon
    ----------------------------------------------------------------------------------------------------
    ```
 
-   </details>
-
 1. (Optional) Launch the [Master UI](http://127.0.0.1:7000) in browser for looking at the state of cluster
 
-   <details>
-     <summary><b>Screenshot</b></summary>
-
-   ![Master Server](01-master-ui.png)
-
-   </details>
+   ![Master Server:right::img-full](01-master-ui.png)
 
    1. You can examine the cluster config JSON by clicking on **Home > Overview > (See full config)** [or click here](http://127.0.0.1:7000/cluster-config)
 
-      <details>
-        <summary><b>Config</b></summary>
+      **Config**
 
       ```yaml
       version: 1
@@ -239,21 +232,16 @@ You will require Yugabyte binaries for your platform. On Macs with Apple Silicon
 
    1. You can check TServer details by clicking **Home > Overview > (See all nodes)** [or click here](http://127.0.0.1:7000/tablet-servers)
 
-      <details>
-        <summary><b>Screenshot</b></summary>
+      **Screenshot**
 
       ![TServers](03-tservers.png)
 
-      </details>
-
    1. You can check tables by clicking **Home > Overview > (See all tables)** [or click here](http://127.0.0.1:7000/tables)
 
-      <details>
-        <summary><b>Screenshot</b></summary>
+      **Screenshot**
 
       ![Tables](04-tables.png)
 
-      </details>
 
 1. Back on command prompt, lets add 2 additional nodes for each of the 3 region. So, 6 additional nodes have to be added. This will make total node count to 9. We want to keep each node is a separate zone for intra-region resiliency.
 
@@ -270,8 +258,7 @@ You will require Yugabyte binaries for your platform. On Macs with Apple Silicon
 
    ```
 
-   <details>
-     <summary><b>Output</b></summary>
+   **Output**
 
    ```log
    Adding node.
@@ -348,16 +335,13 @@ You will require Yugabyte binaries for your platform. On Macs with Apple Silicon
    ----------------------------------------------------------------------------------------------------
    ```
 
-   </details>
-
 1. (Optional) Check the current cluster configuration
 
    ```bash
    yb-ctl status --data_dir $PWD/data
    ```
 
-   <details>
-     <summary><b>Output</b></summary>
+   **Output**
 
    ```log
    ----------------------------------------------------------------------------------------------------
@@ -465,18 +449,14 @@ You will require Yugabyte binaries for your platform. On Macs with Apple Silicon
    ----------------------------------------------------------------------------------------------------
    ```
 
-   </details>
-
 1. (Optional) Check the TServers details by clicking **Home > Overview > (See all nodes)** [or click here](http://127.0.0.1:7000/tablet-servers)
 
-   <details>
-     <summary><b>Screenshot</b></summary>
+   **Screenshot**
 
    ![TServers with 9 nodes](05-tserver-9-nodes.png)
 
-   </details>
 
-Now we have created a multi-region cluster across 3 regions and 9 zones. Each zone has 1 node in it. Table below shows Region/Zone wise list of nodes with roles.
+Now, we have created a multi-region cluster across 3 regions and 9 zones. Each zone has 1 node in it. Table below shows Region/Zone wise list of nodes with roles.
 
 | Region       | Zone          | IP        | Role           |
 | ------------ | ------------- | --------- | -------------- |
@@ -490,7 +470,7 @@ Now we have created a multi-region cluster across 3 regions and 9 zones. Each zo
 | eu-central-1 | eu-central-1b | 127.0.0.6 | tserver        |
 | eu-central-1 | eu-central-1c | 127.0.0.7 | tserver        |
 
-## Example 1 - Global Transactions
+## Global Transactions
 
 In this exercise, we will create a single **bank_transactions** table. Out aim is to place the transaction records for each geo in its own nodes. This is simulating the enforcement of data privacy/sovereignty rules with in a single database. We will use SQL queries to simulate application interactions.
 
@@ -1141,8 +1121,7 @@ Lets try to do a cross geo-transaction (`US` x `EU`) from a third geo (`India`).
    yb-ctl status --data_dir $PWD/data
    ```
 
-   <details>
-     <summary><b>Output</b></summary>
+   **Output**
 
    ```log
    ----------------------------------------------------------------------------------------------------
@@ -1279,8 +1258,6 @@ Lets try to do a cross geo-transaction (`US` x `EU`) from a third geo (`India`).
    | yb-tserver Logs     : /tmp/demo/data/node-12/disk-1/yb-data/tserver/logs                         |
    ----------------------------------------------------------------------------------------------------
    ```
-
-   </details>
 
 1. Launch SQL Shell
 
