@@ -10,14 +10,14 @@ categories:
 thumbnail: 00-row-geo-partition.png
 ---
 
-Lets have look at one of the most intresting features of YugabyteDB - Row Level Geo-distribution
+Lets have look at one of the most interesting features of YugabyteDB - Row Level Geo-distribution
 
 <!-- more -->
 
 I have joined Yugabyte a while back. I have gone through many demos/samples. But one thing that caught my attention very early on was the geo-pinning the data.
 
 This capability can simplify compliance of data privacy laws, data sovereignty laws, etc. It can make the overall architecture of the application very simple.
-Here is my stab at this feature. I followed the documenation for most part. I added only the cluster management parts to the whole guide for a quick self-drive.
+Here is my stab at this feature. I followed the documentation for most part. I added only the cluster management parts to the whole guide for a quick self-drive.
 
 Instead of working with actual cloud, I ran the whole setup on my machine. This will need about 2GB of free RAM. At its peak, there will be 3 master (100MB), 12 tserver(100MB) and 12 postgres (50MB) processes.
 I wanted to remove the network out of the picture to understand the data persistance portion of Yugabyte, hence the local machine cluster.
@@ -111,7 +111,7 @@ You will require Yugabyte binaries for your platform. On Macs with Apple Silicon
    yb-ctl start --data_dir $PWD/data --rf 3  --placement_info "aws.us-west-2.us-west-2a,aws.eu-central-1.eu-central-1a,aws.ap-south-1.ap-south-1a"
    ```
 
-   **NOTE for Mac:** You will get multiple (6) prompts/dialogs stating _yb-tserver_ or _yb-master_ to accept incomming connections. Allow all of them. This will happen later when we add more nodes. Repeat
+   **NOTE for Mac:** You will get multiple (6) prompts/dialogs stating _yb-tserver_ or _yb-master_ to accept incoming connections. Allow all of them. This will happen later when we add more nodes. Repeat
 
    **Output**
 
@@ -237,7 +237,7 @@ You will require Yugabyte binaries for your platform. On Macs with Apple Silicon
       cluster_uuid: "a1ae0a02-f004-4cc8-b608-206ec3f7fc8f"
       ```
 
-   1. You can check TServer details by clicing **Home > Overview > (See all nodes)** [or click here](http://127.0.0.1:7000/tablet-servers)
+   1. You can check TServer details by clicking **Home > Overview > (See all nodes)** [or click here](http://127.0.0.1:7000/tablet-servers)
 
       <details>
         <summary><b>Screenshot</b></summary>
@@ -467,7 +467,7 @@ You will require Yugabyte binaries for your platform. On Macs with Apple Silicon
 
    </details>
 
-1. (Optional) Check the TServers details by clicing **Home > Overview > (See all nodes)** [or click here](http://127.0.0.1:7000/tablet-servers)
+1. (Optional) Check the TServers details by clicking **Home > Overview > (See all nodes)** [or click here](http://127.0.0.1:7000/tablet-servers)
 
    <details>
      <summary><b>Screenshot</b></summary>
@@ -476,7 +476,7 @@ You will require Yugabyte binaries for your platform. On Macs with Apple Silicon
 
    </details>
 
-Now we have created a mult-region cluster across 3 regions and 9 zones. Each zone has 1 node in it. Table below shows Region/Zone wise list of nodes with roles.
+Now we have created a multi-region cluster across 3 regions and 9 zones. Each zone has 1 node in it. Table below shows Region/Zone wise list of nodes with roles.
 
 | Region       | Zone          | IP        | Role           |
 | ------------ | ------------- | --------- | -------------- |
@@ -511,7 +511,7 @@ yugabyte=#
 
 You may exit **YSQL Shell** anytime by typing `\q<enter>`, `<ctrl>+d` or `quit;<enter>`.
 
-### Setup tablespaces for each geo
+### Setup tablespace for each geo
 
 1. Create geo-partitioned tablespace for `us-west-2`
 
@@ -586,7 +586,7 @@ You may exit **YSQL Shell** anytime by typing `\q<enter>`, `<ctrl>+d` or `quit;<
 
    ```
 
-### Create Trasaction Table and Partitions
+### Create Transaction Table and Partitions
 
 1. Create `bank_transaction` table
 
@@ -785,7 +785,7 @@ You may exit **YSQL Shell** anytime by typing `\q<enter>`, `<ctrl>+d` or `quit;<
       1. All the tablet groups are configured to be spread across nodes in `eu-central-1` region (`127.0.0.2`, `127.0.0.6` and `127.0.0.7`).
       1. All the data going into this partition will be placed only in `eu-central-1` regional nodes.
 
-We have now finshed setup for the table, partitions and tablespaces for all the geos now. Lets proceed with transaction simulations.
+We have now finished setup for the table, partitions and tablespaces for all the regions now. Lets proceed with transaction simulations.
 
 ### Scenario : Single Row Transaction
 
@@ -823,7 +823,7 @@ We have now finshed setup for the table, partitions and tablespaces for all the 
    (1 row)
    ```
 
-1. And lets check other `India` geo partions also
+1. And lets check other `India` geo partitions also
 
    ```sql
    SELECT COUNT(*) FROM bank_transactions_india;
@@ -922,7 +922,7 @@ We have now finshed setup for the table, partitions and tablespaces for all the 
 
    ```
 
-   `tableoid::reglass` is a special expression in PostgresSQL for listing the location / partition of a row. Things to notice here are:
+   `tableoid::regclass` is a special expression in PostgresSQL for listing the location / partition of a row. Things to notice here are:
 
    1. We can access all the transactions via table `bank_transactions`.
    1. We ensured that data for a geo (Example: `EU`) is in the partition of that geo `EU` partition. And, `EU` partition is setup such that it will be created on `EU` tablespace. `EU` tablespace is configured to have its data place in `eu-central-1` region, across `eu-central-1a`, `eu-central-1b` and `eu-central-1c` zone.
@@ -943,7 +943,7 @@ We have now finshed setup for the table, partitions and tablespaces for all the 
    **Output**
 
    ```log
-   ERROR:  Illegal state: Nonlocal tablet accessed in local transaction: tablet <hexadecinam-number>: . Errors from tablet servers: [Illegal state (yb/client/transaction.cc:288): Nonlocal tablet accessed in local transaction: tablet <hexadecinam-number>]
+   ERROR:  Illegal state: Nonlocal tablet accessed in local transaction: tablet <hex-number>: . Errors from tablet servers: [Illegal state (yb/client/transaction.cc:288): Nonlocal tablet accessed in local transaction: tablet <hex-number>]
    ```
 
    This fails, as we do not allows cross geo-transaction for multi-row transaction - by default. But we have inserted data for `EU`, `India` and `Singapore` through `us-west-2a` node, then why that worked? Well, this is because of optimization in Yugabyte for single row transactions. As per the docs:
@@ -1280,7 +1280,7 @@ Lets try to do a cross geo-transaction (`US` x `EU`) from a third geo (`India`).
    ----------------------------------------------------------------------------------------------------
    ```
 
-   </detauls>
+   </details>
 
 1. Launch SQL Shell
 
@@ -1613,7 +1613,7 @@ Lets try to do a cross geo-transaction (`US` x `EU`) from a third geo (`India`).
 
 ## Want to Learn More?
 
-1. Join DSS Asia on March 30-31. Rigister today at [asia.distributedsql.org](https://asia.distributedsql.org/)
+1. Join DSS Asia on March 30-31. Register today at [asia.distributedsql.org](https://asia.distributedsql.org/)
 1. Join [YugabyteDB - Community Slack](https://yugabyte.com/slack) [alt](https://communityinviter.com/apps/yugabyte-db/register)
 1. Watch [YFTT - YugabyteDB Friday Tech Talk](https://www.linkedin.com/company/yugabyte/events/)
 1. Get a free training and certification at [Yugabyte University](https://university.yugabyte.com)
