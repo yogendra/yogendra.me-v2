@@ -14,11 +14,11 @@ function post (){
 function _post_new(){
   _post_create $@
 }
-function _post_create(){  
+function _post_create(){
   title=$(echo "$@"| tr '[:upper:]' '[:lower:]' | sed -r 's/[^a-zA-Z0-9]{1}/-/g')
   (
     cd $PROJECT_DIR
-    hugo new "posts/$(date +%Y'/'%m)/${title}.md"
+    hugo new "posts/$(date +%Y'/'%m)/${title}/index.md"
   )
 }
 
@@ -26,7 +26,9 @@ function launch(){
   devcontainer open $PROJECT_DIR
 }
 
-
+function edit(){
+  launch $*
+}
 function help(){
   _show_help
   exit 0
@@ -37,6 +39,8 @@ Launche blog editing
   blog
   OR
   blog launch
+  OR
+  blog edit
 
 Create a new post
   blog post create My Fancy Title
