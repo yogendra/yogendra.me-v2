@@ -16,10 +16,6 @@ aliases:
 - /2022/03/17/yugabyte-row-level-geo-partitioning/
 ---
 
-Lets have look at one of the most interesting features of YugabyteDB - Row Level Geo-distribution
-
-<!-- more -->
-
 ![::img-fit](00-row-geo-partition.png)
 I have joined Yugabyte a while back. I have gone through many demos/samples. But one thing that caught my attention very early on was the geo-pinning the data.
 
