@@ -21,7 +21,7 @@ I presented about IoT sensor data at the recently concluded [Distribute SQL Summ
 
 Starting in this space like, most of the tech spaces, can be complicated. So, I presented about my learnings and seeking feedback from fellow "travelers".
 
-Here is a full video of my session ([link][talk-video]). Deck and Code for the presentation is over at [github][talk-repo]
+Here is a full video of my session ([link][talk-video]). Deck and Code for the presentation is over at [github][talk-repo]. Please provide your comments on this post, twitter, etc. I am also playing with ESP32, Pico PIs currently so I guess there is a good chance of an update on this.
 
 {{<youtube bmB49FrqEwY>}}
 
