@@ -12,7 +12,7 @@ categories:
 thumbnail: 00-row-geo-partition.png
 toc: true
 description: Lets have look at one of the most interesting features of YugabyteDB - Row Level Geo-distribution
-alias:
+aliases:
 - /2022/03/17/yugabyte-row-level-geo-partitioning/
 ---
 
