@@ -5,3 +5,5 @@ lib/
 .firebase/
 firebase-debug.log
 .hugo_build.lock
+*.log
+nohup.out
