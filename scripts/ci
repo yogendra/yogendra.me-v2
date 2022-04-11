@@ -46,6 +46,15 @@ function deploy-beta(){
   publish-beta
 }
 
+function build-local(){
+  prepare
+  hugo --minify --cleanDestinationDir -e local
+}
+function start-local(){
+  killall hugo &>> /dev/null || true
+  nohup hugo  --gc --enableGitInfo -DFE  --cleanDestinationDir -e local serve &> hugo.log &
+}
+
 function devcontainer-build(){
   SCOPE_DIR=${PROJECT_DIR}/.devcontainer
   DOCKERFILE=${SCOPE_DIR}/Dockerfile
