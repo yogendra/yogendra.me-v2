@@ -1,15 +1,19 @@
 ---
-title: "Yugabyte - Row Level Geo Partitioning"
+title: "YugabyteDB - Row Level Geo Partitioning"
 date: 2022-03-17T23:31:47+08:00
 draft: false
 tags:
   - yugabyte
+  - tutorial
+  - database
 categories:
   - tutorial
 
 thumbnail: 00-row-geo-partition.png
 toc: true
 description: Lets have look at one of the most interesting features of YugabyteDB - Row Level Geo-distribution
+alias:
+- /2022/03/17/yugabyte-row-level-geo-partitioning/
 ---
 
 Lets have look at one of the most interesting features of YugabyteDB - Row Level Geo-distribution
@@ -23,11 +27,11 @@ This capability can simplify compliance of data privacy laws, data sovereignty l
 Here is my stab at this feature. I followed the documentation for most part. I added only the cluster management parts to the whole guide for a quick self-drive.
 
 Instead of working with actual cloud, I ran the whole setup on my machine. This will need about 2GB of free RAM. At its peak, there will be 3 master (100MB), 12 tserver(100MB) and 12 postgres (50MB) processes.
-I wanted to remove the network out of the picture to understand the data persistance portion of Yugabyte, hence the local machine cluster.
+I wanted to remove the network out of the picture to understand the data persistance portion of YugabyteDB, hence the local machine cluster.
 
 ## Pre-requisites
 
-You will require Yugabyte binaries for your platform. On Macs with Apple Silicon, you should have rosetta
+You will require YugabyteDB binaries for your platform. On Macs with Apple Silicon, you should have rosetta
 
 1. [YugabyteDB binary (Mac/Linux-x86/ Linux-aarch64)](https://download.yugabyte.com/)
 
@@ -907,7 +911,7 @@ We have now finished setup for the table, partitions and tablespaces for all the
    1. We can access all the transactions via table `bank_transactions`.
    1. We ensured that data for a geo (Example: `EU`) is in the partition of that geo `EU` partition. And, `EU` partition is setup such that it will be created on `EU` tablespace. `EU` tablespace is configured to have its data place in `eu-central-1` region, across `eu-central-1a`, `eu-central-1b` and `eu-central-1c` zone.
 
-### Scenario - Multi Row Transactions
+### Scenario : Multi Row Transactions
 
 1. Let try to multi-row transaction. Remember we are connected to `127.0.0.1` node, which is in `us-west-2a`.
 
@@ -926,7 +930,7 @@ We have now finished setup for the table, partitions and tablespaces for all the
    ERROR:  Illegal state: Nonlocal tablet accessed in local transaction: tablet <hex-number>: . Errors from tablet servers: [Illegal state (yb/client/transaction.cc:288): Nonlocal tablet accessed in local transaction: tablet <hex-number>]
    ```
 
-   This fails, as we do not allows cross geo-transaction for multi-row transaction - by default. But we have inserted data for `EU`, `India` and `Singapore` through `us-west-2a` node, then why that worked? Well, this is because of optimization in Yugabyte for single row transactions. As per the docs:
+   This fails, as we do not allows cross geo-transaction for multi-row transaction - by default. But we have inserted data for `EU`, `India` and `Singapore` through `us-west-2a` node, then why that worked? Well, this is because of optimization in YugabyteDB for single row transactions. As per the docs:
 
    ```text
    The transaction manager of YugabyteDB automatically detects transactions that
@@ -1409,7 +1413,7 @@ Lets try to do a cross geo-transaction (`US` x `EU`) from a third geo (`India`).
 
    ```
 
-### Scenario: Transaction for Unknown Geo
+### Scenario : Transaction for Unknown Geo
 
 1. Lets try to insert a record for a `Singapore` and see what happens
 
