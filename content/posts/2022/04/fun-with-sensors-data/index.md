@@ -8,9 +8,8 @@ tags:
 - iot
 - database
 - yugabyte
-
-summary: IoT is growing rapidly. I wanted to learn more about it from an enterprise and data centric aspect of it. Here are my first of my learnings
-# toc: true
+- mqtt
+summary: IoT is growing rapidly. I wanted to learn more about it from an enterprise and data centric aspect of it. Here are initial learnings
 thumbnail: 00-thumbnail.png
 ---
 
