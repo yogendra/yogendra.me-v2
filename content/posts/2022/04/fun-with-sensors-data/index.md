@@ -23,7 +23,7 @@ Starting in this space like, most of the tech spaces, can be complicated. So, I 
 
 Here is a full video of my session ([link][talk-video]). Deck and Code for the presentation is over at [github][talk-repo]
 
-{{< youtube id="bmB49FrqEwY" autoplay="true" title="Fun with Sensors' Data">}}
+{{<youtube bmB49FrqEwY>}}
 
 ## Links
 
