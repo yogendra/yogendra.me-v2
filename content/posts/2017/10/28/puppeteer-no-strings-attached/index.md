@@ -2,7 +2,7 @@
 layout: post
 title: Puppeteer - No Strings Attached
 date: 2017-10-28 23:52:08
-category:
+categories:
   - Talk
 tags:
   - gdg
