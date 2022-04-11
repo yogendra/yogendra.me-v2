@@ -35,13 +35,15 @@ During my (failed) research, I ran into [Hexo](https://hexo.io) and [PlantUML fi
 
 In less than 20 minutes, I managed to install hexo, create a project, migrate wordpress items and got plantuml working.
 
-```plantuml
-@startuml
-A -> B : Hello
-A <- B : Hi There!
-@enduml
-```
 
+```
+        ```plantuml
+        @startuml
+        A -> B : Hello
+        A <- B : Hi There!
+        @enduml
+        ```
+```
 {{< puml "sample/Test Sequence.png" >}}
 
 I guess I will have to wait for hugo to mature a bit more. I really liked the speed and simplicity of hugo. But lack of
@@ -55,3 +57,47 @@ to help me work around this
 **Update**: Trying client side rendering
 
 [uml-diagram]: diagrams-in-blog/uml.png
+
+
+**Update 11 Apr 2022**: Here is a something new
+
+Hugo introduced support codeblock rendering extension in 0.93.0. Check [here](https://gohugo.io/content-management/diagrams/)
+
+So now a code block like below will generate a diagram. Its based on mermaidjs.
+
+    ```mermaid
+
+    graph TD;
+        A-->B;
+        A-->C;
+        B-->D;
+        C-->D;
+
+    ```
+```mermaid
+
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+
+```
+
+** 11 Apr 2022**: Another attempt to PlatUML in Client Side
+
+```
+    ```plantuml
+    @startuml
+    A -> B : Hello
+    A <- B : Hi There!
+    @enduml
+    ```
+```
+
+```plantuml
+@startuml
+A -> B : Hello
+A <- B : Hi There!
+@enduml
+```
