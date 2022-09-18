@@ -1,5 +1,5 @@
 ARG VARIANT="hirsute"
-ARG HUGO_VERSION="0.95.0"
+ARG HUGO_VERSION="v0.103.0"
 
 FROM golang:latest as hugobuild
 ARG HUGO_VERSION
@@ -9,7 +9,7 @@ RUN \
   apt-get install -qqy build-essential && \
   mkdir -p $HOME/src && \
   cd $HOME/src && \
-  git clone --depth 1 --branch v${HUGO_VERSION} https://github.com/gohugoio/hugo.git &&  \
+  git clone --depth 1 --branch ${HUGO_VERSION} https://github.com/gohugoio/hugo.git &&  \
   cd hugo && \
   go mod download github.com/yuin/goldmark && \
   go get github.com/gohugoio/hugo/common/herrors && \
