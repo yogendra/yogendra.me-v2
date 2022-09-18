@@ -1,4 +1,4 @@
-ARG VARIANT="hirsute"
+ARG VARIANT="jammy"
 ARG HUGO_VERSION="v0.103.0"
 
 FROM golang:latest as hugobuild

@@ -50,6 +50,11 @@
   name = "rss"
   weight = 4
   url = "index.xml"
+[[social]]
+  name = "copy"
+  type ="social"
+  weight = 5
+  url = "/yb.vcf"
 
 # [[social]]
 #   name = "youtube"
