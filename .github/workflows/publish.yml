@@ -9,6 +9,7 @@ on:
     paths:
       - "!.devcontainer/**"
       - "!.github/workflows/publish-devcontainer.yml"
+      - "**"      
   workflow_dispatch:
 jobs:
   build_and_deploy:
