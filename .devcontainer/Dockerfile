@@ -1,19 +1,19 @@
 ARG VARIANT="jammy"
-ARG HUGO_VERSION="v0.103.0"
+ARG HUGO_VERSION="0.104.2"
 
-FROM golang:latest as hugobuild
-ARG HUGO_VERSION
+# FROM golang:latest as hugobuild
+# ARG HUGO_VERSION
 
-RUN \
-  apt-get update && \
-  apt-get install -qqy build-essential && \
-  mkdir -p $HOME/src && \
-  cd $HOME/src && \
-  git clone --depth 1 --branch ${HUGO_VERSION} https://github.com/gohugoio/hugo.git &&  \
-  cd hugo && \
-  go mod download github.com/yuin/goldmark && \
-  go get github.com/gohugoio/hugo/common/herrors && \
-  go install --tags extended
+# RUN \
+#   apt-get update && \
+#   apt-get install -qqy build-essential && \
+#   mkdir -p $HOME/src && \
+#   cd $HOME/src && \
+#   git clone --depth 1 --branch ${HUGO_VERSION} https://github.com/gohugoio/hugo.git &&  \
+#   cd hugo && \
+#   go mod download github.com/yuin/goldmark && \
+#   go get github.com/gohugoio/hugo/common/herrors && \
+#   go install --tags extended
 
 
 
@@ -21,6 +21,7 @@ RUN \
 
 FROM mcr.microsoft.com/vscode/devcontainers/base:${VARIANT}
 ARG TARGETPLATFORM
+ARG HUGO_VERSION
 
 LABEL org.opencontainers.image.description Dev-container for Yogendra.Me Development
 LABEL org.opencontainers.image.source  https://github.com/yogendra/yogendra.me-v2/blob/main/.devcontainer/Dockerfile
@@ -37,7 +38,8 @@ RUN \
 
 RUN \
   apt-get update && \
-  apt-get install -qqy --no-install-recommends wget apt-transport-https gnupg2 curl direnv fzf  xclip
+  apt-get install -qqy --no-install-recommends wget apt-transport-https gnupg2 curl direnv fzf  xclip && \
+  apt-get update
 
 RUN \
   echo 'eval "$(direnv hook bash)"' >> /home/vscode/.bash_profile && \
@@ -54,31 +56,36 @@ RUN \
 
 # Install hugo
 
-COPY --from=hugobuild /go/bin/hugo /usr/local/bin
+# COPY --from=hugobuild /go/bin/hugo /usr/local/bin
 # RUN \
 #   apt-get update && \
 #   apt-get install -qqy hugo
-
+RUN \
+  set -e ;\
+  HUGO_RELEASE=https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz; \
+  if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+      HUGO_RELEASE=https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-arm64.tar.gz;\
+  fi;\
+  wget -qO- $HUGO_RELEASE | tar -C /usr/local/bin -xz hugo
 
 
 # Install asciidoctor, pandoc and docutils (rst)
 RUN \
-  apt-get update && \
   apt-get install -qqy asciidoctor pandoc python3-docutils
 
 # Install plantuml
 RUN  \
-  apt-get update && \
   apt-get install -qqy default-jre graphviz  && \
   curl -sSL http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -o lib/plantuml.jar
 
 
-RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
-  apt-get update && \
-  apt-get install -qqy  nodejs npm chromium-browser  && \
-  npm install -g firebase-tools ;\
+RUN \
+  set -e && \
+  if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+    apt-get install -qqy  nodejs npm chromium-browser  && \
+    npm install -g firebase-tools ;\
   elif [ "$TARGETPLATFORM" = "linux/amd64" ] ; then \
-  curl -sL https://firebase.tools | bash ;\
+    curl -sL https://firebase.tools | bash ;\
   fi
 
 ADD entrypoint.sh /entrypoint.sh
