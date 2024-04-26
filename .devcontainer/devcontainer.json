@@ -11,16 +11,6 @@
   // Set *default* container specific settings.json values on container create.
   "settings": {},
   // Add the IDs of extensions you want installed when the container is created.
-  "extensions": [
-    "hediet.vscode-drawio",
-    "davidanson.vscode-markdownlint",
-    "jebbs.plantuml",
-    "mushan.vscode-paste-image",
-    "bungcip.better-toml",
-    "github.github-vscode-theme",
-    "esbenp.prettier-vscode",
-    "streetsidesoftware.code-spell-checker"
-  ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [
     1313
@@ -30,5 +20,19 @@
     ".devcontainer/startup.sh"
   ],
   // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "hediet.vscode-drawio",
+        "davidanson.vscode-markdownlint",
+        "jebbs.plantuml",
+        "mushan.vscode-paste-image",
+        "bungcip.better-toml",
+        "github.github-vscode-theme",
+        "esbenp.prettier-vscode",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  }
 }

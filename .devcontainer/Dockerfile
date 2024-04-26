@@ -1,23 +1,5 @@
 ARG VARIANT="jammy"
-ARG HUGO_VERSION="0.104.2"
-
-# FROM golang:latest as hugobuild
-# ARG HUGO_VERSION
-
-# RUN \
-#   apt-get update && \
-#   apt-get install -qqy build-essential && \
-#   mkdir -p $HOME/src && \
-#   cd $HOME/src && \
-#   git clone --depth 1 --branch ${HUGO_VERSION} https://github.com/gohugoio/hugo.git &&  \
-#   cd hugo && \
-#   go mod download github.com/yuin/goldmark && \
-#   go get github.com/gohugoio/hugo/common/herrors && \
-#   go install --tags extended
-
-
-
-
+ARG HUGO_VERSION="0.125.4"
 
 FROM mcr.microsoft.com/vscode/devcontainers/base:${VARIANT}
 ARG TARGETPLATFORM
@@ -37,9 +19,12 @@ RUN \
 
 
 RUN \
-  apt-get update && \
-  apt-get install -qqy --no-install-recommends wget apt-transport-https gnupg2 curl direnv fzf  xclip && \
-  apt-get update
+  set -e \
+  && apt-get update \
+  && apt-get install -qqy wget apt-transport-https gnupg2 curl direnv fzf  xclip  asciidoctor pandoc python3-docutils python3 python3-pip python-is-python3 sudo \
+  && apt-get autoremove && apt-get autoclean && apt-get clean \
+  && pip3 install rst2html \
+  && curl -sL https://firebase.tools | bash
 
 RUN \
   echo 'eval "$(direnv hook bash)"' >> /home/vscode/.bash_profile && \
@@ -52,14 +37,6 @@ RUN \
   chown -R vscode:vscode /home/vscode/.config && \
   curl -sSL https://raw.githubusercontent.com/yogendra/dotfiles/master/.config/starship.toml -o /home/vscode/.config/starship.toml
 
-
-
-# Install hugo
-
-# COPY --from=hugobuild /go/bin/hugo /usr/local/bin
-# RUN \
-#   apt-get update && \
-#   apt-get install -qqy hugo
 RUN \
   set -e ;\
   HUGO_RELEASE=https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz; \
@@ -67,26 +44,6 @@ RUN \
       HUGO_RELEASE=https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-arm64.tar.gz;\
   fi;\
   wget -qO- $HUGO_RELEASE | tar -C /usr/local/bin -xz hugo
-
-
-# Install asciidoctor, pandoc and docutils (rst)
-RUN \
-  apt-get install -qqy asciidoctor pandoc python3-docutils
-
-# Install plantuml
-RUN  \
-  apt-get install -qqy default-jre graphviz  && \
-  curl -sSL http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -o lib/plantuml.jar
-
-
-RUN \
-  set -e && \
-  if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
-    apt-get install -qqy  nodejs npm chromium-browser  && \
-    npm install -g firebase-tools ;\
-  elif [ "$TARGETPLATFORM" = "linux/amd64" ] ; then \
-    curl -sL https://firebase.tools | bash ;\
-  fi
 
 ADD entrypoint.sh /entrypoint.sh
 
