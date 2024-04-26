@@ -3,5 +3,4 @@ name: "Devcontainer Action"
 description: "Sharing actions with devcontainers"
 runs:
   using: "docker"
-  # image: "../../../.devcontainer/Dockerfile"
   image: "ghcr.io/yogendra/yogendra-me-devcontainer:latest"
