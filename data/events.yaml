@@ -1,8 +1,111 @@
 events:
+- title: "Public Sector Transformation: Delivering Always-On Services with Distributed Technologies"
+  type: Video
+  event: Distributed SQL Summit Asia (DSS Asia) 2024
+  date: April 2024
+  event-page: https://events.ringcentral.com/canvas/events/distributed-sql-summit-asia-2024/registration
+  description: |
+    Advancing public sector technology requires a modern tech stack capable of delivering a seamless digital experience to users. Citizens and government officers depend on always-on services with immediate access to critical data anytime and from anywhere. In this session, you will hear from the Technical Consulting Team at IMDA on how they are using the cloud and distributed technologies, including distributed SQL, to improve their scalability and resilience. You’ll learn what data challenges they faced and why distributed SQL was a key part of their solution.
+  video:
+  git:
+  slides:
+- title: Building your Multi-Region App for Super Bowl Scale
+  slides:
+  git:
+  date: April 2024
+  event: Webinar
+  event-page: https://info.yugabyte.com/webinar-building-your-multi-region
+  description: |
+    The record-breaking Super Bowl 2024 live stream was a significant achievement for Paramount+, requiring extensive app and data architecture updates to deliver this global, highly available event.
+
+    Join our hands-on session and learn how to build massively scalable, resilient, multi-region applications on a global data architecture.
+
+    We'll dive into real-world database scaling and replication challenges and showcase how industry leaders (including Paramount+) can overcome these hurdles using two global design patterns and distributed PostgreSQL.
+- title: Synapxe HealthX Startup Day
+  event:
+  description:
+  posts:
+  - network: linkedin
+    link: https://www.linkedin.com/posts/yogi_yugabyte-and-red-hat-team-at-the-synapxe-activity-7109846048772132864-g6HY
+- title: A Turbo-Charge PostgreSQL
+  event: Digital Tech Sharing - Infocomm Media Development Authority
+  date: March 2024
+  posts:
+  - network: x
+    link: https://twitter.com/Yugabyte/status/1773168131231388017
+- title: Building Resilient Digital Experience Platforms
+  description: |
+    Navigating the world of cloud-agnostic, resilient digital experience platforms can be a complex task even with Drupal, the leading open-source DXP. Yet, with the right guidance and tools to build cloud-neutral architecture, this task can be managed effectively and efficiently. This recorded webinar delves into the intricacies of constructing modern architectural patterns for Drupal in a distributed cloud environment, by leveraging YugabyteDB. YugabyteDB is an open source  and cloud-agnostic distributed SQL database. Our spotlight will be on resilience, scalability, and reducing total cost of ownership.
+  event: Webinar
+  date: July 2023
+  event-page: https://materialplus.srijan.net/resources/webinar/building-resilient-digital-experience-platforms
+  video: https://materialplus.srijan.net/resources/webinar/building-resilient-digital-experience-platforms
+  git:
+- title: YugabyteDB - Building Resilient ans Scalable Public Sector Services
+  event: 9th Annual Singapore OpenGov Leadership Forum 2024
+  date:  May 2024
+  posts:
+  - network: x
+    link: https://twitter.com/yogendra/status/1656471223331864576
+- title: DSS Asia 2022 - Fun with sensors
+  type: Video
+  event: DSS Asia 2022
+  date: March 2024
+- title: yugabyted - Jumpstart with YugabyteDB
+  type: Video
+  date: January 2024
+  video: https://www.youtube.com/watch?v=65s7y5Z6fKc
+  link:
+  slides:
+  git:
+- title: Succeeding with Cloud Native
+  type: Video
+  event: DevOps Asia Summit
+  video: https://www.youtube.com/watch?v=o7FLSTcyGCk
+  slides:
+  description: |
+    Cloud native architecture and applications have gained big traction in recent years. Let us look at what it means as a journey.  How do you start, make progress and ultimately win with Cloud Native Architectures.
+  date: July 2023
+- title: FOSS All the Way
+  description: |
+    Future is Open - we have all heard this. Let us examine how FOSS technologies can be used at all levels to build variety of solutions. In this session we will walk though multiple distributed technologies (kubernetes, kafka, distributed sql, etc.) to build a solid production grade tech-stack for our applications.
+  type: Video
+  date: 14 April 2023
+  event: FOSS ASIA 2023
+  video: https://www.youtube.com/watch?v=Yrz6aZiYuSU
+  event-page: https://eventyay.com/e/7cfe0771/session/8096
+  slides: https://eventyay.com/e/7cfe0771/session/8096
+  git:
+- title: Resilient Services with Distributed SQL
+  event: Tech Summit 2022
+  video: https://www.youtube.com/watch?v=uj8w8bAGF4k
+- title: Modernizing Digital APIs Platform to Cloud-Native Microservices
+  event: SpringOne 2019
+  date: October 2019
+  video: https://www.youtube.com/watch?v=qkHUZLu7itM&t=8s
+  event-page: https://tanzu.vmware.com/content/videos/abhishek-seth-migrating-open-api-implementation-from-tibco-bw-to-spring-on-pcf
+  slides: https://www.slideshare.net/Pivotal/modernizing-digital-apis-platform-to-cloudnative-microservices
+  git:
+  description: |
+
+- title: Right Abstraction
+  event: FOSSASIA 2019
+  date: March 2019
+  type: Video
+  video: https://www.youtube.com/watch?v=jGVm_-SYc5I
+  event-page: https://2019.fossasia.org/event/rooms.html
+  description: |
+    VMs, Containers and functions provide with a wide choice of delivery platforms. When to use what? This is a difficult choice. What do you gain and lose in each of those choices?
+
+    How do we address that in the cloudfoundry? What is our experience with these? More importantly what is our customer's experience with these.
+
 - title: K8s Office Hours
-  date: Sep 2022
+  date: September 2022
   description: Regular office hours
-  video: 
+  video:
   slides:
   event-page:
   type: Online
+  posts:
+  - link:
+    network: x
