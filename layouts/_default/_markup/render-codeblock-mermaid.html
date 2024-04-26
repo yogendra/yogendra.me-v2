@@ -1,12 +1,18 @@
 <div class="mermaid">
   {{- .Inner | safeHTML }}
 </div>
-{{ .Page.Store.Set "hasMermaid" true }}
+{{ .Page.Scratch.Set "hasMermaid" true }}
+{{ $hasMermaid := .Page.Scratch.Get "hasMermaid"  }}
+{{ $skipMermaidLib := .Page.Scratch.Get "skipMermaidLib" }}
+{{ $loadMermaidLib := not (eq $skipMermaidLib true) }}
 
-
-{{ if .Page.Store.Get "hasMermaid" }}
-  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-  <script>
-    mermaid.initialize({ startOnLoad: true });
-  </script>
+{{ if ( and $hasMermaid $loadMermaidLib ) }}
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  var __mode_value = localStorage.getItem("colorMode") || "dim";
+  __theme = __mode_value == "dim" ? "dark" : "neutral";
+  mermaid.initialize({ startOnLoad: true, theme: __theme });
+</script>
+{{ .Page.Scratch.Set "skipMermaidLib" true }}
 {{ end }}
+
