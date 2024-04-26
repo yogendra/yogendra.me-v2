@@ -24,6 +24,8 @@ function build(){
   hugo --minify --cleanDestinationDir -e github
 }
 function publish(){
+  export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gac.json
+  echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" >> $GOOGLE_APPLICATION_CREDENTIALS
   firebase deploy --only hosting
 }
 
@@ -31,6 +33,8 @@ function build-beta(){
   hugo --minify --cleanDestinationDir -e firebase-beta
 }
 function publish-beta(){
+  export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gac.json
+  echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" >> $GOOGLE_APPLICATION_CREDENTIALS
   firebase deploy --only hosting:yogendra-me-beta
 }
 

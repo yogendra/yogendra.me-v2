@@ -26,7 +26,7 @@ jobs:
       - name: Publish to Firebase
         uses: ./.github/actions/devcontainer-action
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
         with:
           entrypoint: scripts/ci
           args: publish
