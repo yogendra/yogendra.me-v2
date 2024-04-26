@@ -35,7 +35,8 @@ jobs:
         if: github.ref == 'refs/heads/main'
         with:
           # deploy_key: ${{ secrets.DEPLOY_KEY }}
-          github_token: ${{ secrets.GH_WRITE_TOKEN }}
+          # github_token: ${{ secrets.GH_WRITE_TOKEN }}
+          personal_token: ${{ secrets.GH_DEPLOY_PAT }}
           external_repository: yogendra/yogendra.github.io
           publish_branch: main
           publish_dir: ./public/github
