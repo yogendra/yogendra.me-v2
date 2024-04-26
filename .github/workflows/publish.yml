@@ -34,7 +34,8 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
         with:
-          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          # deploy_key: ${{ secrets.DEPLOY_KEY }}
+          github_token: ${{ secrets.GH_WRITE_TOKEN }}
           external_repository: yogendra/yogendra.github.io
           publish_branch: main
           publish_dir: ./public/github
