@@ -9,7 +9,7 @@ on:
     paths:
       - "!.devcontainer/**"
       - "!.github/workflows/publish-devcontainer.yml"
-      - "**"      
+      - "**"
   workflow_dispatch:
 jobs:
   build_and_deploy:
@@ -26,7 +26,7 @@ jobs:
       - name: Publish to Firebase
         uses: ./.github/actions/devcontainer-action
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secret.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
         with:
           entrypoint: scripts/ci
           args: publish
