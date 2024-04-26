@@ -30,9 +30,6 @@ hugo serve
 - VS Code
 - Hugo
 - Firebase cli
-- Java
-- Graphviz
-- Platuml
 
 ## Local Workstation with VS Code + Devcontainer
 
