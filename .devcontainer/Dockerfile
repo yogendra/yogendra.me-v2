@@ -22,9 +22,10 @@ RUN \
   set -e \
   && apt-get update \
   && apt-get install -qqy wget apt-transport-https gnupg2 curl direnv fzf  xclip  asciidoctor pandoc python3-docutils python3 python3-pip python-is-python3 sudo \
-  && apt-get autoremove && apt-get autoclean && apt-get clean \
-  && pip3 install rst2html \
-  && curl -sL https://firebase.tools | bash
+  && apt-get autoremove \
+  && apt-get autoclean \
+  && apt-get clean \
+  && pip3 install rst2html
 
 RUN \
   echo 'eval "$(direnv hook bash)"' >> /home/vscode/.bash_profile && \
@@ -38,12 +39,19 @@ RUN \
   curl -sSL https://raw.githubusercontent.com/yogendra/dotfiles/master/.config/starship.toml -o /home/vscode/.config/starship.toml
 
 RUN \
+  set -e \
+  && HUGO_RELEASE=https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz \
+  && if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+      HUGO_RELEASE=https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-arm64.tar.gz; \
+  fi \
+  && wget -qO- $HUGO_RELEASE | tar -C /usr/local/bin -xz hugo
+
+RUN \
   set -e ;\
-  HUGO_RELEASE=https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz; \
-  if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
-      HUGO_RELEASE=https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-arm64.tar.gz;\
-  fi;\
-  wget -qO- $HUGO_RELEASE | tar -C /usr/local/bin -xz hugo
+  if [ "$TARGETPLATFORM" = "linux/arm64" ]; then apt-get install -qqy npm ; npm install -g firebase-tools ;\
+  else curl -sL https://firebase.tools | bash ;\
+  fi
+
 
 ADD entrypoint.sh /entrypoint.sh
 
