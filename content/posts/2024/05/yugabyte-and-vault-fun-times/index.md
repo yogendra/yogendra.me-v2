@@ -4,7 +4,7 @@ date: 2024-05-23T00:28:38+08:00
 draft: false
 ---
 
-I have been working with [YugabyteDB](https://yugabyte.com) for a while now. I am always experiment with YugabyteDB + (something). Today, its [Vault](https://www.vaultproject.io/).
+I have been working with [YugabyteDB](https://yugabyte.com) for a while now. I am always experimenting with YugabyteDB + (something). Today, its [Vault](https://www.vaultproject.io/).
 
 <!-- more -->
 
