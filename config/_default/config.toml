@@ -31,5 +31,5 @@ theme = "hugo-clarity"
   series = "series"
 
 [permalinks]
-  posts = "/:year/:month/:day/:title/"
+  posts = "/:year/:month/:day/:slug/"
 
