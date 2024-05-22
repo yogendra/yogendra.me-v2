@@ -1,5 +1,6 @@
 ---
-title: "YugabyteDB and Vault: Fun Times"
+title: "YugabyteDB ♥️ Vault: Fun Times"
+slug: "yugabytedb-and-vault-fun-times/"
 date: 2024-05-23T00:28:38+08:00
 draft: false
 keyword:
