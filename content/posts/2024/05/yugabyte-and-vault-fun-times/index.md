@@ -231,11 +231,32 @@ os7-aarch64-build/src/llvm-project/clang 1e6329f40e5c531c09ade7015278078682293eb
 (1 row)
 ```
 
+>
+> **NOTE**: In the docker compose environment, vault binary might take a few minutes to download. You can wait for it to finish and monitor the download with following command
+>
+> ```bash
+> until  command -v vault &> /dev/null ; do echo "Wait for vault to be installed" ; sleep 3; done; command -v vault
+> ```
+>
+> Expected output:
+>
+> ```bash
+> Waiting for vault to be installed
+> Waiting for vault to be installed
+> Waiting for vault to be installed
+> .
+> .
+> /usr/bin/vault
+> ```
+>
+> This will ensure that you continue only after vault is installed
+
 This looks good. Now we will check vault
 
 ```bash
 vault status
 ```
+
 
 Expected output:
 
@@ -258,16 +279,18 @@ HA Enabled      false
 Next, we create a database role for vault to connect. This user/role should have permission to create application roles.
 
 ```bash
-ysqlsh -c "CREATE ROLE vault_admin WITH ENCRYPTED PASSWORD  'P@ssw0rd' LOGIN NOSUPERUSER CREATEROLE;"
+ysqlsh -c "CREATE ROLE vault_admin WITH ENCRYPTED PASSWORD  'P@ssw0rd' LOGIN CREATEROLE;
+GRANT yb_db_admin TO vault_admin;" 
 ```
 
 - Vault database user (`vault_admin`) is given only `CREATEROLE` permission
 - This prevents any accidental misconfiguration on vault side from altering any data per say
+- Granting `yb_db_admin` to allow `SET  yb_make_next_ddl_statement_nonbreaking=TRUE;` to be executed.
 
 Expected output:
 
 ```sql
-CREATE ROLE
+GRANT ROLE
 ```
 
 Noe, we need to create a database role for our application. Roles created by vault will "inherit" the permissions from this role
@@ -398,7 +421,7 @@ Great! Now even I don't know whats the password to impersonate vault. Next, we c
     max_ttl="24h"
 ```
 
-*Update*: Added `SET  yb_make_next_ddl_statement_nonbreaking=TRUE;` to statements, as version < v2.21, user creation and drop, causes SCHEMA_MISMATCH error
+**Update**: Added `SET  yb_make_next_ddl_statement_nonbreaking=TRUE;` to statements, as version < v2.21, user creation , alter and drop, causes SCHEMA_MISMATCH error for other connections.
 
 - `creation_statements` is a minimal requirement. Others are optional. This statement is creating a user in database:
   - With dynamic username
