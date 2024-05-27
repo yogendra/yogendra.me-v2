@@ -390,13 +390,15 @@ Great! Now even I don't know whats the password to impersonate vault. Next, we c
 ```bash
   vault write database/roles/approle \
     db_name=yugabytedb \
-    creation_statements="CREATE ROLE \"{{name}}\" WITH ENCRYPTED PASSWORD '{{password}}' VALID UNTIL '{{expiration}}' LOGIN IN ROLE \"approle\";" \
-    revocation_statements="DROP ROLE \"{{name}}\";" \
-    rollback_statements="DROP ROLE \"{{name}}\";" \
-    renew_statements="ALTER ROLE \"{{name}}\" WITH VALID UNTIL '{{expiration}}';" \
+    creation_statements="SET  yb_make_next_ddl_statement_nonbreaking=TRUE; CREATE ROLE \"{{name}}\" WITH ENCRYPTED PASSWORD '{{password}}' VALID UNTIL '{{expiration}}' LOGIN IN ROLE \"approle\";" \
+    revocation_statements="SET  yb_make_next_ddl_statement_nonbreaking=TRUE; DROP ROLE \"{{name}}\";" \
+    rollback_statements="SET  yb_make_next_ddl_statement_nonbreaking=TRUE; DROP ROLE \"{{name}}\";" \
+    renew_statements="SET  yb_make_next_ddl_statement_nonbreaking=TRUE; ALTER ROLE \"{{name}}\" WITH VALID UNTIL '{{expiration}}';" \
     default_ttl="1h" \
     max_ttl="24h"
 ```
+
+*Update*: Added `SET  yb_make_next_ddl_statement_nonbreaking=TRUE;` to statements, as version < v2.21, user creation and drop, causes SCHEMA_MISMATCH error
 
 - `creation_statements` is a minimal requirement. Others are optional. This statement is creating a user in database:
   - With dynamic username
