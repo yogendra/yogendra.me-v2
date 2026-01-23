@@ -136,7 +136,7 @@ tasks:
       - |
         export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gac.json
         echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > $GOOGLE_APPLICATION_CREDENTIALS
-        firebase deploy --only hosting
+        firebase deploy --only hosting:yogendra-me
 
   release:deploy:
     desc: Build and deploy the site
