@@ -75,7 +75,14 @@ jobs:
                 state: 'closed',
                 state_reason: 'completed'
               });
-              console.log(`Updated and closed issue #${issueNumber}`);
+
+              await github.rest.issues.lock({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                lock_reason: 'resolved'
+              });
+              console.log(`Updated, closed, and locked issue #${issueNumber}`);
             } else {
               console.log('No open beta-testing issue found to close.');
             }
