@@ -1,5 +1,5 @@
 ---
-name: Beta Testing Ticker
+name: Beta Testing Ticket
 about: Coordinate beta testing for the latest changes.
 title: 'Beta Release: [VERSION]'
 labels: beta-testing
