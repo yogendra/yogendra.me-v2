@@ -173,6 +173,11 @@ tasks:
     cmds:
       - killall hugo &>> /dev/null || true
       - nohup hugo --gc --enableGitInfo -DFE --cleanDestinationDir -e local serve &> hugo.log &
+  
+  local:logs:
+    desc: Show local development server logs
+    cmds:
+      - tail -f hugo.log
 
   dev-container:build:
     desc: Build the devcontainer image

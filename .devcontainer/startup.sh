@@ -6,6 +6,6 @@ PROJECT_DIR=$( cd ${SCRIPT_DIR}/.. ; pwd)
 
 direnv allow
 task init
-killall hugo  &>> /dev/null || true
-echo "Launching Hugo..."
-nohup hugo  --gc --enableGitInfo -DFE  --cleanDestinationDir -e local serve &> hugo.log &
+task local:run
+task local:logs
+
