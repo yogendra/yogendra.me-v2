@@ -27,7 +27,7 @@ tasks:
       - cmd: |
           sudo apt update
           sudo apt install -y asciidoctor graphviz openjdk-21-jre pandoc python3-docutils python-is-python3
-          pip3 install rst2html
+          sudo pip3 install rst2html
         platforms: [linux]
 
   _install:hugo:
