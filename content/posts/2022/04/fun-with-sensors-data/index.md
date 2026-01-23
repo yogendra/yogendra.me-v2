@@ -15,7 +15,7 @@ thumbnail: 00-thumbnail.png
 
 ![::img-fit](01-simple-architecture.png)
 
-{{< tweet user="yogendra" id="1505860896488411136" >}}
+{{< x user="yogendra" id="1505860896488411136" >}}
 I presented about IoT sensor data at the recently concluded [Distribute SQL Summit - Asia 2022 (DSS Asia 2022)][event-site]. IoT data is unique in some sense, so I started learning about its lifecycle. Its fascinating! imagine millions of machine coming together and talking to each other to support our daily lives. In many ways they substitute human senses. I have only scratched the surface though.
 
 Starting in this space like, most of the tech spaces, can be complicated. So, I presented about my learnings and seeking feedback from fellow "travelers".
