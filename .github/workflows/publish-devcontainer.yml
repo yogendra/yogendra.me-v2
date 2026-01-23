@@ -41,14 +41,37 @@ jobs:
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha,prefix=,format=long
-
-      - name: Build and push
+      
+      - name: Build and Push Devcontainer
         uses: docker/build-push-action@v6
         with:
           context: .devcontainer
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+  
+
+      - name: Extract metadata (tags, labels)
+        id: meta-ghaction
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/yogendra/yogendra-me-devcontainer-ghaction
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=sha,prefix=,format=long
+
+    
+      - name: Build and Push Github Action
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: .devcontainer/ghaction/Dockerfile
+          push: true
+          tags: ${{ steps.meta-ghaction.outputs.tags }}
+          labels: ${{ steps.meta-ghaction.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
