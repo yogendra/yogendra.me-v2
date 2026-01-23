@@ -48,6 +48,25 @@ jobs:
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Get Changed Files
+        id: files
+        run: |
+          TAG=${{ steps.get_tag.outputs.tag }}
+          FILES=$(git diff --name-only $TAG..HEAD)
+          if [ -z "$FILES" ]; then
+            FILES="No files changed."
+          fi
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          echo "$FILES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Get Build Info
+        id: build_info
+        run: |
+          HUGO_VERSION=$(hugo version | awk '{print $2}')
+          echo "hugo=$HUGO_VERSION" >> $GITHUB_OUTPUT
+          echo "author=${{ github.actor }}" >> $GITHUB_OUTPUT
+
       - name: Create or Update Beta Testing Issue
         uses: actions/github-script@v7
         with:
@@ -64,15 +83,40 @@ jobs:
             - **URL:** [https://beta.yogendra.me](https://beta.yogendra.me)
             - **Deployed At:** ${new Date().toISOString()}
             - **Commit:** ${context.sha}
+            - **Author:** ${{ steps.build_info.outputs.author }}
+            - **Hugo Version:** ${{ steps.build_info.outputs.hugo }}
+            - **Action Run:** [View Logs](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
+            - **Full Diff:** [Compare with Last Release](https://github.com/${context.repo.owner}/${context.repo.repo}/compare/${{ steps.get_tag.outputs.tag }}...${context.sha})
+
+            ## Manual Testing Checklist
+            - [ ] Home page loads correctly
+            - [ ] New/Updated content is visible
+            - [ ] Navigation and search are functional
+            - [ ] No layout issues across devices
 
             ## Changelog
             ${{ steps.changelog.outputs.changelog }}
+
+            ## Changed Files
+            \`\`\`
+            ${{ steps.files.outputs.files }}
+            \`\`\`
 
             ## Approval
             Please comment \`LGTM\` or \`APPROVED\` to trigger the production release.`;
 
             if (issues.length > 0) {
-              const issueNumber = issues[0].number;
+              const issue = issues[0];
+              const issueNumber = issue.number;
+              
+              // Post current body as a comment for history
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: `### Previous Build Details\n\n${issue.body}`
+              });
+
               await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -80,7 +124,7 @@ jobs:
                 title: `Beta Release: ${context.sha.substring(0, 7)}`,
                 body: body
               });
-              console.log(`Updated issue #${issueNumber}`);
+              console.log(`Updated issue #${issueNumber} and added history comment`);
             } else {
               const { data: newIssue } = await github.rest.issues.create({
                 owner: context.repo.owner,

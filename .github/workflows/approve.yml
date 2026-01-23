@@ -6,6 +6,7 @@ on:
 jobs:
   approve-release:
     if: |
+      github.event.comment.user.type != 'Bot' &&
       contains(github.event.issue.labels.*.name, 'beta-testing') &&
       (github.event.comment.body == 'LGTM' || github.event.comment.body == 'APPROVED')
     runs-on: ubuntu-latest

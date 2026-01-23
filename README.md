@@ -1,8 +1,10 @@
 # Yogendra.Me
 
-[![Build Site](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish.yml)
+[![Site Release](https://github.com/yogendra/yogendra.me-v2/actions/workflows/release.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/release.yml)
 |
-[![Build Devcontainer](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish-devcontainer.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish-devcontainer.yml)
+[![Beta Deploy](https://github.com/yogendra/yogendra.me-v2/actions/workflows/beta.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/beta.yml)
+|
+[![Devcontainer Builds](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish-devcontainer.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish-devcontainer.yml)
 
 ## Quickstart
 
