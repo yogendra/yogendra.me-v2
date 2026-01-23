@@ -15,20 +15,20 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: true
       - name: Build Pages
         uses: ./.github/actions/devcontainer-action
         with:
-          entrypoint: task
+          command: task
           args: release:build
       - name: Publish to Firebase
         uses: ./.github/actions/devcontainer-action
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
         with:
-          entrypoint: task
+          command: task
           args: release:publish
       - name: Publish to Github
         uses: peaceiris/actions-gh-pages@v3

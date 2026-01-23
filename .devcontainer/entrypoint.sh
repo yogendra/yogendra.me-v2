@@ -7,6 +7,6 @@ if [ -n "$GITHUB_ACTIONS" ]
 then
   echo "** Running github action script **"
   task init
-  task release:deploy
+  task release:publish
   echo "** **"
 fi
