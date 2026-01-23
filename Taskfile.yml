@@ -168,17 +168,28 @@ tasks:
     cmds:
       - hugo --minify --cleanDestinationDir -e local
 
+  local:start:
+    desc: Run local development server
+    cmds:
+      - task: local:stop
+      - nohup hugo --gc --enableGitInfo -DFE --cleanDestinationDir -e local serve &> hugo.log &
+  
+  local:stop:
+    desc: Stop local development server
+    cmds:
+      - killall hugo &>> /dev/null || true
+
   local:run:
     desc: Run local development server
     cmds:
-      - killall hugo &>> /dev/null || true
-      - nohup hugo --gc --enableGitInfo -DFE --cleanDestinationDir -e local serve &> hugo.log &
-  
+      - task: local:stop
+      - hugo --gc --enableGitInfo -DFE --cleanDestinationDir -e local serve
+
   local:logs:
     desc: Show local development server logs
     cmds:
       - tail -f hugo.log
-
+  
   dev-container:build:
     desc: Build the devcontainer image
     vars:
