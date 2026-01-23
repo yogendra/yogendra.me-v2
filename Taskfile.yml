@@ -1,5 +1,8 @@
 version: '3'
 
+vars:
+  LIB_DIR: "{{.TASKFILE_DIR}}/lib"
+  PROJECT_DIR: "{{.TASKFILE_DIR}}"
 tasks:
   default:
     cmds:
@@ -50,10 +53,10 @@ tasks:
     vars:
       URL: 'http://sourceforge.net/projects/plantuml/files/plantuml.jar/download'
     cmds:
-      - mkdir -p lib/
-      - curl -L {{.URL}} -o lib/plantuml.jar
+      - mkdir -p {{.LIB_DIR}}/
+      - curl -L {{.URL}} -o {{.LIB_DIR}}/plantuml.jar
     status:
-      - test -f lib/plantuml.jar
+      - test -f {{.LIB_DIR}}/plantuml.jar
 
   _install:firebase:
     internal: true
