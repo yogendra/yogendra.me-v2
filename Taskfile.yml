@@ -192,7 +192,12 @@ tasks:
   dev-container:test:
     desc: Run the devcontainer
     cmds:
-      - docker run --name yogendra-me-devcontainer --rm -it -v {{.PROJECT_DIR}}:/workspace --workdir /workspace --entrypoint /bin/bash ghcr.io/yogendra/yogendra-me-devcontainer:latest
+      - docker run --name yogendra-me-devcontainer --hostname yogendra-me-devcontainer --rm -it -v {{.PROJECT_DIR}}:/workspace --workdir /workspace --entrypoint /bin/bash ghcr.io/yogendra/yogendra-me-devcontainer:latest
+
+  dev-container:test-ghaction:
+    desc: Run the devcontainer
+    cmds:
+      - docker run --name yogendra-me-devcontainer-ghaction --hostname yogendra-me-devcontainer-ghaction --rm -it -v {{.PROJECT_DIR}}:/workspace --workdir /workspace --entrypoint /bin/bash ghcr.io/yogendra/yogendra-me-devcontainer-ghaction:latest
 
   post:create:
     desc: Create a new blog post
