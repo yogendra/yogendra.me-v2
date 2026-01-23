@@ -26,7 +26,7 @@ tasks:
         platforms: [darwin]
       - cmd: |
           sudo apt update
-          sudo apt install -y asciidoctor graphviz temurin-21-jdk pandoc python3-docutils python-is-python3
+          sudo apt install -y asciidoctor graphviz openjdk-21-jre pandoc python3-docutils python-is-python3
           pip3 install rst2html
         platforms: [linux]
 
@@ -129,6 +129,11 @@ tasks:
       IMAGE_NAME: ghcr.io/yogendra/yogendra-me-devcontainer
     cmds:
       - docker buildx build -t {{.IMAGE_NAME}}:latest --platform=linux/amd64 --platform=linux/arm64 --push -f {{.DOCKERFILE}} {{.SCOPE_DIR}}
+
+  dev-container:test:
+    desc: Run the devcontainer
+    cmds:
+      - docker run --name yogendra-me-devcontainer --rm -it -v {{.TASKFILE_DIR}}:/workspace --workdir /workspace --entrypoint /bin/bash ghcr.io/yogendra/yogendra-me-devcontainer:latest
 
   post:create:
     desc: Create a new blog post
