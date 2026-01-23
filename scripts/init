@@ -37,11 +37,11 @@ function install_graphviz_darwin(){
   brew_install graphviz
 }
 function install_jre_darwin(){
-  brew_install temurin-17
+  brew_install temurin@21
 }
-function instll_jre_linux(){
+function install_jre_linux(){
   sudo apt update
-  sudo apt install adoptopenjdk-11-hotspot
+  sudo apt install temurin-21-jdk
 }
 function install_graphviz_linux(){
   sudo apt install graphviz
