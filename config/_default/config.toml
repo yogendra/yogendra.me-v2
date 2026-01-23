@@ -8,15 +8,17 @@ defaultContentLanguage = "en"
 enableEmoji = true
 enableRobotsTXT = true
 
-# Pagination
-paginate = 10
-paginatePath = "page"
 disqusShortname = "yogendrarampuria"
+theme = ["hugo-clarity"]
+
+# Pagination
+[pagination]
+  pagerSize = 10
+  path = "page"
 
 # Google analytics
 googleAnalytics = "UA-21164716-2"
 
-theme = "hugo-clarity"
 
 # [languages]
 # config/_default/languages.toml
