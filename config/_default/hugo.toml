@@ -1,31 +1,29 @@
 baseURL = 'https://yogendra.me'
 publishDir = "public/default"
 
-languageCode = 'en-us'
+languageCode = 'en'
 title = 'Chase Your Dreams'
-copyright = "Copyright © 2012–2024, Yogendra Rampuria; all rights reserved."
+copyright = "Copyright © 2012–2026, Yogendra Rampuria; all rights reserved."
 defaultContentLanguage = "en"
 enableEmoji = true
 enableRobotsTXT = true
 
 disqusShortname = "yogendrarampuria"
-theme = ["hugo-clarity"]
+theme = "hugo-clarity"
+
+# Google analytics
+googleAnalytics = "UA-21164716-2"
 
 # Pagination
 [pagination]
   pagerSize = 10
   path = "page"
 
-# Google analytics
-googleAnalytics = "UA-21164716-2"
-
-
 # [languages]
 # config/_default/languages.toml
 
 # [menus]
-# config/_default/menus/menu.xx.toml
-
+#   config/_default/menus/menu.xx.toml
 
 [taxonomies]
   category = "categories"
@@ -35,3 +33,5 @@ googleAnalytics = "UA-21164716-2"
 [permalinks]
   posts = "/:year/:month/:day/:slug/"
 
+[outputs]
+home = ["HTML", "RSS", "JSON"]
