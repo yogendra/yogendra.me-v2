@@ -79,3 +79,12 @@ jobs:
             } else {
               console.log('No open beta-testing issue found to close.');
             }
+
+      - name: Generate Step Summary
+        run: |
+          echo "## 🎊 Production Release Successful" >> $GITHUB_STEP_SUMMARY
+          echo "- **Site URL:** [https://yogendra.me](https://yogendra.me)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Release Tag:** \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build Status:** Success ✅" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The beta testing issue has been updated and closed." >> $GITHUB_STEP_SUMMARY

@@ -75,3 +75,15 @@ jobs:
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Generate Step Summary
+        run: |
+          echo "## 🐳 Devcontainer Build Successful" >> $GITHUB_STEP_SUMMARY
+          echo "The following images have been built and pushed to GHCR:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Devcontainer:** \`ghcr.io/yogendra/yogendra-me-devcontainer:latest\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **GH Action:** \`ghcr.io/yogendra/yogendra-me-devcontainer-ghaction:latest\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🏗 Platforms" >> $GITHUB_STEP_SUMMARY
+          echo "- \`linux/amd64\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`linux/arm64\`" >> $GITHUB_STEP_SUMMARY

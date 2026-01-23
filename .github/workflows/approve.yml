@@ -38,3 +38,11 @@ jobs:
           git tag ${{ steps.version.outputs.tag }}
           git push origin ${{ steps.version.outputs.tag }}
 
+      - name: Generate Step Summary
+        run: |
+          echo "## ✅ Release Approved" >> $GITHUB_STEP_SUMMARY
+          echo "- **New Tag:** \`${{ steps.version.outputs.tag }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Approved By:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Production release workflow has been triggered by the new tag." >> $GITHUB_STEP_SUMMARY
+

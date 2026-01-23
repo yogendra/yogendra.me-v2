@@ -32,7 +32,12 @@ jobs:
       - name: Get Latest Tag
         id: get_tag
         run: |
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          LATEST_TAG=$(git tag -l "v[0-9]*.[0-9]*" --sort=-v:refname | head -n 1)
+          if [ -z "$LATEST_TAG" ]; then
+            LATEST_TAG=$(git rev-list -1 --before="00:00:00" HEAD)
+          fi
+          # Fallback to root commit if no commit exists before today
+          LATEST_TAG=${LATEST_TAG:-$(git rev-list --max-parents=0 HEAD)}
           echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
 
       - name: Generate Changelog
@@ -136,3 +141,20 @@ jobs:
               });
               console.log(`Created issue #${newIssue.number}`);
             }
+
+      - name: Generate Step Summary
+        run: |
+          echo "## 🚀 Beta Deployment Successful" >> $GITHUB_STEP_SUMMARY
+          echo "- **Site URL:** [https://beta.yogendra.me](https://beta.yogendra.me)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Hugo Version:** ${{ steps.build_info.outputs.hugo }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📄 Changelog" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.changelog.outputs.changelog }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🛠 Changed Files" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.files.outputs.files }}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[View Beta Testing Ticket](https://github.com/${{ github.repository }}/issues?q=label%3Abeta-testing+is%3Aopen)" >> $GITHUB_STEP_SUMMARY
