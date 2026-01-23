@@ -23,14 +23,14 @@ jobs:
       - name: Build Pages
         uses: ./.github/actions/devcontainer-action
         with:
-          command: task
+          entrypoint: task
           args: release:build
       - name: Publish to Firebase
         uses: ./.github/actions/devcontainer-action
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
         with:
-          command: task
+          entrypoint: task
           args: release:publish
       - name: Publish to Github
         uses: peaceiris/actions-gh-pages@v3
