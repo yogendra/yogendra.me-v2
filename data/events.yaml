@@ -86,10 +86,10 @@ events:
   event-page: https://tanzu.vmware.com/content/videos/abhishek-seth-migrating-open-api-implementation-from-tibco-bw-to-spring-on-pcf
   slides: https://www.slideshare.net/Pivotal/modernizing-digital-apis-platform-to-cloudnative-microservices
   git:
-  description: |
+  description: ""
 
-- title: Right Abstraction
-  event: FOSSASIA 2019
+- title: "Right Abstraction"
+  event: "FOSSASIA 2019"
   date: March 2019
   type: Video
   video: https://www.youtube.com/watch?v=jGVm_-SYc5I
