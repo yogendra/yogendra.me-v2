@@ -1,0 +1,44 @@
+name: Release Approval
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  approve-release:
+    if: |
+      contains(github.event.issue.labels.*.name, 'beta-testing') &&
+      (github.event.comment.body == 'LGTM' || github.event.comment.body == 'APPROVED')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get New Version
+        id: version
+        run: |
+          DATE=$(date +'%Y%m%d')
+          BASE_TAG="v$DATE"
+          TAG=$BASE_TAG
+          COUNTER=1
+          while git rev-parse "$TAG" >/dev/null 2>&1; do
+            TAG="$BASE_TAG.$COUNTER"
+            COUNTER=$((COUNTER + 1))
+          done
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Tag Repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag ${{ steps.version.outputs.tag }}
+          git push origin ${{ steps.version.outputs.tag }}
+
+      - name: Close Issue
+        uses: peter-evans/close-issue@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          comment: "Release approved and tagged with ${{ steps.version.outputs.tag }}. Production release triggered."

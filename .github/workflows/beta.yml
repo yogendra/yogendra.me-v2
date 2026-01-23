@@ -1,0 +1,94 @@
+name: Beta Deployment
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "!.devcontainer/**"
+      - "!.github/workflows/publish-devcontainer.yml"
+      - "**"
+  workflow_dispatch:
+
+jobs:
+  beta-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Build and Deploy to Beta
+        uses: ./.github/actions/devcontainer-action
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
+        with:
+          entrypoint: task
+          args: beta:deploy
+
+      - name: Get Latest Tag
+        id: get_tag
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+
+      - name: Generate Changelog
+        id: changelog
+        run: |
+          TAG=${{ steps.get_tag.outputs.tag }}
+          CHANGELOG=$(git log $TAG..HEAD --oneline)
+          if [ -z "$CHANGELOG" ]; then
+            CHANGELOG="No changes since last tag."
+          fi
+          # Escape newlines for GITHUB_OUTPUT
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create or Update Beta Testing Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const label = 'beta-testing';
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: [label]
+            });
+
+            const body = `## Beta Site Details
+            - **URL:** [https://beta.yogendra.me](https://beta.yogendra.me)
+            - **Deployed At:** ${new Date().toISOString()}
+            - **Commit:** ${context.sha}
+
+            ## Changelog
+            ${{ steps.changelog.outputs.changelog }}
+
+            ## Approval
+            Please comment \`LGTM\` or \`APPROVED\` to trigger the production release.`;
+
+            if (issues.length > 0) {
+              const issueNumber = issues[0].number;
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                title: `Beta Release: ${context.sha.substring(0, 7)}`,
+                body: body
+              });
+              console.log(`Updated issue #${issueNumber}`);
+            } else {
+              const { data: newIssue } = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `Beta Release: ${context.sha.substring(0, 7)}`,
+                body: body,
+                labels: [label],
+                assignees: ['yogendra']
+              });
+              console.log(`Created issue #${newIssue.number}`);
+            }
