@@ -18,6 +18,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+      # - name: Init environment
+      #   run: task init
       - name: Build Pages
         uses: ./.github/actions/devcontainer-action
         with:
