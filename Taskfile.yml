@@ -3,6 +3,8 @@ version: '3'
 vars:
   LIB_DIR: "{{.TASKFILE_DIR}}/lib"
   PROJECT_DIR: "{{.TASKFILE_DIR}}"
+  DART_SASS_VERSION: "1.97.3"
+  HUGO_VERSION: "0.154.5"
 tasks:
   default:
     cmds:
@@ -14,8 +16,40 @@ tasks:
     cmds:
       - task: _install:os-packages
       - task: _install:hugo
+      - task: _install:dart-sass
       - task: _install:plantuml
       - task: _install:firebase
+      - task: _install:go
+      - task: _install:nodejs
+      - cmd: |
+          echo "Dart Sass: $(sass --version)"
+          echo "Go: $(go version)"
+          echo "Hugo: $(hugo version)"
+          echo "Node.js: $(node --version)"
+
+  _install:go:
+    internal: true
+    cmds:
+      - cmd: brew install go
+        platforms: [darwin]
+      - cmd: |
+          sudo apt update
+          sudo apt install -y golang-go
+        platforms: [linux]
+    status:
+      - go version
+
+  _install:nodejs:
+    internal: true
+    cmds:
+      - cmd: brew install node
+        platforms: [darwin]
+      - cmd: |
+          sudo apt update
+          sudo apt install -y nodejs
+        platforms: [linux]
+    status:
+      - node --version
 
   _install:os-packages:
     internal: true
@@ -33,20 +67,39 @@ tasks:
           sudo pip3 install rst2html
         platforms: [linux]
 
-  _install:hugo:
+  _install:dart-sass:
     internal: true
     vars:
-      VERSION: "0.154.5"
-      ARCH: '{{if eq .ARCH "arm64"}}arm64{{else}}amd64{{end}}'
-      URL: "https://github.com/gohugoio/hugo/releases/download/v{{.VERSION}}/hugo_extended_{{.VERSION}}_linux-{{.ARCH}}.tar.gz"
+      ARCH_TAG: '{{if eq .ARCH "arm64"}}arm64{{else}}x64{{end}}'
+    cmds:
+      - cmd: brew install sass/sass/sass
+        platforms: [darwin]
+      - cmd: |
+            curl -sLJ "https://github.com/sass/dart-sass/releases/download/{{.DART_SASS_VERSION}}/dart-sass-{{.DART_SASS_VERSION}}-linux-x64.tar.gz" | \
+            sudo tar -xz --strip-components=1 -C /usr/local/bin
+        platforms: [linux/amd64]
+      - cmd: |
+            curl -sSL "https://github.com/sass/dart-sass/releases/download/{{.DART_SASS_VERSION}}/dart-sass-{{.DART_SASS_VERSION}}-linux-arm64.tar.gz" | \
+            sudo tar -xz --strip-components=1 -C /usr/local/bin 
+        platforms: [linux/arm64]
+    status:
+      - sass --version | grep {{.DART_SASS_VERSION}}
+  
+  _install:hugo:
+    internal: true
     cmds:
       - cmd: brew install hugo
         platforms: [darwin]
       - cmd: |
-          wget -qO- {{.URL}} | sudo tar -C /usr/local/bin -xz hugo
-        platforms: [linux]
+          curl -sSL "https://github.com/gohugoio/hugo/releases/download/v{{.HUGO_VERSION}}/hugo_extended_{{.HUGO_VERSION}}_linux-arm64.tar.gz" | \
+            sudo tar -C /usr/local/bin -xz hugo
+        platforms: [linux/arm64]
+      - cmd: |
+          curl -sSL "https://github.com/gohugoio/hugo/releases/download/v{{.HUGO_VERSION}}/hugo_extended_{{.HUGO_VERSION}}_linux-amd64.tar.gz" | \
+            sudo tar -C /usr/local/bin -xz hugo
+        platforms: [linux/amd64]
     status:
-      - hugo version | grep {{.VERSION}}
+      - hugo version | grep {{.HUGO_VERSION}}
 
   _install:plantuml:
     internal: true
@@ -61,16 +114,13 @@ tasks:
   _install:firebase:
     internal: true
     cmds:
-      - cmd: |
-          if [ "{{.ARCH}}" = "arm64" ]; then 
-            sudo apt-get install -qqy npm
-            sudo npm install -g firebase-tools
-          else 
-            curl -sL https://firebase.tools | upgrade=true analytics=false bash
-          fi
-        platforms: [linux]
-      - cmd: curl -sL https://firebase.tools | upgrade=true analytics=false bash
-        platforms: [darwin]
+      - platforms: [linux/arm64]
+        cmd: |
+          sudo apt-get install -qqy npm
+          sudo npm install -g firebase-tools
+      - platforms: [linux/amd64,darwin]
+        cmd: |
+          curl -sL https://firebase.tools | upgrade=true analytics=false bash
     status:
       - command -v firebase &> /dev/null
 
@@ -132,11 +182,12 @@ tasks:
       IMAGE_NAME: ghcr.io/yogendra/yogendra-me-devcontainer
     cmds:
       - docker buildx build -t {{.IMAGE_NAME}}:latest --platform=linux/amd64 --platform=linux/arm64 --push -f {{.DOCKERFILE}} {{.SCOPE_DIR}}
+      - docker buildx build -t {{.IMAGE_NAME}}-ghaction:latest --platform=linux/amd64 --platform=linux/arm64 --push -f {{.SCOPE_DIR}}/ghaction/Dockerfile {{.PROJECT_DIR}}
 
   dev-container:test:
     desc: Run the devcontainer
     cmds:
-      - docker run --name yogendra-me-devcontainer --rm -it -v {{.TASKFILE_DIR}}:/workspace --workdir /workspace --entrypoint /bin/bash ghcr.io/yogendra/yogendra-me-devcontainer:latest
+      - docker run --name yogendra-me-devcontainer --rm -it -v {{.PROJECT_DIR}}:/workspace --workdir /workspace --entrypoint /bin/bash ghcr.io/yogendra/yogendra-me-devcontainer:latest
 
   post:create:
     desc: Create a new blog post
