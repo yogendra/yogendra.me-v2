@@ -1,0 +1,157 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
+
+  init:
+    desc: Initialize the environment
+    cmds:
+      - task: _install:os-packages
+      - task: _install:hugo
+      - task: _install:plantuml
+      - task: _install:firebase
+
+  _install:os-packages:
+    internal: true
+    cmds:
+      - cmd: |
+          brew install asciidoctor libtool graphviz
+          brew link -f --overwrite asciidoctor libtool graphviz
+          if ! brew list --cask temurin@21 &>/dev/null; then
+            brew install --cask temurin@21
+          fi
+        platforms: [darwin]
+      - cmd: |
+          sudo apt update
+          sudo apt install -y asciidoctor graphviz temurin-21-jdk pandoc python3-docutils python-is-python3
+          pip3 install rst2html
+        platforms: [linux]
+
+  _install:hugo:
+    internal: true
+    vars:
+      VERSION: "0.154.5"
+      ARCH: '{{if eq .ARCH "arm64"}}arm64{{else}}amd64{{end}}'
+      URL: "https://github.com/gohugoio/hugo/releases/download/v{{.VERSION}}/hugo_extended_{{.VERSION}}_linux-{{.ARCH}}.tar.gz"
+    cmds:
+      - cmd: brew install hugo
+        platforms: [darwin]
+      - cmd: |
+          wget -qO- {{.URL}} | sudo tar -C /usr/local/bin -xz hugo
+        platforms: [linux]
+    status:
+      - hugo version | grep {{.VERSION}}
+
+  _install:plantuml:
+    internal: true
+    vars:
+      URL: 'http://sourceforge.net/projects/plantuml/files/plantuml.jar/download'
+    cmds:
+      - mkdir -p lib/
+      - curl -L {{.URL}} -o lib/plantuml.jar
+    status:
+      - test -f lib/plantuml.jar
+
+  _install:firebase:
+    internal: true
+    cmds:
+      - cmd: |
+          if [ "{{.ARCH}}" = "arm64" ]; then 
+            sudo apt-get install -qqy npm
+            sudo npm install -g firebase-tools
+          else 
+            curl -sL https://firebase.tools | upgrade=true analytics=false bash
+          fi
+        platforms: [linux]
+      - cmd: curl -sL https://firebase.tools | upgrade=true analytics=false bash
+        platforms: [darwin]
+    status:
+      - command -v firebase &> /dev/null
+
+  release:build:
+    desc: Build the site for production
+    cmds:
+      - hugo --minify --cleanDestinationDir -e firebase
+      - hugo --minify --cleanDestinationDir -e github
+
+  release:publish:
+    desc: Publish the site to Firebase
+    cmds:
+      - |
+        export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gac.json
+        echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > $GOOGLE_APPLICATION_CREDENTIALS
+        firebase deploy --only hosting
+
+  release:deploy:
+    desc: Build and deploy the site
+    cmds:
+      - task: release:build
+      - task: release:publish
+
+  beta:build:
+    desc: Build the site for beta environment
+    cmds:
+      - hugo --minify --cleanDestinationDir -e firebase-beta
+
+  beta:publish:
+    desc: Publish the site to Firebase Beta
+    cmds:
+      - |
+        export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gac.json
+        echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > $GOOGLE_APPLICATION_CREDENTIALS
+        firebase deploy --only hosting:yogendra-me-beta
+
+  beta:deploy:
+    desc: Build and deploy the site to beta
+    cmds:
+      - task: beta:build
+      - task: beta:publish
+
+  local:build:
+    desc: Build the site for local testing
+    cmds:
+      - hugo --minify --cleanDestinationDir -e local
+
+  local:run:
+    desc: Run local development server
+    cmds:
+      - killall hugo &>> /dev/null || true
+      - nohup hugo --gc --enableGitInfo -DFE --cleanDestinationDir -e local serve &> hugo.log &
+
+  dev-container:build:
+    desc: Build the devcontainer image
+    vars:
+      SCOPE_DIR: .devcontainer
+      DOCKERFILE: '{{.SCOPE_DIR}}/Dockerfile'
+      IMAGE_NAME: ghcr.io/yogendra/yogendra-me-devcontainer
+    cmds:
+      - docker buildx build -t {{.IMAGE_NAME}}:latest --platform=linux/amd64 --platform=linux/arm64 --push -f {{.DOCKERFILE}} {{.SCOPE_DIR}}
+
+  post:create:
+    desc: Create a new blog post
+    summary: |
+      Usage: task post:create -- "My Post Title"
+    cmds:
+      - |
+        TITLE=$(echo "{{.CLI_ARGS}}" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | sed -E 's/^-+|-+$//g')
+        [ -z "$TITLE" ] && { echo "Error: Title cannot be empty"; exit 1; }
+        hugo new "posts/$(date +%Y'/'%m)/${TITLE}/index.md"
+
+  page:bundle:
+    desc: Convert a markdown file to a page bundle
+    summary: |
+      Usage: task page:bundle -- content/posts/my-post.md
+    cmds:
+      - |
+        FILE="{{.CLI_ARGS}}"
+        [ -f "$FILE" ] || { echo "Error: File $FILE not found"; exit 1; }
+        DIR=$(dirname "$FILE")
+        BASE=$(basename "$FILE")
+        NAME="${BASE%.*}"
+        BUNDLE_DIR="$DIR/$NAME"
+        mkdir -p "$BUNDLE_DIR"
+        mv "$FILE" "$BUNDLE_DIR/index.md"
+        echo "Converted $FILE to $BUNDLE_DIR/index.md"

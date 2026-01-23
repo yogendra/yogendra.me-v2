@@ -10,17 +10,16 @@
 git clone --recurse-submodules git@github.com:yogendra/yogendra.me-v2.git yogendra.me
 cd yogendra.me
 direnv allow
-scripts/init
-script/ci prepare
-hugo serve
+task init
+task local:run
 ```
 
-| Action            | Command                  |
-| ----------------- | ------------------------ |
-| Plant UML Prepare | `scripts/ci prepare`     |
-| Run local         | `hugo -e local`          |
-| Deploy to Beta    | `scripts/ci deploy-beta` |
-| Deploy            | `scrtips/ci deploy`      |
+| Action            | Command               |
+| ----------------- | --------------------- |
+| Initialize        | `task init`           |
+| Run local         | `task local:run`      |
+| Deploy to Beta    | `task beta:deploy`    |
+| Deploy            | `task release:deploy` |
 
 ## Local
 
@@ -47,5 +46,5 @@ devcontainer open
 ### Build devcontainer
 
 ```bash
-scripts/ci devcontainer-build
+task dev-container:build
 ```

@@ -6,7 +6,7 @@ set -e
 if [ -n "$GITHUB_ACTIONS" ]
 then
   echo "** Running github action script **"
-  script/ci build
-  script/ci publish
+  task init
+  task release:deploy
   echo "** **"
 fi
