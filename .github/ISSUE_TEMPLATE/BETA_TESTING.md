@@ -1,7 +1,7 @@
 ---
 name: Beta Testing Ticket
 about: Coordinate beta testing for the latest changes.
-title: 'Beta Release'
+title: 'Beta Release : {{ env.VERSION }}'
 labels: beta-testing
 assignees: yogendra
 ---

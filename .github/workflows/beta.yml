@@ -91,8 +91,9 @@ jobs:
         with:
           filename: .github/ISSUE_TEMPLATE/BETA_TESTING.md
           update_existing: true
-          search_existing: all
+          search_existing: open
         env:
+          VERSION: "After ${{ steps.get_last_release_tag.outputs.tag }}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEPLOYED_AT: "${{ github.event.head_commit.timestamp || 'Now' }}"
           COMMIT_SHA: "${{ github.sha }}"
