@@ -127,8 +127,8 @@ tasks:
   release:build:
     desc: Build the site for production
     cmds:
-      - hugo --minify --cleanDestinationDir -e firebase
-      - hugo --minify --cleanDestinationDir -e github
+      - hugo --minify --cleanDestinationDir -e firebase {{.CLI_ARGS}}
+      - hugo --minify --cleanDestinationDir -e github {{.CLI_ARGS}}
 
   release:publish:
     desc: Publish the site to Firebase
@@ -163,29 +163,29 @@ tasks:
       - task: beta:build
       - task: beta:publish
 
-  local:build:
+  build:
     desc: Build the site for local testing
     cmds:
-      - hugo --minify --cleanDestinationDir -e local
+      - hugo --minify --cleanDestinationDir {{.CLI_ARGS}}
 
-  local:start:
+  start:
     desc: Run local development server
     cmds:
-      - task: local:stop
-      - nohup hugo --gc --enableGitInfo -DFE --cleanDestinationDir -e local serve &> hugo.log &
+      - task: stop
+      - nohup hugo --gc --enableGitInfo -DFE --cleanDestinationDir serve {{.CLI_ARGS}} &> hugo.log &
   
-  local:stop:
+  stop:
     desc: Stop local development server
     cmds:
       - killall hugo &>> /dev/null || true
 
-  local:run:
+  run:
     desc: Run local development server
     cmds:
-      - task: local:stop
-      - hugo --gc --enableGitInfo -DFE --cleanDestinationDir -e local serve
+      - task: stop
+      - hugo --gc --enableGitInfo -DFE --cleanDestinationDir serve {{.CLI_ARGS}}
 
-  local:logs:
+  logs:
     desc: Show local development server logs
     cmds:
       - tail -f hugo.log

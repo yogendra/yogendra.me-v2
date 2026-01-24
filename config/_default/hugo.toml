@@ -1,5 +1,5 @@
-baseURL = 'https://yogendra.me'
-publishDir = "public/default"
+baseURL = 'http://127.0.0.1:1313'
+publishDir = "public/local"
 
 languageCode = 'en'
 title = 'Chase Your Dreams'

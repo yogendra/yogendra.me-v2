@@ -13,13 +13,13 @@ git clone --recurse-submodules git@github.com:yogendra/yogendra.me-v2.git yogend
 cd yogendra.me
 direnv allow
 task init
-task local:run
+task run
 ```
 
 | Action            | Command               |
 | ----------------- | --------------------- |
 | Initialize        | `task init`           |
-| Run local         | `task local:run`      |
+| Run local         | `task run`      |
 | Deploy to Beta    | `task beta:deploy`    |
 | Deploy            | `task release:deploy` |
 
