@@ -22,32 +22,24 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.YMEGHIO_PAT }}
 
-      - name: 🔖 Get New Version
-        id: version
+      - name: 🎯 Next Release Version
+        id: next_version
         run: |
-          DATE=$(date +'%Y%m%d')
-          BASE_TAG="v$DATE"
-          TAG=$BASE_TAG
-          COUNTER=1
-          while git rev-parse "$TAG" >/dev/null 2>&1; do
-            TAG="$BASE_TAG.$COUNTER"
-            COUNTER=$((COUNTER + 1))
-          done
-          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "next_version=$(task next_version)" >> $GITHUB_OUTPUT
 
       - name: 🏷️ Tag Repository
         id: tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag ${{ steps.version.outputs.tag }}
-          git push origin ${{ steps.version.outputs.tag }}
+          git tag ${{ steps.next_version.outputs.next_version }}
+          git push origin ${{ steps.next_version.outputs.next_version }}
 
       - name: 📢 Generate Summary
         id: summary
         run: |
           echo "## ✅ Release Approved" >> $GITHUB_STEP_SUMMARY
-          echo "- **New Tag:** \`${{ steps.version.outputs.tag }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **New Tag:** \`${{ steps.next_version.outputs.next_version }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- **Approved By:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Production release workflow has been triggered by the new tag." >> $GITHUB_STEP_SUMMARY
