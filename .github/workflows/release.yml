@@ -33,12 +33,12 @@ jobs:
           auto-activate-base: false
 
       - name: Build Pages
-        run: task release:build
-
-      - name: Publish to Firebase
         run: |
           task version VERSION="${{ github.ref }}"
-          task release:publish
+          task release:build
+
+      - name: Publish to Firebase
+        run: task release:publish
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
     
