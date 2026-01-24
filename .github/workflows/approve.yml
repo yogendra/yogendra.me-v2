@@ -15,19 +15,21 @@ jobs:
       contents: write
       issues: write
     steps:
-      - name: 🔍 Extract Referenced Commit SHA
-        id: extract_sha
-        run: |
-          SHA=$(echo "${{ github.event.issue.body }}" | grep -oE '- **Commit[ ]+:** [0-9a-f]{7,40}' | grep -oE '[0-9a-f]{7,40}' | head -n 1)
-          echo "sha=$SHA" >> $GITHUB_OUTPUT      
-          
+     
       - name: ⬇️ Checkout
         id: checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ steps.extract_sha.outputs.sha }}
           fetch-depth: 0
           token: ${{ secrets.YMEGHIO_PAT }}
+
+      - name: 👀 What version is checked out?
+        run: git log -1 -p
+     
+      - name: ✍️ Approved Version
+        id: approved_version
+        run: |
+          echo "approved_version=$(task beta:sha ISSUE_NUMBER=${{ github.event.issue.number }})" >> $GITHUB_OUTPUT
 
       - name: 🎯 Next Release Version
         id: next_version
@@ -39,7 +41,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag ${{ steps.next_version.outputs.next_version }}
+          git tag ${{ steps.next_version.outputs.next_version }} ${{ steps.approved_version.outputs.approved_version }}
           git push origin ${{ steps.next_version.outputs.next_version }}
 
       - name: 📢 Generate Summary
