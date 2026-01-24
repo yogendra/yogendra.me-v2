@@ -24,7 +24,6 @@ jobs:
           submodules: true
           fetch-depth: 0
 
-
       - name: 📦 Install go-task
         id: install
         uses: arduino/setup-task@v2
