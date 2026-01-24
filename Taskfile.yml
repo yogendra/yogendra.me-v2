@@ -72,6 +72,17 @@ tasks:
       - task: beta:build
       - task: beta:publish
 
+  beta:sha:
+    desc: Get beta sha
+    silent: true
+    vars:
+      ISSUE_NUMBER: '{{.ISSUE_NUMBER}}'
+    cmds:
+      - |
+        gh issue view {{.ISSUE_NUMBER}} --json body --template '{{.body}}'  | \
+          grep -oE '^- \*\*Commit[ ]+:\*\* [0-9a-f]{7,40}' | \
+          grep -oE '[0-9a-f]{7,40}'
+
   build:
     desc: Build the site for local testing
     cmds:
@@ -190,3 +201,4 @@ tasks:
           FILES="No files changed."
         fi
         echo $FILES
+  

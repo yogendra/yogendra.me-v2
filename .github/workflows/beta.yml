@@ -107,18 +107,3 @@ jobs:
           echo ## 🚀 Beta Deployment Successful" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "[Beta Testing Ticket #${{steps.create-issue.outputs.number}}](${{steps.create-issue.outputs.url}})" >> $GITHUB_STEP_SUMMARY
-
-      - name: 📄 Get SHA from Issue Body
-        id: sha
-        run: |
-          SHA="sha=$( 
-            gh issue view ${{ steps.create-issue.outputs.number }} --json body --template '{{.body}}'  | \
-            grep -oE '- **Commit[ ]+:** [0-9a-f]{7,40}' | \
-            grep -oE '[0-9a-f]{7,40}' | \
-            head -n 1 \
-          )" 
-          echo "$SHA" 
-          echo "$SHA" >> $GITHUB_OUTPUT
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
