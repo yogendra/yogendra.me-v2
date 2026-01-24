@@ -17,7 +17,7 @@ tasks:
   init:
     desc: Initialize the environment
     cmds:
-      - task: setup:init
+      - task: setup:init      
 
   build-info:
     desc: Show environment info
@@ -66,12 +66,14 @@ tasks:
   build:
     desc: Build the site for local testing
     cmds:
+      - task: version
       - hugo --minify --cleanDestinationDir {{.CLI_ARGS}}
 
   start:
     desc: Run local development server
     cmds:
       - task: stop
+      - task: version
       - nohup hugo --gc --enableGitInfo -DFE --cleanDestinationDir serve {{.CLI_ARGS}} &> hugo.log &
   
   stop:
@@ -80,9 +82,10 @@ tasks:
       - killall hugo &>> /dev/null || true
 
   run:
-    desc: Run local development server
+    desc: Run local development server    
     cmds:
       - task: stop
+      - task: version
       - hugo --gc --enableGitInfo -DFE --cleanDestinationDir serve {{.CLI_ARGS}}
 
   logs:
@@ -115,3 +118,15 @@ tasks:
         mkdir -p "$BUNDLE_DIR"
         mv "$FILE" "$BUNDLE_DIR/index.md"
         echo "Converted $FILE to $BUNDLE_DIR/index.md"
+  
+  version:
+    desc: Generate version.yaml
+    vars:
+      VERSION: '{{.VERSION | default "local"}}'
+    cmds:
+      - |
+        echo "Setting version: {{.VERSION}}"
+        echo "version: {{.VERSION}}" > data/version.yaml
+    silent: true
+    status: 
+    - test -f data/version.yaml
