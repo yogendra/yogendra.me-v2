@@ -17,19 +17,17 @@ assignees: yogendra
 
 ### Build Info
 
-```
+```yaml
 {{ env.BUILD_INFO }}
 ```
 
 ### Changelog
 
-```
 {{ env.CHANGELOG }}
-```
 
 ### Changed Files
 
-```
+```bash
 {{ env.CHANGED_FILES }}
 ```
 
