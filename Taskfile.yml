@@ -27,8 +27,12 @@ tasks:
   release:build:
     desc: Build the site for production
     cmds:
-      - hugo --minify --cleanDestinationDir -e firebase {{.CLI_ARGS}}
-      - hugo --minify --cleanDestinationDir -e github {{.CLI_ARGS}}
+      - |
+        hugo --minify --cleanDestinationDir -e firebase {{.CLI_ARGS}}
+        cat public/firebase/index.html | grep "| Version : "
+      - |
+        hugo --minify --cleanDestinationDir -e github {{.CLI_ARGS}}
+        cat public/github/index.html | grep "| Version : "
 
   release:publish:
     desc: Publish the site to Firebase
@@ -47,7 +51,9 @@ tasks:
   beta:build:
     desc: Build the site for beta environment
     cmds:
-      - hugo --minify --cleanDestinationDir -e firebase-beta
+      - |
+        hugo --minify --cleanDestinationDir -e firebase-beta
+        cat public/firebase-beta/index.html | grep "| Version : "
 
   beta:publish:
     desc: Publish the site to Firebase Beta
@@ -67,7 +73,9 @@ tasks:
     desc: Build the site for local testing
     cmds:
       - task: version
-      - hugo --minify --cleanDestinationDir {{.CLI_ARGS}}
+      - |
+        hugo --minify --cleanDestinationDir {{.CLI_ARGS}}
+        cat public/local/index.html | grep "| Version : "
 
   start:
     desc: Run local development server
@@ -127,6 +135,7 @@ tasks:
       - |
         echo "Setting version: {{.VERSION}}"
         echo "version: {{.VERSION}}" > data/version.yaml
+        cat data/version.yaml
     silent: true
     status: 
     - test -f data/version.yaml
