@@ -131,14 +131,19 @@ tasks:
         echo "Converted $FILE to $BUNDLE_DIR/index.md"
   
   version:
-    desc: Generate version.yaml
+    desc: Generate version.yaml    
     vars:
-      VERSION: '{{.VERSION | default "local"}}'
+      VERSION: '{{.VERSION | default ""}}'
+    env:
+      VERSION: '{{.VERSION}}'
     cmds:
-      - |
-        echo "Setting version: {{.VERSION}}"
-        echo "version: {{.VERSION}}" > data/version.yaml
-        cat data/version.yaml
+      - |        
+        if [[ -z ${VERSION} ]] 
+        then 
+          VERSION=$(task next_version)
+        fi
+        echo "version: $VERSION" > data/version.yaml
+      - cat data/version.yaml
     silent: true
     status: 
     - test -f data/version.yaml
@@ -151,4 +156,37 @@ tasks:
         D=$(date -u +%Y%m%d)
         C=$(git tag -l "v$D.*" | wc -l)
         echo "v$D.$((C + 1))"
-          
+  prod_version:
+    desc: Get production version
+    silent: true
+    cmds:
+      - |
+        LATEST_TAG=$(git tag -l "v[0-9]*.[0-9]*" --sort=-v:refname | head -n 1)
+        if [ -z "$LATEST_TAG" ]; then
+          LATEST_TAG=$(git rev-list -1 --before="00:00:00" HEAD)
+        fi
+        # Fallback to root commit if no commit exists before today
+        echo ${LATEST_TAG:-$(git rev-list --max-parents=0 HEAD)}
+  changelog:
+    desc: Generate changelog
+    silent: true
+    cmds:
+      - |
+        TAG=$(task prod_version)
+        CHANGELOG=$(git log $TAG..HEAD --oneline)
+        if [ -z "$CHANGELOG" ]; then
+          CHANGELOG="No changes since last tag."
+        fi
+        echo $CHANGELOG
+  
+  changes:
+    desc: Get changed files
+    silent: true
+    cmds:
+      - |
+        TAG=$(task prod_version)
+        FILES=$(git diff --stat $TAG..HEAD)
+        if [ -z "$FILES" ]; then
+          FILES="No files changed."
+        fi
+        echo $FILES
