@@ -78,15 +78,15 @@ jobs:
         with:
           template: .github/ISSUE_TEMPLATE/BETA_TESTING.md
           vars: |
-            DEPLOYED_AT: ${{ github.event.head_commit.timestamp || 'Now' }}
-            COMMIT_SHA: ${{ github.sha }}
-            BASELINE_TAG: ${{ steps.get_tag.outputs.tag }}
-            AUTHOR: ${{ steps.build_info.outputs.author }}
-            HUGO_VERSION: ${{ steps.build_info.outputs.hugo }}
-            ACTION_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-            DIFF_URL: https://github.com/${{ github.repository }}/compare/${{ steps.get_tag.outputs.tag }}...${{ github.sha }}
-            CHANGELOG: ${{ steps.changelog.outputs.changelog }}
-            CHANGED_FILES: ${{ steps.files.outputs.files }}
+            DEPLOYED_AT: "${{ github.event.head_commit.timestamp || 'Now' }}"
+            COMMIT_SHA: "${{ github.sha }}"
+            BASELINE_TAG: "${{ steps.get_tag.outputs.tag }}"
+            AUTHOR: "${{ steps.build_info.outputs.author }}"
+            HUGO_VERSION: "${{ steps.build_info.outputs.hugo }}"
+            ACTION_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            DIFF_URL: "https://github.com/${{ github.repository }}/compare/${{ steps.get_tag.outputs.tag }}...${{ github.sha }}"
+            CHANGELOG: "${{ steps.changelog.outputs.changelog }}"
+            CHANGED_FILES: "${{ steps.files.outputs.files }}"
 
       - name: Create or Update Beta Testing Issue
         uses: actions/github-script@v7
