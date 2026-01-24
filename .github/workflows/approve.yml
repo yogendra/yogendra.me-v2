@@ -34,12 +34,16 @@ jobs:
       - name: ✍️ Approved Version
         id: approved_version
         run: |
-          echo "approved_version=$(task beta:sha ISSUE_NUMBER=${{ github.event.issue.number }})" >> $GITHUB_OUTPUT
+          APPROVED_VERSION="$(task beta:sha ISSUE_NUMBER=${{ github.event.issue.number }})"
+          echo "Approved Version: $APPROVED_VERSION"
+          echo "approved_version=$APPROVED_VERSION" >> $GITHUB_OUTPUT
 
       - name: 🎯 Next Release Version
         id: next_version
         run: |
-          echo "next_version=$(task next_version)" >> $GITHUB_OUTPUT
+          NEXT_VERSION="$(task next_version)"
+          echo "Next Version: $NEXT_VERSION"
+          echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
       - name: 🏷️ Tag Repository
         id: tag
