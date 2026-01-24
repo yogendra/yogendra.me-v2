@@ -33,6 +33,8 @@ jobs:
      
       - name: ✍️ Approved Version
         id: approved_version
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           APPROVED_VERSION="$(task beta:sha ISSUE_NUMBER=${{ github.event.issue.number }})"
           echo "Approved Version: $APPROVED_VERSION"
