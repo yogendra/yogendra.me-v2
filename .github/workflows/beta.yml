@@ -26,13 +26,15 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
         with:
-          cmd: task beta:deploy
+          entrypoint: task 
+          args: beta:deploy
       
       - name: Get Build Info
         uses: ./.github/actions/devcontainer-action
         id: build_info
         with:
-          cmd: echo "build_info='$(task build-info)'" >> $GITHUB_OUTPUT
+          entrypoint: task 
+          args: build-info
           
       - name: Get Latest Tag
         id: get_tag
@@ -62,7 +64,7 @@ jobs:
         id: files
         run: |
           TAG=${{ steps.get_tag.outputs.tag }}
-          FILES=$(git diff --name-only $TAG..HEAD)
+          FILES=$(git diff --stats $TAG..HEAD)
           if [ -z "$FILES" ]; then
             FILES="No files changed."
           fi
@@ -82,7 +84,7 @@ jobs:
             COMMIT_SHA: "${{ github.sha }}"
             BASELINE_TAG: "${{ steps.get_tag.outputs.tag }}"
             AUTHOR: "${{ steps.build_info.outputs.author }}"
-            BUILD_INFO: "${{ steps.build_info.outputs.build_info }}"
+            BUILD_INFO: "${{ steps.build_info.outputs.stdout }}"
             ACTION_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             DIFF_URL: "https://github.com/${{ github.repository }}/compare/${{ steps.get_tag.outputs.tag }}...${{ github.sha }}"
             CHANGELOG: "${{ steps.changelog.outputs.changelog }}"

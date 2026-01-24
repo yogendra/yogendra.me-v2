@@ -4,3 +4,6 @@ description: "Sharing actions with devcontainers"
 runs:
   using: "docker"
   image: "ghcr.io/yogendra/yogendra-me-devcontainer-ghaction:latest"
+outputs:
+  stdout: # ID of the output parameter
+    description: 'Console output'
