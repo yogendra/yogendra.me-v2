@@ -3,8 +3,10 @@
 [![Site Release](https://github.com/yogendra/yogendra.me-v2/actions/workflows/release.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/release.yml)
 |
 [![Beta Deploy](https://github.com/yogendra/yogendra.me-v2/actions/workflows/beta.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/beta.yml)
-|
-[![Devcontainer Builds](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish-devcontainer.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/publish-devcontainer.yml)
+
+* [Beta Site](https://beta.yogendra.me)
+* [Production Site](https://yogendra.me)
+* [Beta Testing Ticket](https://github.com/yogendra/yogendra.me-v2/issues?q=is%3Aissue%20state%3Aopen%20label%3Abeta-testing)
 
 ## Quickstart
 
