@@ -188,7 +188,7 @@ tasks:
         if [ -z "$CHANGELOG" ]; then
           CHANGELOG="No changes since last tag."
         fi
-        echo $CHANGELOG
+        echo "$CHANGELOG"
   
   changes:
     desc: Get changed files
@@ -200,5 +200,5 @@ tasks:
         if [ -z "$FILES" ]; then
           FILES="No files changed."
         fi
-        echo $FILES
+        echo "$FILES"
   
