@@ -22,6 +22,11 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.YMEGHIO_PAT }}
+      - name: 📦 Install go-task
+        id: install
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
 
       - name: 👀 What version is checked out?
         run: git log -1 -p
