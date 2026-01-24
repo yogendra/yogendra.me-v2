@@ -1,0 +1,56 @@
+{{- $url := .url -}}
+{{- if not $url -}}
+  {{- errorf "'url' is a required field for social partial." -}}
+{{- end -}}
+
+{{- $width := .width | default "504" -}}
+{{- $height := .height | default "600" -}}
+
+{{- if or (in $url "twitter.com") (in $url "x.com") -}}
+  {{- $parts := split $url "/" -}}
+  {{- if lt (len $parts) 6 -}}
+    {{- errorf "Invalid Twitter/X URL: %s" $url -}}
+  {{- end -}}
+  {{- $user := index $parts 3 }}
+  {{- $status := index $parts 4 }}
+  {{- $tweetid := index $parts 5 }}
+
+  {{- if ne $status "status" -}}
+    {{- errorf "Invalid Twitter/X url. Missing 'status' path: %s" $url -}}
+  {{- end -}}
+
+  {{- if not $tweetid -}}
+    {{- errorf "Invalid Twitter/X URL. Missing tweet id: %s" $url -}}
+  {{- end -}}
+
+  {{- $query := querify "url" (printf "https://twitter.com/%s/status/%s" $user $tweetid) -}}
+  {{- $oembedUrl := printf "https://publish.twitter.com/oembed?%s" $query -}}
+  {{- partial "social-fetch.html" $oembedUrl -}}
+
+{{- else if in $url "bsky.app" -}}
+  {{- $params := dict "url" $url "format" "json" -}}
+  {{- $queryString := "" -}}
+  {{- range $k, $v := $params -}}
+    {{- if eq $queryString "" -}}
+      {{- $queryString = printf "%s=%s" $k (urlquery $v) -}}
+    {{- else -}}
+      {{- $queryString = printf "%s&%s=%s" $queryString $k (urlquery $v) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $bskyReq := printf "https://embed.bsky.app/oembed?%s" $queryString -}}
+  {{- partial "social-fetch.html" $bskyReq -}}
+
+{{- else if in $url "linkedin.com" -}}
+<div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 0 4px; overflow: hidden; max-width: {{ $width }}px; text-align: center;">
+  <iframe src="{{ $url | safeURL }}"
+          height="{{ $height }}"
+          width="{{ $width }}"
+          frameborder="0"
+          allowfullscreen=""
+          title="LinkedIn Post"
+          style="display: block; margin: 0 auto;"></iframe>
+</div>
+
+{{- else -}}
+  {{- errorf "Unsupported url format or social platform: %s" $url -}}
+{{- end -}}

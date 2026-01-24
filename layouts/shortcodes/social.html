@@ -1,0 +1,4 @@
+{{- $url := .Get "url" -}}
+{{- $width := .Get "width" -}}
+{{- $height := .Get "height" -}}
+{{- partial "social.html" (dict "url" $url "width" $width "height" $height) -}}

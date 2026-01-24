@@ -1,0 +1,17 @@
+{{- $req := . -}}
+{{- with try (resources.GetRemote $req) -}}
+  {{- with .Err }}
+    {{- errorf "Error fetching oEmbed from %s: %s" $req . -}}
+  {{- else }}
+    {{- with .Value }}
+      {{- $data := transform.Unmarshal (.) -}}
+      {{- if $data.html }}
+        {{- $data.html | safeHTML -}}
+      {{- else }}
+        {{- warnf "oEmbed data from %s does not contain HTML" $req }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- else }}
+  {{- warnf "Unable to retrieve oEmbed data from %s" $req }}
+{{- end }}

@@ -1,0 +1,31 @@
+{{ define "main" }}
+<div class="grid-inverse wrap content">
+  <div>
+    <div class="events-header">
+      <h1>{{ .Title }}</h1>
+      {{ .Content }}
+    </div>
+
+    <div class="events-list-wrapper">
+      <ul class="events-compact-list">
+        {{ range .Pages.ByDate.Reverse }}
+        <li class="event-item">
+          <div class="event-item-date">
+            {{ if .Date.IsZero }}
+              {{ .Params.date }}
+            {{ else }}
+              {{ .Date | time.Format ":date_medium" }}
+            {{ end }}
+          </div>
+          <div class="event-item-main">
+            <a href="{{ .RelPermalink }}" class="event-item-title">{{ .Title }}</a>
+            <span class="event-item-location">{{ .Params.event }}</span>
+          </div>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+  </div>
+  {{- partial "sidebar" . }}
+</div>
+{{ end }}

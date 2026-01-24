@@ -1,17 +1,111 @@
+- title: The road to smarter transportation networks is paved with data
+  type: Article
+  event: GovInsider
+  date: 2022-07-28
+  event-page: https://govinsider.asia/intl-en/article/the-road-to-smarter-transportation-networks-is-paved-with-data-yogi-rampuria-yugabyte
+  role:
+    - Interviewee
+  description: |
+    Around the world, governments are turning to technology to create smarter and more efficient transportation networks, and data is critical to their efforts. City planning requires access to data such as pedestrian footfall, road traffic and weather conditions, even though collecting and analysing such massive amounts of information is a formidable task.
+
+    Yogi Rampuria, Principal Solution Engineer at Yugabyte, says governments can best manage the data they need to create smarter transportation if they embrace the use of data, in particular real-time data.
+
+- title: K8SUG - Kubernetes Singapore 15th Meetup - June 21st 2023
+  type: Video
+  event: K8SUG - Kubernetes Singapore Meetup
+  location: Online, Singapore
+  roles:
+    - Presenter
+    - Speaker
+    - Demonstrator
+  date: 2023-06-21  
+  description: |
+    Run Stateful Application on Kubernetes by Yogi Rampuria , Yugabyte    
+  video: https://www.youtube.com/watch?v=0X73HgiYQZ0
+  event-page: https://www.youtube.com/watch?v=0X73HgiYQZ0
+
+- title: "Yugabyte Community Open Hours: Generative AI for Database Migrations"
+  type: Video
+  event: Yugabyte Community Open Hours
+  location: Online, Singapore
+  roles:
+    - Presenter
+    - Speaker
+    - Demonstrator
+  date: 2024-06-05
+  description: |
+    Demonstrated how to use Generative AI for Database Migrations. Specifically using LLM to migration Stored Procedures from Oracle to YugabyteDB.
+  video: https://www.youtube.com/watch?v=NLV9DkRlzxw
+  event-page: https://www.youtube.com/watch?v=NLV9DkRlzxw
+
+- title: Cloud Expo Asia 2022
+  type: Booth
+  event: Cloud Expo Asia
+  location: Marina Bay Sands, Singapore
+  date: 2022-10-12
+  roles:
+    - Exhibitor
+    - Speaker
+  description: |
+    Yugabyte Booth at Cloud Expo Asia 2022. Met with community members, partners, prospects and customers to share thoutghts on YugabyteDB and distributed SQL in generally.
+  posts:
+  - network: linkedin
+    link: https://www.linkedin.com/embed/feed/update/urn:li:share:6985755167358939136
+
+- title: "JVM Meetup #45 - Tech Talk with VMWare"
+  type: Video
+  event: JVM Indonesia Meetup
+  location: Online, Indonesia
+  roles:
+    - Presenter
+    - Speaker
+    - Demonstrator
+  date: 2021-03-18
+  description: |
+    Yogi Rampuria (Advisory Platform Architect VMWare): "Spring Native"
+  video: https://www.youtube.com/watch?v=-ejuBi2JR_k
+  event-page: https://www.eventbrite.com/e/jvm-meetup-45-tech-talk-with-vmware-tickets-146218943797
+
+
+- title: K8SUG - Kubernetes Singapore 20th Meetup - 29th Sep 2023
+  type: Video
+  event: K8SUG - Kubernetes Singapore Meetup
+  location: Online, Singapore
+  roles:
+    - Presenter
+    - Speaker
+    - Demonstrator
+  date: 2023-09-29
+  description: |
+    Stateful Apps in Kubernetes by Yogi Rampuria, Principal Solution Engineer, Yugabyte
+  video: https://www.youtube.com/watch?v=4Qcull6j9ZI
+  event-page: https://www.youtube.com/watch?v=4Qcull6j9ZI
+
 - title: "Public Sector Transformation: Delivering Always-On Services with Distributed Technologies"
   type: Video
   event: Distributed SQL Summit Asia (DSS Asia) 2024
-  date: April 2024
+  location: Online, Singapore
+  roles:
+    - Presenter
+    - Speaker
+    - Demonstrator
+  date: 2024-04-24
   event-page: https://events.ringcentral.com/canvas/events/distributed-sql-summit-asia-2024/registration
   description: |
-    Advancing public sector technology requires a modern tech stack capable of delivering a seamless digital experience to users. Citizens and government officers depend on always-on services with immediate access to critical data anytime and from anywhere. In this session, you will hear from the Technical Consulting Team at IMDA on how they are using the cloud and distributed technologies, including distributed SQL, to improve their scalability and resilience. You’ll learn what data challenges they faced and why distributed SQL was a key part of their solution.
-  video:
-  git:
-  slides:
+    Advancing public sector technology requires a modern tech stack capable of delivering a seamless digital experience to users. 
+    Citizens and government officers depend on always-on services with immediate access to critical data anytime and from anywhere. 
+    In this session, you will hear from the Technical Consulting Team at IMDA on how they are using the cloud and distributed 
+    technologies, including distributed SQL, to improve their scalability and resilience. You’ll learn what data challenges they 
+    faced and why distributed SQL was a key part of their solution.
+  video: https://www.youtube.com/watch?v=XzXEy8688mo
+
 - title: Building your Multi-Region App for Super Bowl Scale
-  slides:
-  git:
-  date: April 2024
+  location: Online, Singapore
+  roles:
+    - Presenter
+    - Speaker
+    - Demonstrator
+  date: 2024-04-16
   event: Webinar
   event-page: https://info.yugabyte.com/webinar-building-your-multi-region
   description: |
@@ -20,76 +114,144 @@
     Join our hands-on session and learn how to build massively scalable, resilient, multi-region applications on a global data architecture.
 
     We'll dive into real-world database scaling and replication challenges and showcase how industry leaders (including Paramount+) can overcome these hurdles using two global design patterns and distributed PostgreSQL.
+
 - title: Synapxe HealthX Startup Day
-  event:
-  description:
+  event: Synapxe HealthX Startup Day
+  type: In-Person Event
+  roles:
+    - Presenter
+    - Demonstrator
+  location: Singapore
+  date: 2023-09-19
+  description: |
+    The Synapxe HealthX Startup Day brought together healthcare innovators to explore the future of medical technology. 
+    
+    In collaboration with Red Hat and AWS, the event showcased cloud-native solutions within the HealthX Innovation 
+    Sandbox (HX-IS), demonstrating how modern data architectures can accelerate the journey for startups making 
+    a difference in the healthcare innovation space.
   posts:
   - network: linkedin
     link: https://www.linkedin.com/posts/yogi_yugabyte-and-red-hat-team-at-the-synapxe-activity-7109846048772132864-g6HY
+
 - title: A Turbo-Charge PostgreSQL
   event: Digital Tech Sharing - Infocomm Media Development Authority
-  date: March 2024
+  date: 2024-04-02
   posts:
   - network: x
     link: https://twitter.com/Yugabyte/status/1773168131231388017
+  roles:
+    - Presenter
+    - Speaker
+    - Demonstrator
+
 - title: Building Resilient Digital Experience Platforms
   description: |
     Navigating the world of cloud-agnostic, resilient digital experience platforms can be a complex task even with Drupal, the leading open-source DXP. Yet, with the right guidance and tools to build cloud-neutral architecture, this task can be managed effectively and efficiently. This recorded webinar delves into the intricacies of constructing modern architectural patterns for Drupal in a distributed cloud environment, by leveraging YugabyteDB. YugabyteDB is an open source  and cloud-agnostic distributed SQL database. Our spotlight will be on resilience, scalability, and reducing total cost of ownership.
   event: Webinar
-  date: July 2023
-  event-page: https://materialplus.srijan.net/resources/webinar/building-resilient-digital-experience-platforms
-  video: https://materialplus.srijan.net/resources/webinar/building-resilient-digital-experience-platforms
-  git:
+  date: 2023-07-06
+  event-page: https://www.linkedin.com/posts/yogi_yugabytedb-drupal-cloudnative-activity-7082178800129634305-4Ina
+  roles:
+    - Presenter
+    - Speaker
+    - Demonstrator
+  posts:
+  - network: linkedin
+    link: https://www.linkedin.com/posts/yogi_yugabytedb-drupal-cloudnative-activity-7082178800129634305-4Ina
 - title: YugabyteDB - Building Resilient ans Scalable Public Sector Services
   event: 9th Annual Singapore OpenGov Leadership Forum 2024
-  date:  May 2024
+  date:  2024-05-11
+  roles:
+    - Presenter
+    - Speaker
+    - Demonstrator
   posts:
   - network: x
     link: https://twitter.com/yogendra/status/1656471223331864576
+
 - title: DSS Asia 2022 - Fun with sensors
   type: Video
   event: DSS Asia 2022
-  date: March 2024
+  location: Online, Singapore
+  roles:
+    - Presenter
+    - Speaker
+    - Demonstrator
+  date: 2022-03-31
+  git: https://github.com/yogendra/fun-with-sensors-data
+  slides: https://raw.githubusercontent.com/yogendra/fun-with-sensors-data/refs/heads/main/slides.pdf
+  video: https://www.youtube.com/watch?v=bmB49FrqEwY
+
 - title: yugabyted - Jumpstart with YugabyteDB
   type: Video
-  date: January 2024
+  date: 2024-01-24
+  location: Online, Singapore
+  roles:
+    - Presenter
+    - Speaker
+    - Demonstrator
   video: https://www.youtube.com/watch?v=65s7y5Z6fKc
-  link:
-  slides:
-  git:
+  slides: https://raw.githubusercontent.com/yogendra/ybdb-workshop/refs/heads/main/slides/yugabyted%20-%20Jumpstart%20with%20YugabyteDB%2024JAN2024.pdf
+  git: https://github.com/yogendra/ybdb-workshop/tree/main
+
 - title: Succeeding with Cloud Native
   type: Video
-  event: DevOps Asia Summit
+  date: 2023-07-23
+  location: Singapore
+  event: DevOps Asia Summit 2023
+  roles:
+    - Presenter
+    - Speaker
   video: https://www.youtube.com/watch?v=o7FLSTcyGCk
-  slides:
   description: |
     Cloud native architecture and applications have gained big traction in recent years. Let us look at what it means as a journey.  How do you start, make progress and ultimately win with Cloud Native Architectures.
-  date: July 2023
+
 - title: FOSS All the Way
   description: |
     Future is Open - we have all heard this. Let us examine how FOSS technologies can be used at all levels to build variety of solutions. In this session we will walk though multiple distributed technologies (kubernetes, kafka, distributed sql, etc.) to build a solid production grade tech-stack for our applications.
   type: Video
-  date: 14 April 2023
+  roles:
+    - Presenter
+    - Speaker
+  date: 2023-04-14
+  location: Singapore
   event: FOSS ASIA 2023
   video: https://www.youtube.com/watch?v=Yrz6aZiYuSU
   event-page: https://eventyay.com/e/7cfe0771/session/8096
   slides: https://eventyay.com/e/7cfe0771/session/8096
-  git:
+
+
 - title: Resilient Services with Distributed SQL
   event: Tech Summit 2022
-  video: https://www.youtube.com/watch?v=uj8w8bAGF4k
+  date: 2022-06-06
+  location: Online, Philippines
+  video: https://www.youtube.com/watch?v=uj8w8bAGF4k  
+  roles:
+    - Presenter
+    - Speaker
+
 - title: Modernizing Digital APIs Platform to Cloud-Native Microservices
   event: SpringOne 2019
-  date: October 2019
+  date: 2019-10-07
+  location:  Austin, TX, USA
   video: https://www.youtube.com/watch?v=qkHUZLu7itM&t=8s
   event-page: https://tanzu.vmware.com/content/videos/abhishek-seth-migrating-open-api-implementation-from-tibco-bw-to-spring-on-pcf
   slides: https://www.slideshare.net/Pivotal/modernizing-digital-apis-platform-to-cloudnative-microservices
-  git:
-  description: ""
+  roles:
+    - Presenter
+    - Speaker
+  description: |
+    One of our banking clients is migrating its assets developed on exiting stack to an open-source platform: Spring on Pivotal Platform. They started this journey by moving the Public APIs and subsequently move the Private APIs. 
+
+    Public APIs offer integration capabilities to partners, which embed these capabilities in their platforms to bring remarkable experiences and offerings to our consumers/customers. 
+
+    This session is to share the experience and value they created on the way by migrating to Spring on Pivotal Platform.
 
 - title: "Right Abstraction"
-  event: "FOSSASIA 2019"
-  date: March 2019
+  event: FOSSASIA 2019
+  date: 2019-03-17
+  roles:
+    - Presenter
+    - Speaker
   type: Video
   video: https://www.youtube.com/watch?v=jGVm_-SYc5I
   event-page: https://2019.fossasia.org/event/rooms.html
@@ -99,12 +261,12 @@
     How do we address that in the cloudfoundry? What is our experience with these? More importantly what is our customer's experience with these.
 
 - title: K8s Office Hours
-  date: September 2022
-  description: Regular office hours
-  video:
-  slides:
-  event-page:
-  type: Online
-  posts:
-  - link:
-    network: x
+  date: 2022-09-15
+  description: |
+    Regular office hours. Addressing questions from the community. General discusisons on news from the K8s ecosystem.
+  roles:
+    - Panelist
+  type: Webinar
+  location: Online
+  video: https://www.youtube.com/watch?v=M4BhjZE176s
+  event-page: https://www.youtube.com/watch?v=M4BhjZE176s

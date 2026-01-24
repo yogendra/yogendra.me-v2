@@ -1,0 +1,27 @@
+{{ range site.Data.events }}
+  {{ $content := dict "mediaType" "text/markdown" "value" (default "" .description) }}
+  
+  {{/* Handle date parsing gracefully. If it fails, we use the string. */}}
+  {{ $pageDate := now }}
+  {{ with .date }}
+    {{ $pageDate = . }}
+  {{ end }}
+
+  {{ $params := . }}
+  {{ $page := dict 
+    "content" $content 
+    "kind" "page" 
+    "params" $params 
+    "path" (.title | urlize) 
+    "title" .title 
+  }}
+  
+  {{/* Only add date if it's a valid time object for Hugo, otherwise keep as param */}}
+  {{ with try (time.AsTime .date) }}
+    {{ if not .Err }}
+      {{ $page = merge $page (dict "dates" (dict "date" .Value)) }}
+    {{ end }}
+  {{ end }}
+
+  {{ $.AddPage $page }}
+{{ end }}

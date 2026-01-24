@@ -1,0 +1,70 @@
+{{ define "main" }}
+<div class="grid-inverse wrap content">
+  <article class="event-article">
+    <nav class="event-nav">
+      <a href="{{ .Parent.RelPermalink }}" class="back-link">&larr; Back to Events</a>
+    </nav>
+    
+    <header class="event-article-header">
+      <h1 class="event-article-title">{{ .Title }}</h1>
+      <div class="event-article-meta">
+        {{ with .Params.event }}<span class="event-venue">{{ . }}</span>{{ end }}
+        <span class="event-separator">&bull;</span>
+        <span class="event-date">{{ .Date | time.Format ":date_long" }}</span>
+      </div>
+    </header>
+
+    <div class="event-article-content">
+      {{ .Content }}
+    </div>
+
+    {{ if or .Params.video .Params.posts }}
+    <section class="event-article-media">
+      {{ with .Params.video }}
+        <div class="video-wrapper">
+          {{ if (findRE "youtube\\.com|youtu\\.be" .) }}
+            {{ $pc := split . "v=" }}
+            {{ $src := "" }}
+            {{ if gt (len $pc) 1 }}
+              {{ $src = index $pc 1 }}
+            {{ else }}
+              {{ $pc = split . "/" }}
+              {{ $src = index $pc (sub (len $pc) 1) }}
+            {{ end }}
+            <iframe src="https://www.youtube.com/embed/{{ $src }}" allowfullscreen loading="lazy"></iframe>
+          {{ else }}
+            <div class="media-cta">
+              <a href="{{ . }}" target="_blank" class="btn-event btn-video">Watch Video</a>
+            </div>
+          {{ end }}
+        </div>
+      {{ end }}
+
+      {{ with .Params.posts }}
+        <div class="social-wrapper">
+          {{ range . }}
+            {{ partial "social.html" (dict "url" .link) }}
+          {{ end }}
+        </div>
+      {{ end }}
+    </section>
+    {{ end }}
+
+    <footer class="event-article-footer">
+      <h3 class="footer-title">Resources & Links</h3>
+      <div class="resource-links">
+        {{ if (index .Params "event-page") }}
+          <a href="{{ (index .Params "event-page") }}" target="_blank" class="btn-article-resource">Event Official Page</a>
+        {{ end }}
+        {{ with .Params.slides }}
+          <a href="{{ . }}" target="_blank" class="btn-article-resource">Presentation Slides</a>
+        {{ end }}
+        {{ with .Params.git }}
+          <a href="{{ . }}" target="_blank" class="btn-article-resource">Source Code (GitHub)</a>
+        {{ end }}
+      </div>
+    </footer>
+  </article>
+  {{- partial "sidebar" . }}
+</div>
+{{ end }}
