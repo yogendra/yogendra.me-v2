@@ -3,7 +3,7 @@ publishDir = "public/local"
 
 languageCode = 'en'
 title = 'Chase Your Dreams'
-copyright = "Copyright © 2012–2026, Yogendra Rampuria; all rights reserved."
+copyright = "Yogendra Rampuria"
 defaultContentLanguage = "en"
 enableEmoji = true
 enableRobotsTXT = true
