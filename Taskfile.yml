@@ -21,12 +21,17 @@ tasks:
       - task: _install:firebase
       - task: _install:go
       - task: _install:nodejs
+      - task: build-info
+  build-info:
+    desc: Show environment info
+    silent: true
+    cmds:
       - cmd: |
           echo "Dart Sass: $(sass --version)"
           echo "Go: $(go version)"
           echo "Hugo: $(hugo version)"
           echo "Node.js: $(node --version)"
-
+  
   _install:go:
     internal: true
     cmds:
