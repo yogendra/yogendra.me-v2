@@ -44,7 +44,6 @@ jobs:
     
       - name: Publish to Github
         uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
         with:
           personal_token: ${{ secrets.YMEGHIO_PAT }}          
           external_repository: yogendra/yogendra.github.io
