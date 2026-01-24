@@ -77,11 +77,17 @@ tasks:
     silent: true
     vars:
       ISSUE_NUMBER: '{{.ISSUE_NUMBER}}'
+      GH_TOKEN: '{{.GH_TOKEN | default ""}}'
     cmds:
       - |
-        gh issue view {{.ISSUE_NUMBER}} --json body --template '{{.body}}'  | \
+        if [[ -n "{{.GH_TOKEN}}" ]] 
+        then
+          export GH_TOKEN={{.GH_TOKEN}}
+        fi
+        gh issue view {{.ISSUE_NUMBER}} --json body --template '{{.body}}' | \
+          jq -r '.body' | \
           grep -oE '^- \*\*Commit[ ]+:\*\* [0-9a-f]{7,40}' | \
-          grep -oE '[0-9a-f]{7,40}'
+          grep -oE '[0-9a-f]{7,40}'        
 
   build:
     desc: Build the site for local testing
