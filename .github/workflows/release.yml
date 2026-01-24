@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Pages
         run: |
-          task version VERSION="${{ github.ref }}"
+          task version VERSION="${{ github.ref_name }}"
           task release:build
 
       - name: Publish to Firebase
