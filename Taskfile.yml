@@ -87,7 +87,7 @@ tasks:
         gh issue view {{.ISSUE_NUMBER}} --json body --template '{{.body}}' | \
           jq -r '.body' | \
           grep -oE '^- \*\*Commit[ ]+:\*\* [0-9a-f]{7,40}' | \
-          grep -oE '[0-9a-f]{7,40}'        
+          grep -oE '[0-9a-f]{7,40}'
 
   build:
     desc: Build the site for local testing
