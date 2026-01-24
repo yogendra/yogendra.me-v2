@@ -10,47 +10,54 @@ on:
   workflow_dispatch:
 
 jobs:
-  beta-deploy:
+  build-and-deploy:
+    name: 🔨 Build and Deploy
     runs-on: ubuntu-latest
     permissions:
       contents: write
       issues: write
     steps:
-      - uses: actions/checkout@v4
+      - name: ⬇️ Checkout
+        id: checkout
+        uses: actions/checkout@v4
         with:
           submodules: true
           fetch-depth: 0
 
-      - name: Install Task
+      - name: 📦 Install go-task
+        id: install
         uses: arduino/setup-task@v2
         with:
           version: 3.x
 
-      - name: Initialize Environment
+      - name: 🎬 Initialize Environment
+        id: init
         run: task init
 
-      - name: Setup Conda
+      - name: 🐍 Setup Conda
+        id: setup_conda
         uses: conda-incubator/setup-miniconda@v3
         with:
           activate-environment: yogendra-me
           environment-file: environment.yml
           auto-activate-base: false
       
-      - name: Build and Deploy to Beta
+      - name: 🚀 Build and Deploy to Beta
+        id: build_and_deploy
         run: | 
           task version VERSION="${{ github.sha }}"
           task beta:deploy
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
 
-      - name: Get Build Info
+      - name: 📊 Get Build Info
         id: build_info
         run: |
           echo "build_info<<EOF" >> $GITHUB_OUTPUT
           task build-info >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           
-      - name: Get Last Release Tag
+      - name: 🏷️ Get Last Release Tag
         id: get_last_release_tag
         run: |
           LATEST_TAG=$(git tag -l "v[0-9]*.[0-9]*" --sort=-v:refname | head -n 1)
@@ -61,7 +68,7 @@ jobs:
           LATEST_TAG=${LATEST_TAG:-$(git rev-list --max-parents=0 HEAD)}
           echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
 
-      - name: Generate Changelog
+      - name: 🪵 Generate Changelog
         id: changelog
         run: |
           TAG=${{ steps.get_last_release_tag.outputs.tag }}
@@ -74,7 +81,7 @@ jobs:
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Get Changed Files
+      - name: 📁 Get Changed Files
         id: files
         run: |
           TAG=${{ steps.get_last_release_tag.outputs.tag }}
@@ -86,9 +93,9 @@ jobs:
           echo "$FILES" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Create Issue
-        uses: JasonEtco/create-an-issue@v2
+      - name: 🎟️ Create Testing Ticket
         id: create-issue
+        uses: JasonEtco/create-an-issue@v2
         with:
           filename: .github/ISSUE_TEMPLATE/BETA_TESTING.md
           update_existing: true
@@ -105,7 +112,8 @@ jobs:
           DIFF_URL: "https://github.com/${{ github.repository }}/compare/${{ steps.get_last_release_tag.outputs.tag }}...${{ github.sha }}"
           CHANGELOG: ${{ steps.changelog.outputs.changelog }}
           CHANGED_FILES: ${{ steps.files.outputs.files }}
-      - name: Generate Step Summary
+      - name: 📢 Generate Summary
+        id: summary
         run: |
           echo ## 🚀 Beta Deployment Successful" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY

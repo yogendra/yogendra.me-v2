@@ -12,36 +12,48 @@ on:
       - "**"
 jobs:
   publish:
+    name: 🚀 Publish to Production
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: ⬇️ Checkout
+        id: checkout
+        uses: actions/checkout@v4
         with:
           submodules: true
+          fetch-depth: 0
 
-      - name: Install Task
-        uses: go-task/setup-task@v1
-        
-      - name: Initialize Environment
+      - name: 📦 Install go-task
+        id: install
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+
+      - name: 🎬 Initialize Environment
+        id: init
         run: task init
 
-      - name: Setup Conda
+      - name: 🐍 Setup Conda
+        id: setup_conda
         uses: conda-incubator/setup-miniconda@v3
         with:
           activate-environment: yogendra-me
           environment-file: environment.yml
           auto-activate-base: false
 
-      - name: Build Pages
+      - name: 🧱 Build Pages
+        id: build
         run: |
           task version VERSION="${{ github.ref_name }}"
           task release:build
 
-      - name: Publish to Firebase
+      - name: 🚀 Publish to Firebase
+        id: publish_firebase
         run: task release:publish
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
     
-      - name: Publish to Github
+      - name: 🚀 Publish to Github
+        id: publish_github
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.YMEGHIO_PAT }}          
@@ -49,7 +61,8 @@ jobs:
           publish_branch: main
           publish_dir: ./public/github
 
-      - name: Update and Close Beta Issue
+      - name: 🔏 Update and Close Testing Ticket
+        id: close_ticker
         uses: actions/github-script@v7
         with:
           script: |
@@ -94,7 +107,8 @@ jobs:
               console.log('No open beta-testing issue found to close.');
             }
 
-      - name: Generate Step Summary
+      - name: 📢 Generate Summary
+        id: summary
         run: |
           echo "## 🎊 Production Release Successful" >> $GITHUB_STEP_SUMMARY
           echo "- **Site URL:** [https://yogendra.me](https://yogendra.me)" >> $GITHUB_STEP_SUMMARY

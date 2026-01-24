@@ -5,6 +5,7 @@ on:
 
 jobs:
   approve-release:
+    name: 👍 Release Approval
     if: |
       github.event.comment.user.type != 'Bot' &&
       contains(github.event.issue.labels.*.name, 'beta-testing') &&
@@ -14,12 +15,14 @@ jobs:
       contents: write
       issues: write
     steps:
-      - uses: actions/checkout@v4
+      - name: ⬇️ Checkout
+        id: checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.YMEGHIO_PAT }}
 
-      - name: Get New Version
+      - name: 🔖 Get New Version
         id: version
         run: |
           DATE=$(date +'%Y%m%d')
@@ -32,14 +35,16 @@ jobs:
           done
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
-      - name: Tag Repository
+      - name: 🏷️ Tag Repository
+        id: tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag ${{ steps.version.outputs.tag }}
           git push origin ${{ steps.version.outputs.tag }}
 
-      - name: Generate Step Summary
+      - name: 📢 Generate Summary
+        id: summary
         run: |
           echo "## ✅ Release Approved" >> $GITHUB_STEP_SUMMARY
           echo "- **New Tag:** \`${{ steps.version.outputs.tag }}\`" >> $GITHUB_STEP_SUMMARY
