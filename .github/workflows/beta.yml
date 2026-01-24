@@ -92,7 +92,7 @@ jobs:
         uses: lexty/jinja2-renderer@v1
         with:
           template_path: .github/ISSUE_TEMPLATE/BETA_TESTING.md
-          output_path: rendered_issue_body.md
+          output_path: ${{ github.workspace }}/BETA_TESTING.md
         env:
           DEPLOYED_AT: "${{ github.event.head_commit.timestamp || 'Now' }}"
           COMMIT_SHA: "${{ github.sha }}"
@@ -108,7 +108,7 @@ jobs:
         id: read_rendered_issue_body
         uses: andstor/file-reader-action@v1
         with:
-          path: rendered_issue_body.md
+          path: ${{ github.workspace }}/BETA_TESTING.md
 
       - name: Create or Update Beta Testing Issue
         uses: actions/github-script@v7
