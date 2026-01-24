@@ -8,13 +8,27 @@ assignees: yogendra
 
 ## Beta Site Details
 - **URL:** [https://beta.yogendra.me](https://beta.yogendra.me)
-- **Deployed At:** ${{ github.event.head_commit.timestamp }}
-- **Commit:** ${{ github.sha }}
+- **Deployed At:** {{ .DEPLOYED_AT }}
+- **Commit:** {{ .COMMIT_SHA }}
+- **Baseline Tag:** [{{ .BASELINE_TAG }}](https://github.com/yogendra/yogendra.me-v2/tree/{{ .BASELINE_TAG }})
+- **Author:** {{ .AUTHOR }}
+- **Hugo Version:** {{ .HUGO_VERSION }}
+- **Action Run:** [View Logs]({{ .ACTION_URL }})
+- **Full Diff:** [Compare with Last Release]({{ .DIFF_URL }})
+
+## Manual Testing Checklist
+- [ ] Home page loads correctly
+- [ ] New/Updated content is visible
+- [ ] Navigation and search are functional
+- [ ] No layout issues across devices
 
 ## Changelog
-<!-- changelog_start -->
-[Automatically filled by GitHub Action]
-<!-- changelog_end -->
+{{ .CHANGELOG }}
+
+## Changed Files
+```
+{{ .CHANGED_FILES }}
+```
 
 ## Approval
 Please comment `LGTM` or `APPROVED` to trigger the production release.

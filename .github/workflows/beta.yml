@@ -72,10 +72,29 @@ jobs:
           echo "hugo=$HUGO_VERSION" >> $GITHUB_OUTPUT
           echo "author=${{ github.actor }}" >> $GITHUB_OUTPUT
 
+      - name: Render Issue Body
+        id: render
+        uses: chuhlomin/render-template@v1
+        with:
+          template: .github/ISSUE_TEMPLATE/BETA_TESTING.md
+          vars: |
+            DEPLOYED_AT: ${{ github.event.head_commit.timestamp || 'Now' }}
+            COMMIT_SHA: ${{ github.sha }}
+            BASELINE_TAG: ${{ steps.get_tag.outputs.tag }}
+            AUTHOR: ${{ steps.build_info.outputs.author }}
+            HUGO_VERSION: ${{ steps.build_info.outputs.hugo }}
+            ACTION_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            DIFF_URL: https://github.com/${{ github.repository }}/compare/${{ steps.get_tag.outputs.tag }}...${{ github.sha }}
+            CHANGELOG: ${{ steps.changelog.outputs.changelog }}
+            CHANGED_FILES: ${{ steps.files.outputs.files }}
+
       - name: Create or Update Beta Testing Issue
         uses: actions/github-script@v7
+        env:
+          ISSUE_BODY: ${{ steps.render.outputs.result }}
         with:
           script: |
+            const body = process.env.ISSUE_BODY;
             const label = 'beta-testing';
             const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
@@ -83,32 +102,6 @@ jobs:
               state: 'open',
               labels: [label]
             });
-
-            const body = `## Beta Site Details
-            - **URL:** [https://beta.yogendra.me](https://beta.yogendra.me)
-            - **Deployed At:** ${new Date().toISOString()}
-            - **Commit:** ${context.sha}
-            - **Author:** ${{ steps.build_info.outputs.author }}
-            - **Hugo Version:** ${{ steps.build_info.outputs.hugo }}
-            - **Action Run:** [View Logs](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
-            - **Full Diff:** [Compare with Last Release](https://github.com/${context.repo.owner}/${context.repo.repo}/compare/${{ steps.get_tag.outputs.tag }}...${context.sha})
-
-            ## Manual Testing Checklist
-            - [ ] Home page loads correctly
-            - [ ] New/Updated content is visible
-            - [ ] Navigation and search are functional
-            - [ ] No layout issues across devices
-
-            ## Changelog
-            ${{ steps.changelog.outputs.changelog }}
-
-            ## Changed Files
-            \`\`\`
-            ${{ steps.files.outputs.files }}
-            \`\`\`
-
-            ## Approval
-            Please comment \`LGTM\` or \`APPROVED\` to trigger the production release.`;
 
             if (issues.length > 0) {
               const issue = issues[0];
