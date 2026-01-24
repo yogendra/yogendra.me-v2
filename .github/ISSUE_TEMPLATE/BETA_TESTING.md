@@ -1,19 +1,19 @@
 ---
 name: Beta Testing Ticket
 about: Coordinate beta testing for the latest changes.
-title: '🔨Beta Release : {{ env.VERSION }}'
+title: '🔨Beta Release : {{ env.NEXT_VERSION }}'
 labels: beta-testing
 assignees: yogendra
 ---
 ## 📍 Beta Site Details
 
-- **URL          :** [https://beta.yogendra.me](https://beta.yogendra.me)
-- **Deployed At  :** {{ env.DEPLOYED_AT }}
-- **Commit       :** {{ env.COMMIT_SHA }}
-- **Baseline Tag :** [{{ env.BASELINE_TAG }}](https://github.com/yogendra/yogendra.me-v2/tree/{{ env.BASELINE_TAG }})
-- **Author       :** {{ env.AUTHOR }}
-- **Action Run   :** [View Logs]({{ env.ACTION_URL }})
-- **Full Diff    :** [Compare with Last Release]({{ env.DIFF_URL }})
+- **URL                :** [https://beta.yogendra.me](https://beta.yogendra.me)
+- **Deployed At        :** {{ env.DEPLOYED_AT }}
+- **Commit             :** {{ env.COMMIT_SHA }}
+- **Production Version :** [{{ env.PRODUCTION_VERSION }}](https://github.com/yogendra/yogendra.me-v2/tree/{{ env.PRODUCTION_VERSION }})
+- **Author             :** {{ env.AUTHOR }}
+- **Action Run         :** [View Logs]({{ env.ACTION_URL }})
+- **Full Diff          :** [Compare with Last Release]({{ env.DIFF_URL }})
 
 ### ⚙️ Build Info
 
