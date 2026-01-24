@@ -24,6 +24,7 @@ jobs:
           submodules: true
           fetch-depth: 0
 
+
       - name: 📦 Install go-task
         id: install
         uses: arduino/setup-task@v2
@@ -57,41 +58,29 @@ jobs:
           task build-info >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           
-      - name: 🏷️ Get Last Release Tag
-        id: get_last_release_tag
-        run: |
-          LATEST_TAG=$(git tag -l "v[0-9]*.[0-9]*" --sort=-v:refname | head -n 1)
-          if [ -z "$LATEST_TAG" ]; then
-            LATEST_TAG=$(git rev-list -1 --before="00:00:00" HEAD)
-          fi
-          # Fallback to root commit if no commit exists before today
-          LATEST_TAG=${LATEST_TAG:-$(git rev-list --max-parents=0 HEAD)}
-          echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+      - name: 🏷️ Get Production Version
+        id: prod_version
+        run: |          
+          echo "prod_version=$(task prod_version)" >> $GITHUB_OUTPUT
 
       - name: 🪵 Generate Changelog
         id: changelog
         run: |
-          TAG=${{ steps.get_last_release_tag.outputs.tag }}
-          CHANGELOG=$(git log $TAG..HEAD --oneline)
-          if [ -z "$CHANGELOG" ]; then
-            CHANGELOG="No changes since last tag."
-          fi
-          # Escape newlines for GITHUB_OUTPUT
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          task changelog >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: 📁 Get Changed Files
         id: files
-        run: |
-          TAG=${{ steps.get_last_release_tag.outputs.tag }}
-          FILES=$(git diff --stat $TAG..HEAD)
-          if [ -z "$FILES" ]; then
-            FILES="No files changed."
-          fi
+        run: |         
           echo "files<<EOF" >> $GITHUB_OUTPUT
-          echo "$FILES" >> $GITHUB_OUTPUT
+          task changes >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 🎯 Next Release Version
+        id: next_version
+        run: |
+          echo "next_version=$(task next_version)" >> $GITHUB_OUTPUT
 
       - name: 🎟️ Create Testing Ticket
         id: create-issue
@@ -100,16 +89,16 @@ jobs:
           filename: .github/ISSUE_TEMPLATE/BETA_TESTING.md
           update_existing: true
           search_existing: open
-        env:
-          VERSION: "After ${{ steps.get_last_release_tag.outputs.tag }}"
+        env:          
+          NEXT_VERSION: ${{ steps.next_version.outputs.next_version }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEPLOYED_AT: "${{ github.event.head_commit.timestamp || 'Now' }}"
           COMMIT_SHA: "${{ github.sha }}"
-          BASELINE_TAG: "${{ steps.get_last_release_tag.outputs.tag }}"
+          PRODUCTION_VERSION: "${{ steps.prod_version.outputs.prod_version }}"
           AUTHOR: "${{ github.event.head_commit.author.name }}"
           BUILD_INFO: ${{ steps.build_info.outputs.build_info }}
           ACTION_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          DIFF_URL: "https://github.com/${{ github.repository }}/compare/${{ steps.get_last_release_tag.outputs.tag }}...${{ github.sha }}"
+          DIFF_URL: "https://github.com/${{ github.repository }}/compare/${{ steps.prod_version.outputs.prod_version }}...${{ github.sha }}"
           CHANGELOG: ${{ steps.changelog.outputs.changelog }}
           CHANGED_FILES: ${{ steps.files.outputs.files }}
       - name: 📢 Generate Summary
