@@ -29,10 +29,12 @@ tasks:
     cmds:
       - |
         hugo --minify --cleanDestinationDir -e firebase {{.CLI_ARGS}}
-        cat public/firebase/index.html | grep "| Version : "
+        echo -n "Version: "
+        cat public/firebase/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
       - |
         hugo --minify --cleanDestinationDir -e github {{.CLI_ARGS}}
-        cat public/github/index.html | grep "| Version : "
+        echo -n "Version: "
+        cat public/github/index.html | grep -oE '\| Version : [^ ]+' | grep -oE '[^ ]+$'
 
   release:publish:
     desc: Publish the site to Firebase
@@ -51,9 +53,10 @@ tasks:
   beta:build:
     desc: Build the site for beta environment
     cmds:
+      - hugo --minify --cleanDestinationDir -e firebase-beta
       - |
-        hugo --minify --cleanDestinationDir -e firebase-beta
-        cat public/firebase-beta/index.html | grep "| Version : "
+        echo -n "Version: ";
+        cat public/firebase-beta/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
 
   beta:publish:
     desc: Publish the site to Firebase Beta
@@ -75,7 +78,7 @@ tasks:
       - task: version
       - |
         hugo --minify --cleanDestinationDir {{.CLI_ARGS}}
-        cat public/local/index.html | grep "| Version : "
+        cat public/local/index.html | grep -oE '\| Version : [^ ]+' | grep -oE '[^ ]+$'
 
   start:
     desc: Run local development server
