@@ -6,6 +6,6 @@ PROJECT_DIR=$( cd ${SCRIPT_DIR}/.. ; pwd)
 
 direnv allow
 task init
-task local:run
-task local:logs
+task run -- --bind=0.0.0.0
+task logs
 
