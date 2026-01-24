@@ -5,17 +5,9 @@ description: Run the local development server
 To start the Hugo development server:
 
 // turbo
-1. Run the serve command:
+1. Run the serve task:
 ```bash
-hugo serve -D
+task run
 ```
 
-This will include drafts and future-dated posts.
-
-If you want to use the local environment configuration:
-
-// turbo
-1. Run the local serve command:
-```bash
-hugo serve -e local
-```
+This will run the server with drafts (`-D`), future-dated posts (`-F`), and expired posts (`-E`) enabled, as configured in the `Taskfile.yml`.

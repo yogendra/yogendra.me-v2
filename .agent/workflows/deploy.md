@@ -5,15 +5,15 @@ description: Deploy the site to Firebase
 To deploy the site to production:
 
 // turbo
-1. Run the deployment script:
+1. Run the deployment task:
 ```bash
-scripts/ci deploy
+task release:deploy
 ```
 
 To deploy to beta/staging:
 
 // turbo
-1. Run the beta deployment script:
+1. Run the beta deployment task:
 ```bash
-scripts/ci deploy-beta
+task beta:deploy
 ```

@@ -5,8 +5,9 @@ This is a Hugo-based static site for Yogendra's blog and portfolio. It is design
 ## Core Technologies
 - **Static Site Generator**: [Hugo](https://gohugo.io/)
 - **Theme**: `hugo-clarity`
+- **Orchestration**: [go-task](https://taskfile.dev/) (`Taskfile.yml`, `Taskinit.yml`)
 - **Hosting/Deployment**: [Firebase Hosting](https://firebase.google.com/products/hosting)
-- **CI/CD**: Custom shell scripts in `scripts/` and GitHub Actions.
+- **CI/CD**: Task-based automation in GitHub Actions.
 
 ## Important Directories
 - `content/`: Where all the written content lives.
@@ -18,7 +19,6 @@ This is a Hugo-based static site for Yogendra's blog and portfolio. It is design
 - `config/`: Configuration files split by environment.
   - `_default/`: Base configurations.
   - `local/`, `firebase/`, `github/`: Environment-specific overrides.
-- `scripts/`: Utility scripts for development and CI/CD.
 
 ## Key Configuration
 - **Base URL**: `https://yogendra.me`
@@ -27,32 +27,34 @@ This is a Hugo-based static site for Yogendra's blog and portfolio. It is design
 
 ## Common Workflows
 
+### Environment Setup
+To initialize the development environment (installs Hugo, Go, Node.js, etc.):
+```bash
+task init
+```
+
 ### Local Development
 To start the Hugo development server:
 ```bash
-hugo serve -D
-```
-Or for local environment specific config:
-```bash
-hugo serve -e local
+task run
 ```
 
 ### Creating new content
-Use the provided script or standard hugo command:
+Use the provided task to create a new post:
 ```bash
-hugo new posts/2025/my-new-post.md
+task post:create -- "My Post Title"
 ```
 
 ### Build and Deploy
-The `scripts/ci` script manages builds and deployments:
-- `scripts/ci build`: Builds for various environments.
-- `scripts/ci deploy`: Builds and deploys to production Firebase.
-- `scripts/ci deploy-beta`: Builds and deploys to beta Firebase.
+Managed via `Taskfile.yml`:
+- `task build`: Builds for local testing.
+- `task release:deploy`: Builds and deploys to production Firebase.
+- `task beta:deploy`: Builds and deploys to beta Firebase.
 
 ## Design and Customization
 - The site uses the **Clarity** theme, with customizations in `layouts/`.
 - **Shortcodes**: Custom shortcodes are located in `layouts/shortcodes/`.
-- **PlantUML**: The project supports PlantUML diagrams (prepared via `scripts/ci prepare`).
+- **Diagrams**: The project supports [Mermaid.js](https://mermaid.js.org/) diagrams using Hugo's code block rendering (`layouts/_markup/render-codeblock-mermaid.html`). PlantUML and Java support have been removed.
 
 ## Future Enhancements
 - Adding new blog posts or updating project details.
