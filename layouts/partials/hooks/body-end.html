@@ -16,3 +16,10 @@
 
   });
 </script>
+
+<script>
+  const version = document.createElement('span');
+  version.textContent = " | Version : {{ .Site.Data.version.version }} ";
+  document.querySelector('footer p').append(version);
+</script>
+
