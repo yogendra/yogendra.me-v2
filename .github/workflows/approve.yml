@@ -15,10 +15,17 @@ jobs:
       contents: write
       issues: write
     steps:
+      - name: 🔍 Extract Referenced Commit SHA
+        id: extract_sha
+        run: |
+          SHA=$(echo "${{ github.event.issue.body }}" | grep -oE '- **Commit[ ]+:** [0-9a-f]{7,40}' | grep -oE '[0-9a-f]{7,40}' | head -n 1)
+          echo "sha=$SHA" >> $GITHUB_OUTPUT      
+          
       - name: ⬇️ Checkout
         id: checkout
         uses: actions/checkout@v4
         with:
+          ref: ${{ steps.extract_sha.outputs.sha }}
           fetch-depth: 0
           token: ${{ secrets.YMEGHIO_PAT }}
 
