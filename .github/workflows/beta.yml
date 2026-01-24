@@ -89,11 +89,11 @@ jobs:
         uses: JasonEtco/create-an-issue@v2
         id: create-issue
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           filename: .github/ISSUE_TEMPLATE/BETA_TESTING.md
           update_existing: true
           search_existing: all
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEPLOYED_AT: "${{ github.event.head_commit.timestamp || 'Now' }}"
           COMMIT_SHA: "${{ github.sha }}"
           BASELINE_TAG: "${{ steps.get_last_release_tag.outputs.tag }}"
