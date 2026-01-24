@@ -8,6 +8,8 @@
 # Subtitle = 'Chase Your Dreams - SRT'
 
 enableSearch = true
+customCSS = ["css/custom.css", "css/events.css"]
+customJS = ["js/custom.js"]
 
 twitter = "@yogendra"
 largeTwitterCard = true # set to true if you want to show a large twitter card image. The default is a small twitter card image
