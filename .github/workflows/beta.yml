@@ -1,4 +1,4 @@
-name: Beta Deployment
+name: 🧪 Deploy to Beta Testing
 on:
   push:
     branches:

@@ -1,4 +1,4 @@
-name: Release Approval
+name: 👍 Release Approval
 on:
   issue_comment:
     types: [created]
