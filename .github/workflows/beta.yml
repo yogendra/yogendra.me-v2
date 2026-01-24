@@ -49,8 +49,8 @@ jobs:
           task build-info >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           
-      - name: Get Latest Tag
-        id: get_tag
+      - name: Get Last Release Tag
+        id: get_last_release_tag
         run: |
           LATEST_TAG=$(git tag -l "v[0-9]*.[0-9]*" --sort=-v:refname | head -n 1)
           if [ -z "$LATEST_TAG" ]; then
@@ -63,7 +63,7 @@ jobs:
       - name: Generate Changelog
         id: changelog
         run: |
-          TAG=${{ steps.get_tag.outputs.tag }}
+          TAG=${{ steps.get_last_release_tag.outputs.tag }}
           CHANGELOG=$(git log $TAG..HEAD --oneline)
           if [ -z "$CHANGELOG" ]; then
             CHANGELOG="No changes since last tag."
@@ -76,7 +76,7 @@ jobs:
       - name: Get Changed Files
         id: files
         run: |
-          TAG=${{ steps.get_tag.outputs.tag }}
+          TAG=${{ steps.get_last_release_tag.outputs.tag }}
           FILES=$(git diff --stat $TAG..HEAD)
           if [ -z "$FILES" ]; then
             FILES="No files changed."
@@ -85,78 +85,24 @@ jobs:
           echo "$FILES" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      
-
-      - name: Render Issue Body to file
-        id: render
-        uses: lexty/jinja2-renderer@v1
+      - name: Create Issue
+        uses: JasonEtco/create-an-issue@v2
+        id: create-issue
         with:
-          template_path: .github/ISSUE_TEMPLATE/BETA_TESTING.md
-          output_path: ${{ github.workspace }}/BETA_TESTING.md
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filename: .github/ISSUE_TEMPLATE/BETA_TESTING.md
+          update_existing: true
+          search_existing: all
         env:
           DEPLOYED_AT: "${{ github.event.head_commit.timestamp || 'Now' }}"
           COMMIT_SHA: "${{ github.sha }}"
-          BASELINE_TAG: "${{ steps.get_tag.outputs.tag }}"
+          BASELINE_TAG: "${{ steps.get_last_release_tag.outputs.tag }}"
           AUTHOR: "${{ github.event.head_commit.author.name }}"
           BUILD_INFO: ${{ steps.build_info.outputs.build_info }}
           ACTION_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          DIFF_URL: "https://github.com/${{ github.repository }}/compare/${{ steps.get_tag.outputs.tag }}...${{ github.sha }}"
+          DIFF_URL: "https://github.com/${{ github.repository }}/compare/${{ steps.get_last_release_tag.outputs.tag }}...${{ github.sha }}"
           CHANGELOG: ${{ steps.changelog.outputs.changelog }}
-          CHANGED_FILES: ${{ steps.files.outputs.files }}          
-
-      - name: "Read rendered issue body from file"
-        id: read_rendered_issue_body
-        uses: andstor/file-reader-action@v1
-        with:
-          path: ${{ github.workspace }}/BETA_TESTING.md
-
-      - name: Create or Update Beta Testing Issue
-        uses: actions/github-script@v7
-        env:
-          ISSUE_BODY: ${{ steps.read_rendered_issue_body.outputs.contents }}
-        with:
-          script: |
-            const body = process.env.ISSUE_BODY;
-            const label = 'beta-testing';
-            const { data: issues } = await github.rest.issues.listForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'open',
-              labels: [label]
-            });
-
-            if (issues.length > 0) {
-              const issue = issues[0];
-              const issueNumber = issue.number;
-              
-              // Post current body as a comment for history
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issueNumber,
-                body: `### Previous Build Details\n\n${issue.body}`
-              });
-
-              await github.rest.issues.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issueNumber,
-                title: `Beta Release: ${context.sha.substring(0, 7)}`,
-                body: body
-              });
-              console.log(`Updated issue #${issueNumber} and added history comment`);
-            } else {
-              const { data: newIssue } = await github.rest.issues.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                title: `Beta Release: ${context.sha.substring(0, 7)}`,
-                body: body,
-                labels: [label],
-                assignees: ['yogendra']
-              });
-              console.log(`Created issue #${newIssue.number}`);
-            }
-
+          CHANGED_FILES: ${{ steps.files.outputs.files }}
       - name: Generate Step Summary
         run: |
           echo "## 🚀 Beta Deployment Successful" >> $GITHUB_STEP_SUMMARY
@@ -172,4 +118,4 @@ jobs:
           echo "${{ steps.files.outputs.files }}" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "[View Beta Testing Ticket](https://github.com/${{ github.repository }}/issues?q=label%3Abeta-testing+is%3Aopen)" >> $GITHUB_STEP_SUMMARY
+          echo "[Beta Testing Ticket #${{steps.create-issue.outputs.number}}](${{steps.create-issue.outputs.url}})" >> $GITHUB_STEP_SUMMARY
