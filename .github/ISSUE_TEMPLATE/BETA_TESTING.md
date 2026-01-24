@@ -12,9 +12,9 @@ assignees: yogendra
 - **Commit:** {{ .COMMIT_SHA }}
 - **Baseline Tag:** [{{ .BASELINE_TAG }}](https://github.com/yogendra/yogendra.me-v2/tree/{{ .BASELINE_TAG }})
 - **Author:** {{ .AUTHOR }}
-- **Hugo Version:** {{ .HUGO_VERSION }}
 - **Action Run:** [View Logs]({{ .ACTION_URL }})
 - **Full Diff:** [Compare with Last Release]({{ .DIFF_URL }})
+- **Build Info:** {{ .BUILD_INFO }}
 
 ## Manual Testing Checklist
 - [ ] Home page loads correctly
