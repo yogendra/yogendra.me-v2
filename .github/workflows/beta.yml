@@ -60,7 +60,9 @@ jobs:
       - name: 🏷️ Get Production Version
         id: prod_version
         run: |          
-          echo "prod_version=$(task prod_version)" >> $GITHUB_OUTPUT
+          PROD_VERSION="$(task prod_version)"
+          echo "Production Version: $PROD_VERSION"
+          echo "prod_version=$PROD_VERSION" >> $GITHUB_OUTPUT
 
       - name: 🪵 Generate Changelog
         id: changelog
@@ -79,7 +81,9 @@ jobs:
       - name: 🎯 Next Release Version
         id: next_version
         run: |
-          echo "next_version=$(task next_version)" >> $GITHUB_OUTPUT
+          NEXT_VERSION="$(task next_version)"
+          echo "Next Version: $NEXT_VERSION"
+          echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
       - name: 🎟️ Create Testing Ticket
         id: create-issue
