@@ -28,6 +28,11 @@
   weight = -107
 
 [[main]]
+  name = "Events"
+  url = "events/"
+  weight = -106
+
+[[main]]
   name = "Security"
   url = "security.html"
   weight = -106
@@ -50,11 +55,6 @@
   name = "rss"
   weight = 4
   url = "index.xml"
-[[social]]
-  name = "copy"
-  type ="social"
-  weight = 5
-  url = "/yb.vcf"
 
 # [[social]]
 #   name = "youtube"
