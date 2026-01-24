@@ -142,3 +142,13 @@ tasks:
     silent: true
     status: 
     - test -f data/version.yaml
+
+  next_version:
+    desc: Generate next version
+    silent: true
+    cmds:
+      - |
+        D=$(date -u +%Y%m%d)
+        C=$(git tag -l "v$D.*" | wc -l)
+        echo "v$D.$((C + 1))"
+          
