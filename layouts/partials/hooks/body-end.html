@@ -18,10 +18,10 @@
 </script>
 
 <script>
-  const version = document.createElement('span');
-  
-  version.textContent = " | Version : {{ .Site.Data.version.version }} ";
+  const v = document.createElement('span');
+  v.textContent = " | Version : {{ .Site.Data.version.version }} ";
+  const p = document.querySelector('footer p');
+  p.append(v);
 
-  document.querySelector('footer p').append(version);
 </script>
 
