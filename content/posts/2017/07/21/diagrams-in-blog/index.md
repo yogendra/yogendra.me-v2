@@ -44,8 +44,6 @@ In less than 20 minutes, I managed to install hexo, create a project, migrate wo
         @enduml
         ```
 ```
-{{< puml "sample/Test Sequence.png" >}}
-
 I guess I will have to wait for hugo to mature a bit more. I really liked the speed and simplicity of hugo. But lack of
 plugin support in processing really killed it!
 
@@ -53,6 +51,8 @@ plugin support in processing really killed it!
 generates plantuml files and svg locally. So overall page rendering is fast. Downside, I need to have Java and graphviz
 working locally. I have created a working Docker image ([yogendra/blog-toolbox:latest](https://hub.docker.com/yogendra/blog-toolbox))
 to help me work around this
+
+**Update**: 2026-01-24. I previously used PlantUML, but I have now moved to Mermaid.js for all diagrams in this blog. It's much simpler as it doesn't require Java or any external dependencies to be installed on the local machine for client-side rendering.
 
 **Update**: Trying client side rendering
 
@@ -66,6 +66,47 @@ Hugo introduced support codeblock rendering extension in 0.93.0. Check [here](ht
 So now a code block like below will generate a diagram. Its based on mermaidjs.
 
     ```mermaid
+    erDiagram
+      CUSTOMER }|..|{ DELIVERY-ADDRESS : has
+      CUSTOMER ||--o{ ORDER : places
+      CUSTOMER ||--o{ INVOICE : "liable for"
+      DELIVERY-ADDRESS ||--o{ ORDER : receives
+      INVOICE ||--|{ ORDER : covers
+      ORDER ||--|{ ORDER-ITEM : includes
+      PRODUCT-CATEGORY ||--|{ PRODUCT : contains
+      PRODUCT ||--o{ ORDER-ITEM : "ordered in"
+    ```
+
+
+```mermaid
+erDiagram
+  CUSTOMER }|..|{ DELIVERY-ADDRESS : has
+  CUSTOMER ||--o{ ORDER : places
+  CUSTOMER ||--o{ INVOICE : "liable for"
+  DELIVERY-ADDRESS ||--o{ ORDER : receives
+  INVOICE ||--|{ ORDER : covers
+  ORDER ||--|{ ORDER-ITEM : includes
+  PRODUCT-CATEGORY ||--|{ PRODUCT : contains
+  PRODUCT ||--o{ ORDER-ITEM : "ordered in"
+```
+
+    ```mermaid
+    sequenceDiagram
+        Alice->>John: Hello John, how are you?
+        %% this is a comment
+        John-->>Alice: Great!
+    ```
+
+```mermaid
+sequenceDiagram
+    Alice->>John: Hello John, how are you?
+    %% this is a comment
+    John-->>Alice: Great!
+```
+
+
+
+    ```mermaid
 
     graph TD;
         A-->B;
@@ -74,6 +115,8 @@ So now a code block like below will generate a diagram. Its based on mermaidjs.
         C-->D;
 
     ```
+
+
 ```mermaid
 
 graph TD;
@@ -82,22 +125,4 @@ graph TD;
     B-->D;
     C-->D;
 
-```
-
-** 11 Apr 2022**: Another attempt to PlatUML in Client Side
-
-```
-    ```plantuml
-    @startuml
-    A -> B : Hello
-    A <- B : Hi There!
-    @enduml
-    ```
-```
-
-```plantuml
-@startuml
-A -> B : Hello
-A <- B : Hi There!
-@enduml
 ```

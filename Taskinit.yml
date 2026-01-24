@@ -14,7 +14,6 @@ tasks:
       - task: _install:python-env
       - task: _install:hugo
       - task: _install:dart-sass
-      - task: _install:plantuml
       - task: _install:firebase
       - task: _install:go
       - task: _install:nodejs
@@ -30,9 +29,7 @@ tasks:
       echo "Node.js   : $(node --version 2>/dev/null || echo 'Not installed')"
       echo "Conda     : $(conda --version 2>/dev/null || echo 'Not installed')"
       echo "Python    : $(python --version 2>/dev/null || echo 'Not installed')"
-      echo "PlantUML  : $(java -jar lib/plantuml.jar --version |& head -1|| echo 'Not installed')"
       echo "Firebase  : $(firebase --version 2>/dev/null || echo 'Not installed')"
-      echo "Java      : $(java -version |& head -1 || echo 'Not installed')"
       echo "OS        : $(uname -s)"
       echo "Arch      : $(uname -m)"
     
@@ -89,13 +86,10 @@ tasks:
       - cmd: |
           brew install asciidoctor libtool graphviz
           brew link -f --overwrite asciidoctor libtool graphviz
-          if ! brew list --cask temurin@21 &>/dev/null; then
-            brew install --cask temurin@21
-          fi
         platforms: [darwin]
       - cmd: |
           sudo apt update
-          sudo apt install -y asciidoctor graphviz openjdk-21-jre pandoc
+          sudo apt install -y asciidoctor graphviz pandoc
         platforms: [linux]
 
   _install:dart-sass:
@@ -132,15 +126,6 @@ tasks:
     status:
       - hugo version | grep {{.HUGO_VERSION}}
 
-  _install:plantuml:
-    internal: true
-    vars:
-      URL: 'http://sourceforge.net/projects/plantuml/files/plantuml.jar/download'
-    cmds:
-      - mkdir -p {{.LIB_DIR}}/
-      - curl -L {{.URL}} -o {{.LIB_DIR}}/plantuml.jar
-    status:
-      - test -f {{.LIB_DIR}}/plantuml.jar
 
   _install:firebase:
     internal: true
