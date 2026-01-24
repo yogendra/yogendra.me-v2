@@ -1,11 +1,11 @@
 ---
 name: Beta Testing Ticket
 about: Coordinate beta testing for the latest changes.
-title: 'Beta Release : {{ env.VERSION }}'
+title: '🔨Beta Release : {{ env.VERSION }}'
 labels: beta-testing
 assignees: yogendra
 ---
-## Beta Site Details
+## 📍 Beta Site Details
 
 - **URL          :** [https://beta.yogendra.me](https://beta.yogendra.me)
 - **Deployed At  :** {{ env.DEPLOYED_AT }}
@@ -15,28 +15,28 @@ assignees: yogendra
 - **Action Run   :** [View Logs]({{ env.ACTION_URL }})
 - **Full Diff    :** [Compare with Last Release]({{ env.DIFF_URL }})
 
-### Build Info
+### ⚙️ Build Info
 
 ```yaml
 {{ env.BUILD_INFO }}
 ```
 
-### Changelog
+### 🪵 Changelog
 
 {{ env.CHANGELOG }}
 
-### Changed Files
+### 📁 Changed Files
 
 ```bash
 {{ env.CHANGED_FILES }}
 ```
 
-## Manual Testing Checklist
+## 📋 Manual Testing Checklist
 - [ ] Home page loads correctly
 - [ ] New/Updated content is visible
 - [ ] Navigation and search are functional
 - [ ] No layout issues across devices
 
 
-## Approval
+## 📝 Approval
 Please comment `LGTM` or `APPROVED` to trigger the production release.
