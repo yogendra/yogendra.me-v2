@@ -35,10 +35,11 @@ jobs:
           activate-environment: yogendra-me
           environment-file: environment.yml
           auto-activate-base: false
-
-
+      
       - name: Build and Deploy to Beta
-        run: task beta:deploy
+        run: | 
+          task version VERSION="${{ github.sha }}"
+          task beta:deploy
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
 
