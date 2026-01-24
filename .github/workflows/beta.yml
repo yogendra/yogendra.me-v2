@@ -107,17 +107,6 @@ jobs:
           CHANGED_FILES: ${{ steps.files.outputs.files }}
       - name: Generate Step Summary
         run: |
-          echo "## 🚀 Beta Deployment Successful" >> $GITHUB_STEP_SUMMARY
-          echo "- **Site URL:** [https://beta.yogendra.me](https://beta.yogendra.me)" >> $GITHUB_STEP_SUMMARY
+          echo ## 🚀 Beta Deployment Successful" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Hugo Version:** ${{ steps.build_info.outputs.hugo }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 📄 Changelog" >> $GITHUB_STEP_SUMMARY
-          echo "${{ steps.changelog.outputs.changelog }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 🛠 Changed Files" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          echo "${{ steps.files.outputs.files }}" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
           echo "[Beta Testing Ticket #${{steps.create-issue.outputs.number}}](${{steps.create-issue.outputs.url}})" >> $GITHUB_STEP_SUMMARY
