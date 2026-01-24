@@ -1,0 +1,11 @@
+name: yogendra-me
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - docutils
+  - pip
+  - pip:
+    - pygments
+    - rst2html

@@ -19,19 +19,26 @@ jobs:
         with:
           submodules: true
 
-      - name: Build Pages
-        uses: ./.github/actions/devcontainer-action
+      - name: Install Task
+        uses: go-task/setup-task@v1
+        
+      - name: Initialize Environment
+        run: task init
+
+      - name: Setup Conda
+        uses: conda-incubator/setup-miniconda@v3
         with:
-          entrypoint: task
-          args: release:build
+          activate-environment: yogendra-me
+          environment-file: environment.yml
+          auto-activate-base: false
+
+      - name: Build Pages
+        run: task release:build
 
       - name: Publish to Firebase
-        uses: ./.github/actions/devcontainer-action
+        run: task release:publish
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
-        with:
-          entrypoint: task
-          args: release:publish
     
       - name: Publish to Github
         uses: peaceiris/actions-gh-pages@v3
