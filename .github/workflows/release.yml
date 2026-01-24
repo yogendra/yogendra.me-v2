@@ -10,7 +10,6 @@ on:
       - "!.devcontainer/**"
       - "!.github/workflows/publish-devcontainer.yml"
       - "**"
-  workflow_dispatch:
 jobs:
   publish:
     runs-on: ubuntu-latest
