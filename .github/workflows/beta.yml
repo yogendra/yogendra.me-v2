@@ -96,12 +96,15 @@ jobs:
             DEPLOYED_AT: "${{ github.event.head_commit.timestamp || 'Now' }}"
             COMMIT_SHA: "${{ github.sha }}"
             BASELINE_TAG: "${{ steps.get_tag.outputs.tag }}"
-            AUTHOR: "${{ steps.build_info.outputs.author }}"
-            BUILD_INFO: "${{ steps.build_info.outputs.build_info }}"
+            AUTHOR: "${{ github.event.head_commit.author.name }}"
+            BUILD_INFO: |
+              ${{ steps.build_info.outputs.build_info }}
             ACTION_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             DIFF_URL: "https://github.com/${{ github.repository }}/compare/${{ steps.get_tag.outputs.tag }}...${{ github.sha }}"
-            CHANGELOG: "${{ steps.changelog.outputs.changelog }}"
-            CHANGED_FILES: "${{ steps.files.outputs.files }}"
+            CHANGELOG: |
+              ${{ steps.changelog.outputs.changelog }}
+            CHANGED_FILES: |
+              ${{ steps.files.outputs.files }}
 
       - name: Create or Update Beta Testing Issue
         uses: actions/github-script@v7
