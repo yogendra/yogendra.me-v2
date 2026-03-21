@@ -4,12 +4,31 @@ on:
     types: [created]
 
 jobs:
-  approve-release:
-    name: 👍 Release Approval
+  check-approval:
+    name: 🔍 Check Approval
     if: |
       github.event.comment.user.type != 'Bot' &&
-      contains(github.event.issue.labels.*.name, 'beta-testing') &&
-      (github.event.comment.body == 'LGTM' || github.event.comment.body == 'APPROVED')
+      contains(github.event.issue.labels.*.name, 'beta-testing')
+    runs-on: ubuntu-latest
+    outputs:
+      approved: ${{ steps.verify.outputs.approved }}
+    steps:
+      - name: Verify Comment Body
+        id: verify
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comment = context.payload.comment.body.trim().toUpperCase();
+            if (comment === 'LGTM' || comment === 'APPROVED') {
+              core.setOutput('approved', 'true');
+            } else {
+              core.setOutput('approved', 'false');
+            }
+
+  approve-release:
+    name: 👍 Release Approval
+    needs: check-approval
+    if: needs.check-approval.outputs.approved == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
