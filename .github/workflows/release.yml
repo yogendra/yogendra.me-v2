@@ -30,7 +30,7 @@ jobs:
 
       - name: 🔓 Prepare cache directories
         run: |
-          sudo mkdir -p /var/cache/apt/archives /usr/local/bin/src ~/.cache/firebase
+          sudo mkdir -p /var/cache/apt/archives /usr/local/bin/src
           sudo chown -R $USER:$USER /var/cache/apt/archives /usr/local/bin ~/.cache
 
       - name: 📦 Cache NPM, Tools & Conda Pkgs
@@ -38,13 +38,11 @@ jobs:
         with:
           path: |
             ~/.npm
-            ~/.cache/firebase
             ~/.cache/pip
             /usr/share/miniconda/pkgs
             /usr/local/bin/hugo
             /usr/local/bin/sass
             /usr/local/bin/src
-            /usr/local/bin/firebase
             /var/cache/apt/archives
           key: ${{ runner.os }}-setup-${{ hashFiles('Taskinit.yml', 'environment.yml') }}
           restore-keys: |
@@ -76,11 +74,6 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
-      - name: 🚀 Publish to Firebase
-        id: publish_firebase
-        run: task firebase:publish
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
 
       - name: 🚀 Publish to Github
         id: publish_github

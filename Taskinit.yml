@@ -14,7 +14,6 @@ tasks:
       - task: _install:python-env
       - task: _install:hugo
       - task: _install:dart-sass
-      - task: _install:firebase
       - task: _install:go
       - task: _install:nodejs
       - task: build-info
@@ -29,7 +28,6 @@ tasks:
       echo "Node.js   : $(node --version 2>/dev/null || echo 'Not installed')"
       echo "Conda     : $(conda --version 2>/dev/null || echo 'Not installed')"
       echo "Python    : $(python --version 2>/dev/null || echo 'Not installed')"
-      echo "Firebase  : $(firebase --version 2>/dev/null || echo 'Not installed')"
       echo "OS        : $(uname -s)"
       echo "Arch      : $(uname -m)"
     
@@ -131,16 +129,3 @@ tasks:
     status:
       - hugo version | grep {{.HUGO_VERSION}}
 
-
-  _install:firebase:
-    internal: true
-    cmds:
-      - platforms: [linux/arm64]
-        cmd: |
-          sudo apt-get install -qqy npm
-          sudo npm install -g firebase-tools
-      - platforms: [linux/amd64,darwin]
-        cmd: |
-          curl -sL https://firebase.tools | upgrade=true analytics=false bash
-    status:
-      - command -v firebase >/dev/null 2>&1

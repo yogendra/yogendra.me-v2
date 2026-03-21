@@ -27,14 +27,12 @@ tasks:
   release:build:
     desc: Build the site for production
     cmds:
-      - task: firebase:build
       - task: github:build
       - task: cloudflare:build
 
   release:publish:
     desc: Publish the site to Firebase, Cloudflare, and GitHub
     cmds:
-      - task: firebase:publish
       - task: cloudflare:publish
       - task: github:publish
 
@@ -70,18 +68,15 @@ tasks:
   beta:build:
     desc: Build the site for beta environment
     cmds:
-      - hugo --minify --cleanDestinationDir -e firebase-beta
+      - hugo --minify --cleanDestinationDir -e cloudflare-beta {{.CLI_ARGS}}
       - |
         echo -n "Version: ";
-        cat public/firebase-beta/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
+        cat public/cloudflare-beta/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
 
   beta:publish:
-    desc: Publish the site to Firebase Beta
+    desc: Publish the site to Cloudflare Beta
     cmds:
-      - |
-        export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gac.json
-        echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > $GOOGLE_APPLICATION_CREDENTIALS
-        firebase deploy --only hosting:yogendra-me-beta
+      - npx wrangler pages deploy public/cloudflare-beta --project-name yogendra-me --branch beta
 
   beta:deploy:
     desc: Build and deploy the site to beta
@@ -89,28 +84,6 @@ tasks:
       - task: beta:build
       - task: beta:publish
   
-  firebase:build:
-    desc: Build the site for production
-    cmds:
-      - |
-        hugo --minify --cleanDestinationDir -e firebase {{.CLI_ARGS}}
-        echo -n "Version: "
-        cat public/firebase/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
-
-  firebase:publish:
-    desc: Publish the site to Firebase
-    cmds:
-      - |
-        export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gac.json
-        echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > $GOOGLE_APPLICATION_CREDENTIALS
-        firebase deploy --only hosting:yogendra-me
-
-  firebase:deploy:
-    desc: Deploy the site to Firebase
-    cmds:
-      - task: firebase:build
-      - task: firebase:publish
-
 
   cloudflare:build:
     desc: Build the site for Cloudflare

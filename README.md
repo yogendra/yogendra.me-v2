@@ -32,7 +32,7 @@ task run
 - Git
 - VS Code
 - Hugo
-- Firebase cli
+
 
 ## Local Workstation with VS Code + Devcontainer
 

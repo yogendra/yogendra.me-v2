@@ -1,0 +1,2 @@
+baseURL = 'https://beta.yogendra.me'
+publishDir = "public/cloudflare-beta"
