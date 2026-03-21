@@ -22,16 +22,17 @@ jobs:
           submodules: true
           fetch-depth: 0
 
+      - name: 🔓 Prepare cache directories
+        run: |
+          sudo mkdir -p /var/cache/apt/archives /usr/local/bin/src ~/.cache
+          sudo chown -R $USER:$USER /var/cache/apt/archives /usr/local/bin ~/.cache
+
       - name: 📦 Install go-task
         id: install
         uses: arduino/setup-task@v2
         with:
           version: 3.x
 
-      - name: 🔓 Prepare cache directories
-        run: |
-          sudo mkdir -p /var/cache/apt/archives /usr/local/bin/src
-          sudo chown -R $USER:$USER /var/cache/apt/archives /usr/local/bin ~/.cache
 
       - name: 📦 Cache NPM, Tools & Conda Pkgs
         uses: actions/cache@v4
