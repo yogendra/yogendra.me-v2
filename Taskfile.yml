@@ -64,7 +64,8 @@ tasks:
       - git -C public/github commit -m "Publish site update" || true
       - |
         if [ -n "$YMEGHIO_PAT" ]; then
-          git -C public/github remote set-url origin https://x-access-token:$YMEGHIO_PAT@github.com/yogendra/yogendra.github.io.git
+          git -C public/github config --local --unset-all http.https://github.com/.extraheader || true
+          git -C public/github remote set-url origin https://oauth2:$YMEGHIO_PAT@github.com/yogendra/yogendra.github.io.git
         fi
       - git -C public/github push origin main
 
