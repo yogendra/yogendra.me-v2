@@ -40,6 +40,7 @@ jobs:
           path: |
             ~/.npm
             ~/.cache/pip
+            ~/conda_pkgs_dir
             /usr/share/miniconda/pkgs
             /usr/local/bin/hugo
             /usr/local/bin/sass
@@ -55,6 +56,7 @@ jobs:
         with:
           activate-environment: yogendra-me
           environment-file: environment.yml
+          pkgs-dirs: ~/conda_pkgs_dir
           auto-activate-base: false
           use-mamba: true
 
