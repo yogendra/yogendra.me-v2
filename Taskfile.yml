@@ -48,6 +48,8 @@ tasks:
     desc: Build site for github pages
     cmds:
     - |
+        (cd public/github && git clean -ffxd)
+        git submodule update --remote public/github
         hugo --minify --cleanDestinationDir -e github {{.CLI_ARGS}}
         echo -n "Version: "
         cat public/github/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
