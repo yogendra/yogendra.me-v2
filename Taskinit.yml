@@ -47,7 +47,7 @@ tasks:
       - $HOME/miniconda/bin/conda init bash
       - echo "Please restart your shell to use conda."
     status:
-      - command -v conda &> /dev/null
+      - command -v conda >/dev/null 2>&1
 
   _install:python-env:
     internal: true
@@ -66,7 +66,7 @@ tasks:
           sudo apt install -y golang-go
         platforms: [linux]
     status:
-      - go version
+      - command -v go >/dev/null 2>&1
 
   _install:nodejs:
     internal: true
@@ -78,7 +78,7 @@ tasks:
           sudo apt install -y nodejs
         platforms: [linux]
     status:
-      - node --version
+      - command -v node >/dev/null 2>&1
 
   _install:os-packages:
     internal: true
@@ -91,6 +91,11 @@ tasks:
           sudo apt update
           sudo apt install -y asciidoctor graphviz pandoc
         platforms: [linux]
+    status:
+      - command -v asciidoctor >/dev/null 2>&1
+      - command -v dot >/dev/null 2>&1
+      - if [ "$(uname)" = "Linux" ]; then command -v pandoc >/dev/null 2>&1; fi
+      - if [ "$(uname)" = "Darwin" ]; then command -v libtool >/dev/null 2>&1; fi
 
   _install:dart-sass:
     internal: true
@@ -138,4 +143,4 @@ tasks:
         cmd: |
           curl -sL https://firebase.tools | upgrade=true analytics=false bash
     status:
-      - command -v firebase &> /dev/null
+      - command -v firebase >/dev/null 2>&1

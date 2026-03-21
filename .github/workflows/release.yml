@@ -28,9 +28,27 @@ jobs:
         with:
           version: 3.x
 
-      - name: 🎬 Initialize Environment
-        id: init
-        run: task init
+      - name: 🔓 Prepare cache directories
+        run: |
+          sudo mkdir -p /var/cache/apt/archives /usr/local/bin/src ~/.cache/firebase
+          sudo chown -R $USER:$USER /var/cache/apt/archives /usr/local/bin ~/.cache
+
+      - name: 📦 Cache NPM, Tools & Conda Pkgs
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ~/.cache/firebase
+            ~/.cache/pip
+            /usr/share/miniconda/pkgs
+            /usr/local/bin/hugo
+            /usr/local/bin/sass
+            /usr/local/bin/src
+            /usr/local/bin/firebase
+            /var/cache/apt/archives
+          key: ${{ runner.os }}-setup-${{ hashFiles('Taskinit.yml', 'environment.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-setup-
 
       - name: 🐍 Setup Conda
         id: setup_conda
@@ -39,6 +57,11 @@ jobs:
           activate-environment: yogendra-me
           environment-file: environment.yml
           auto-activate-base: false
+          use-mamba: true
+
+      - name: 🎬 Initialize Environment
+        id: init
+        run: task init
 
       - name: 🧱 Build Pages
         id: build
