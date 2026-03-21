@@ -46,20 +46,31 @@ jobs:
           task version VERSION="${{ github.ref_name }}"
           task release:build
 
+      - name: 🚀 Publish to Cloudflare
+        id: publish_cloudflare
+        run: task cloudflare:publish
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
       - name: 🚀 Publish to Firebase
         id: publish_firebase
-        run: task release:publish
+        run: task firebase:publish
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_YOGENDRA_ME }}
-    
+
       - name: 🚀 Publish to Github
         id: publish_github
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          personal_token: ${{ secrets.YMEGHIO_PAT }}          
-          external_repository: yogendra/yogendra.github.io
-          publish_branch: main
-          publish_dir: ./public/github
+        run: task github:publish        
+      
+    
+      # - name: 🚀 Publish to Github
+      #   id: publish_github
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     personal_token: ${{ secrets.YMEGHIO_PAT }}          
+      #     external_repository: yogendra/yogendra.github.io
+      #     publish_branch: main
+      #     publish_dir: ./public/github
 
       - name: 🔏 Update and Close Testing Ticket
         id: close_ticker
