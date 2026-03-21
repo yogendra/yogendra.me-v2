@@ -32,10 +32,11 @@ tasks:
       - task: cloudflare:build
 
   release:publish:
-    desc: Publish the site to Firebase
+    desc: Publish the site to Firebase, Cloudflare, and GitHub
     cmds:
       - task: firebase:publish
       - task: cloudflare:publish
+      - task: github:publish
 
   release:deploy:
     desc: Build and deploy the site
@@ -50,6 +51,19 @@ tasks:
         hugo --minify --cleanDestinationDir -e github {{.CLI_ARGS}}
         echo -n "Version: "
         cat public/github/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
+
+  github:publish:
+    desc: Publish the site to GitHub Pages
+    cmds:
+      - git -C public/github add .
+      - git -C public/github commit -m "Publish site update" || true
+      - git -C public/github push origin main
+
+  github:deploy:
+    desc: Build and deploy the site to GitHub Pages
+    cmds:
+      - task: github:build
+      - task: github:publish
   
   beta:build:
     desc: Build the site for beta environment
