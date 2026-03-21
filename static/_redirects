@@ -1,0 +1,9 @@
+/jumpbox https://raw.githubusercontent.com/yogendra/pcf-tools/master/scripts/pcf-jumpbox-init.sh 301
+/keys https://raw.githubusercontent.com/yogendra/dotfiles/master/.ssh/authorized_keys 301
+/minimal-vimrc https://raw.githubusercontent.com/yogendra/dotfiles/master/.vimrc.minimal 301
+/setup-vim https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/setup-vim.sh 301
+/k8s-workspace https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/k8s-workspace.sh 301
+/k8s-profile https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/k8s-profile.sh 301
+/dotfiles https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/dotfiles-init.Linux.sh 301
+/dotfiles.Linux https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/dotfiles-init.Linux.sh 301
+/dotfiles.Darwin https://raw.githubusercontent.com/yogendra/dotfiles/master/scripts/dotfiles-init.Darwin.sh 301

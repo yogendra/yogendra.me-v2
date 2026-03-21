@@ -1,4 +1,5 @@
-public/
+public/*
+!public/github/
 resources/_gen/
 lib/
 .DS_Store
@@ -8,3 +9,6 @@ firebase-debug.log
 *.log
 nohup.out
 private/
+build_output.txt
+exit_code.txt
+.wrangler/

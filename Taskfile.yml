@@ -27,22 +27,15 @@ tasks:
   release:build:
     desc: Build the site for production
     cmds:
-      - |
-        hugo --minify --cleanDestinationDir -e firebase {{.CLI_ARGS}}
-        echo -n "Version: "
-        cat public/firebase/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
-      - |
-        hugo --minify --cleanDestinationDir -e github {{.CLI_ARGS}}
-        echo -n "Version: "
-        cat public/github/index.html | grep -oE '\| Version : [^ ]+' | grep -oE '[^ ]+$'
+      - task: firebase:build
+      - task: github:build
+      - task: cloudflare:build
 
   release:publish:
     desc: Publish the site to Firebase
     cmds:
-      - |
-        export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gac.json
-        echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > $GOOGLE_APPLICATION_CREDENTIALS
-        firebase deploy --only hosting:yogendra-me
+      - task: firebase:publish
+      - task: cloudflare:publish
 
   release:deploy:
     desc: Build and deploy the site
@@ -50,6 +43,14 @@ tasks:
       - task: release:build
       - task: release:publish
 
+  github:build:
+    desc: Build site for github pages
+    cmds:
+    - |
+        hugo --minify --cleanDestinationDir -e github {{.CLI_ARGS}}
+        echo -n "Version: "
+        cat public/github/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
+  
   beta:build:
     desc: Build the site for beta environment
     cmds:
@@ -71,6 +72,48 @@ tasks:
     cmds:
       - task: beta:build
       - task: beta:publish
+  
+  firebase:build:
+    desc: Build the site for production
+    cmds:
+      - |
+        hugo --minify --cleanDestinationDir -e firebase {{.CLI_ARGS}}
+        echo -n "Version: "
+        cat public/firebase/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
+
+  firebase:publish:
+    desc: Publish the site to Firebase
+    cmds:
+      - |
+        export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gac.json
+        echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > $GOOGLE_APPLICATION_CREDENTIALS
+        firebase deploy --only hosting:yogendra-me
+
+  firebase:deploy:
+    desc: Deploy the site to Firebase
+    cmds:
+      - task: firebase:build
+      - task: firebase:publish
+
+
+  cloudflare:build:
+    desc: Build the site for Cloudflare
+    cmds:
+      - |
+        hugo --minify --cleanDestinationDir -e cloudflare {{.CLI_ARGS}}
+        echo -n "Version: "
+        cat public/cloudflare/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
+
+  cloudflare:publish:
+    desc: Publish the static site to Cloudflare worker (Pages)
+    cmds:
+      - npx wrangler pages deploy public/cloudflare --project-name yogendra-me
+
+  cloudflare:deploy:
+    desc: Build and deploy the static site to Cloudflare
+    cmds:
+      - task: cloudflare:build
+      - task: cloudflare:publish
 
   beta:sha:
     desc: Get beta sha
@@ -120,6 +163,11 @@ tasks:
     desc: Show local development server logs
     cmds:
       - tail -f hugo.log
+
+  theme:sync:
+    desc: Sync themes/hugo-clarity submodule
+    cmds:
+      - git submodule update --remote themes/hugo-clarity
 
   post:create:
     desc: Create a new blog post
