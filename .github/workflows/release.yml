@@ -78,6 +78,8 @@ jobs:
       - name: 🚀 Publish to Github
         id: publish_github
         run: task github:publish        
+        env:
+          YMEGHIO_PAT: ${{ secrets.YMEGHIO_PAT }}
       
     
       # - name: 🚀 Publish to Github

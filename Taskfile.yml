@@ -55,8 +55,17 @@ tasks:
   github:publish:
     desc: Publish the site to GitHub Pages
     cmds:
+      - |
+        if [ "$CI" = "true" ]; then
+          git -C public/github config user.name "github-actions[bot]"
+          git -C public/github config user.email "github-actions[bot]@users.noreply.github.com"
+        fi
       - git -C public/github add .
       - git -C public/github commit -m "Publish site update" || true
+      - |
+        if [ -n "$YMEGHIO_PAT" ]; then
+          git -C public/github remote set-url origin https://x-access-token:$YMEGHIO_PAT@github.com/yogendra/yogendra.github.io.git
+        fi
       - git -C public/github push origin main
 
   github:deploy:
