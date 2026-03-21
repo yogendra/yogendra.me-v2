@@ -74,6 +74,7 @@ jobs:
         run: task cloudflare:publish
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: 🚀 Publish to Firebase
         id: publish_firebase
