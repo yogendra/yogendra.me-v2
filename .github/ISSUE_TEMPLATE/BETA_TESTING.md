@@ -7,7 +7,7 @@ assignees: yogendra
 ---
 ## 📍 Beta Site Details
 
-- **URL                :** [https://beta.yogendra.me](https://beta.yogendra.me)
+- **URL                :** [https://beta.yogendra-me.pages.dev/](https://beta.yogendra-me.pages.dev/)
 - **Deployed At        :** {{ env.DEPLOYED_AT }}
 - **Commit             :** {{ env.COMMIT_SHA }}
 - **Production Version :** [{{ env.PRODUCTION_VERSION }}](https://github.com/yogendra/yogendra.me-v2/tree/{{ env.PRODUCTION_VERSION }})

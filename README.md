@@ -4,7 +4,7 @@
 |
 [![Beta Deploy](https://github.com/yogendra/yogendra.me-v2/actions/workflows/beta.yml/badge.svg)](https://github.com/yogendra/yogendra.me-v2/actions/workflows/beta.yml)
 
-* [Beta Site](https://beta.yogendra.me)
+* [Beta Site](https://beta.yogendra-me.pages.dev/)
 * [Production Site](https://yogendra.me)
 * [Beta Testing Ticket](https://github.com/yogendra/yogendra.me-v2/issues?q=is%3Aissue%20state%3Aopen%20label%3Abeta-testing)
 

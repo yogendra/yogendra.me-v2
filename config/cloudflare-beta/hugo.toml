@@ -1,2 +1,2 @@
-baseURL = 'https://beta.yogendra.me'
+baseURL = 'https://beta.yogendra-me.pages.dev/'
 publishDir = "public/cloudflare-beta"
