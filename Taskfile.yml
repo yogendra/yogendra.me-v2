@@ -47,10 +47,10 @@ tasks:
     cmds:
     - |
         (cd public/github && git clean -ffxd)
-        git submodule update --remote public/github
+        git submodule update --init --remote public/github
         hugo --minify -e github {{.CLI_ARGS}}
         echo -n "Version: "
-        cat public/github/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
+        cat public/github/index.html | grep -oE '\| Version : [^ ]*' | grep -oE '[^ ]+$' || echo "built"
 
   github:publish:
     desc: Publish the site to GitHub Pages
@@ -60,14 +60,15 @@ tasks:
           git -C public/github config user.name "github-actions[bot]"
           git -C public/github config user.email "github-actions[bot]@users.noreply.github.com"
         fi
-      - git -C public/github add .
+      - git -C public/github checkout -B main
+      - git -C public/github add -A .
       - git -C public/github commit -m "Publish site update" || true
       - |
         if [ -n "$YMEGHIO_PAT" ]; then
           git -C public/github config --local --unset-all http.https://github.com/.extraheader || true
           git -C public/github remote set-url origin https://oauth2:$YMEGHIO_PAT@github.com/yogendra/yogendra.github.io.git
         fi
-      - git -C public/github push --force origin main
+      - git -C public/github push --force origin HEAD:main
 
   github:deploy:
     desc: Build and deploy the site to GitHub Pages
@@ -81,7 +82,7 @@ tasks:
       - hugo --minify --cleanDestinationDir -e cloudflare-beta {{.CLI_ARGS}}
       - |
         echo -n "Version: ";
-        cat public/cloudflare-beta/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
+        cat public/cloudflare-beta/index.html | grep -oE '\| Version : [^ ]*' | grep -oE '[^ ]+$' || echo "built"
 
   beta:publish:
     desc: Publish the site to Cloudflare Beta
@@ -101,12 +102,12 @@ tasks:
       - |
         hugo --minify --cleanDestinationDir -e cloudflare {{.CLI_ARGS}}
         echo -n "Version: "
-        cat public/cloudflare/index.html | grep -oE '\| Version : [^ ]+'| grep -oE '[^ ]+$'
+        cat public/cloudflare/index.html | grep -oE '\| Version : [^ ]*' | grep -oE '[^ ]+$' || echo "built"
 
   cloudflare:publish:
     desc: Publish the static site to Cloudflare worker (Pages)
     cmds:
-      - npx wrangler pages deploy public/cloudflare --project-name yogendra-me
+      - npx wrangler pages deploy public/cloudflare --project-name yogendra-me --branch main
 
   cloudflare:deploy:
     desc: Build and deploy the static site to Cloudflare
