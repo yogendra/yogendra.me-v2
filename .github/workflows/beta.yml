@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: ⬇️ Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: true
           fetch-depth: 0
@@ -31,13 +31,13 @@ jobs:
 
       - name: 📦 Install go-task
         id: install
-        uses: arduino/setup-task@v2
+        uses: arduino/setup-task@v3
         with:
           version: 3.x
 
 
       - name: 📦 Cache NPM, Tools & Conda Pkgs
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.npm
@@ -54,7 +54,7 @@ jobs:
 
       - name: 🐍 Setup Conda
         id: setup_conda
-        uses: conda-incubator/setup-miniconda@v3
+        uses: conda-incubator/setup-miniconda@v4
         with:
           activate-environment: yogendra-me
           environment-file: environment.yml
@@ -112,7 +112,7 @@ jobs:
 
       - name: 🎟️ Create Testing Ticket
         id: create-issue
-        uses: JasonEtco/create-an-issue@v2
+        uses: JasonEtco/create-an-issue@v2.9.1
         with:
           filename: .github/ISSUE_TEMPLATE/BETA_TESTING.md
           update_existing: true

@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: ⬇️ Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: true
           fetch-depth: 0
@@ -29,13 +29,13 @@ jobs:
 
       - name: 📦 Install go-task
         id: install
-        uses: arduino/setup-task@v2
+        uses: arduino/setup-task@v3
         with:
           version: 3.x
 
 
       - name: 📦 Cache NPM, Tools & Conda Pkgs
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.npm
@@ -52,7 +52,7 @@ jobs:
 
       - name: 🐍 Setup Conda
         id: setup_conda
-        uses: conda-incubator/setup-miniconda@v3
+        uses: conda-incubator/setup-miniconda@v4
         with:
           activate-environment: yogendra-me
           environment-file: environment.yml
@@ -96,7 +96,7 @@ jobs:
 
       - name: 🔏 Update and Close Testing Ticket
         id: close_ticker
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const label = 'beta-testing';
