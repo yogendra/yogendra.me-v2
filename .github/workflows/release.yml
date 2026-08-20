@@ -27,11 +27,17 @@ jobs:
           sudo mkdir -p /var/cache/apt/archives /usr/local/bin/src ~/.cache
           sudo chown -R $USER:$USER /var/cache/apt/archives /usr/local/bin ~/.cache
 
-      - name: 📦 Install go-task
-        id: install
-        uses: arduino/setup-task@v3
+      - name: 📦 Cache Task CLI
+        id: cache-task
+        uses: actions/cache@v6
         with:
-          version: 3.x
+          path: /usr/local/bin/task
+          key: ${{ runner.os }}-task-v3.38.0
+
+      - name: Install Task CLI if missing from cache
+        if: steps.cache-task.outputs.cache-hit != 'true'
+        run: |
+          sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin v3.38.0
 
 
       - name: 📦 Cache NPM, Tools & Conda Pkgs
