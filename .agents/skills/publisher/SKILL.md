@@ -131,10 +131,11 @@ cat << 'EOF' > /tmp/comment.md
 **LGTM** — Automated sanity checks verified. Ready for production release.
 EOF
 
+# 3. Post consolidated comment with LGTM approval
 gh issue comment <ISSUE_NUMBER> --body-file /tmp/comment.md
 ```
 
-This single comment triggers the `👍 Release Approval` workflow, which calculates the next version tag and pushes it.
+This triggers the `👍 Release Approval` workflow, which tags the release and launches `🎯 Release To Production`. Once deployed, the action will automatically update, close, and lock the testing issue.
 
 ---
 

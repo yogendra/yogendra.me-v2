@@ -103,8 +103,9 @@ jobs:
             const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              state: 'open',
-              labels: [label]
+              state: 'all',
+              labels: [label],
+              per_page: 5
             });
 
             if (issues.length > 0) {
@@ -129,15 +130,17 @@ jobs:
                 state_reason: 'completed'
               });
 
-              await github.rest.issues.lock({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issueNumber,
-                lock_reason: 'resolved'
-              });
+              if (!issues[0].locked) {
+                await github.rest.issues.lock({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  lock_reason: 'resolved'
+                });
+              }
               console.log(`Updated, closed, and locked issue #${issueNumber}`);
             } else {
-              console.log('No open beta-testing issue found to close.');
+              console.log('No beta-testing issue found.');
             }
 
       - name: 📢 Generate Summary

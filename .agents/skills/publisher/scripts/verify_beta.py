@@ -198,6 +198,7 @@ def post_to_github(issue_num, body, report):
         code, stdout, stderr = run_cmd(f"gh issue comment {issue_num} --body-file {tmp_comment_file}")
         if code == 0:
             print(f"[+] Comment posted successfully to Issue #{issue_num}.")
+            print(f"[+] Release workflow triggered! The action will automatically deploy to production and close Issue #{issue_num}.")
         else:
             print(f"[!] Error posting comment: {stderr}", file=sys.stderr)
     finally:
