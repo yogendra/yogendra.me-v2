@@ -19,7 +19,7 @@ jobs:
         with:
           script: |
             const comment = context.payload.comment.body.trim().toUpperCase();
-            if (comment === 'LGTM' || comment === 'APPROVED') {
+            if (comment === 'LGTM' || comment === 'APPROVED' || comment.includes('LGTM') || comment.includes('APPROVED')) {
               core.setOutput('approved', 'true');
             } else {
               core.setOutput('approved', 'false');

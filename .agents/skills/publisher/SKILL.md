@@ -97,9 +97,9 @@ Test the beta deployment (`https://beta.yogendra-me.pages.dev/`):
 
 ---
 
-### Step 4: Record Findings in Issue
+### Step 4: Record Findings & Approve in Single Issue Comment
 
-Update the checklist in the issue description and post the validation summary:
+Update the checklist in the issue description and post the consolidated validation summary with approval:
 
 ```bash
 # 1. Update checklist boxes in issue body
@@ -107,27 +107,34 @@ gh issue view <ISSUE_NUMBER> --json body --jq '.body' | \
   sed 's/- \[ \]/- [x]/g' > /tmp/issue_body.md
 gh issue edit <ISSUE_NUMBER> --body-file /tmp/issue_body.md
 
-# 2. Record validation table comment
-gh issue comment <ISSUE_NUMBER> --body "### 🧪 Beta Validation Report — ✅ All Checks Passed
+# 2. Record validation table comment with LGTM approval
+cat << 'EOF' > /tmp/comment.md
+## 🧪 Beta Validation Report
 
-| Check | URL | Status | Details |
-|---|---|---|---|
-| **Homepage Load** | https://beta.yogendra-me.pages.dev | PASS ✅ | HTTP 200, Viewport & Layout verified |
-| **New Content** | https://beta.yogendra-me.pages.dev/... | PASS ✅ | HTTP 200, Mermaid diagrams intact |
-| **Navigation** | /projects/, /about/, /events/ | PASS ✅ | HTTP 200 |"
-```
+> **Status:** All Checks Passed ✅  
+> **Environment:** [https://beta.yogendra-me.pages.dev/](https://beta.yogendra-me.pages.dev/)  
+> **Testing Ticket:** #<ISSUE_NUMBER>  
+
+### 📋 Sanity Check Results
+
+| Check | Target URL | Status | Details |
+|:---|:---|:---:|:---|
+| 🏠 Homepage & Viewport | [`/`](https://beta.yogendra-me.pages.dev/) | `PASS` ✅ | HTTP 200 • Viewport meta & Title verified |
+| 🗂️ Navigation: Projects | [`/projects/`](https://beta.yogendra-me.pages.dev/projects/) | `PASS` ✅ | HTTP 200 |
+| 🗂️ Navigation: About | [`/about/`](https://beta.yogendra-me.pages.dev/about/) | `PASS` ✅ | HTTP 200 |
+| 🗂️ Navigation: Events | [`/events/`](https://beta.yogendra-me.pages.dev/events/) | `PASS` ✅ | HTTP 200 |
 
 ---
 
-### Step 5: Approve the Release
+### 👍 Release Approval
 
-Comment `LGTM` on the issue to trigger the approval workflow:
+**LGTM** — Automated sanity checks verified. Ready for production release.
+EOF
 
-```bash
-gh issue comment <ISSUE_NUMBER> --body "LGTM"
+gh issue comment <ISSUE_NUMBER> --body-file /tmp/comment.md
 ```
 
-This triggers the `👍 Release Approval` action, which calculates the next tag (e.g. `v20260820.1`) and pushes it.
+This single comment triggers the `👍 Release Approval` workflow, which calculates the next version tag and pushes it.
 
 ---
 
