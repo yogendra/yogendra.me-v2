@@ -131,6 +131,16 @@ tasks:
           grep -oE '^- \*\*Commit[ ]+:\*\* [0-9a-f]{7,40}' | \
           grep -oE '[0-9a-f]{7,40}'
 
+  beta:verify:
+    desc: Run automated validation checks on latest beta deployment
+    cmds:
+      - python3 .agents/skills/publisher/scripts/verify_beta.py {{.CLI_ARGS}}
+
+  beta:approve:
+    desc: Validate beta deployment, record findings, and approve release (LGTM)
+    cmds:
+      - python3 .agents/skills/publisher/scripts/verify_beta.py --approve {{.CLI_ARGS}}
+
   build:
     desc: Build the site for local testing
     cmds:
