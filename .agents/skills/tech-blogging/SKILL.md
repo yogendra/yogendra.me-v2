@@ -99,6 +99,29 @@ flowchart LR
 
 ---
 
+## Workflows (preserved reference)
+
+### New Post — create a post scaffold
+```
+task post:create -- "Your Post Title"
+```
+Creates `content/posts/YYYY/MM/<slug>/index.md`; then edit the frontmatter and content of the created file.
+
+### AI-Assisted Draft — research → outline → draft a technical post
+1. **Scaffold**: `task post:create -- "Your Article Title"`.
+2. **Formulate the content brief**: specific question/topic; target audience (Beginner / Intermediate / Advanced); what diagrams are needed (Architecture / Sequence / Flowchart).
+3. **Draft**: fill frontmatter (`title`, `description`, `tags`, `categories`, `series`); add Mermaid diagrams (```mermaid blocks); include copy-pasteable configuration and CLI commands.
+4. **Verify on homelab staging**: open `https://blog.hs.yogendra.me` to review the live draft.
+5. **Publish**: set `draft: false` in frontmatter; commit & push to `main` to trigger GitHub Actions deployment.
+
+### Serve — run the local dev server (preview)
+```
+task run
+```
+Runs the Hugo dev server with drafts (`-D`), future-dated (`-F`), and expired (`-E`) posts enabled, as configured in `Taskfile.yml`.
+
+---
+
 ## 6. Publishing Checklist
 
 1. Review post formatting and diagram rendering at `https://blog.hs.yogendra.me`.

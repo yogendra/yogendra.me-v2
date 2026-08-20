@@ -150,3 +150,18 @@ gh run list --workflow="🎯 Release To Production" --limit 1
 Once completed:
 - The site is live on `https://yogendra.me`.
 - The testing ticket is automatically commented on, closed, and locked by `github-actions[bot]`.
+
+---
+
+## Workflow: Deploy (preserved reference)
+
+To deploy the site to **production**:
+```
+task release:deploy
+```
+
+To deploy to **beta/staging**:
+
+```
+task beta:deploy
+```
