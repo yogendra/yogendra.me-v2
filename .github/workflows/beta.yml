@@ -133,14 +133,9 @@ jobs:
 
       - name: 🎟️ Create Testing Ticket
         id: create-issue
-        uses: JasonEtco/create-an-issue@v2.9.2
-        with:
-          filename: .github/ISSUE_TEMPLATE/BETA_TESTING.md
-          update_existing: true
-          search_existing: open
+        uses: actions/github-script@v9
         env:          
           NEXT_VERSION: ${{ steps.next_version.outputs.next_version }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEPLOYED_AT: "${{ github.event.head_commit.timestamp || 'Now' }}"
           COMMIT_SHA: "${{ github.sha }}"
           PRODUCTION_VERSION: "${{ steps.prod_version.outputs.prod_version }}"
@@ -150,6 +145,60 @@ jobs:
           DIFF_URL: "https://github.com/${{ github.repository }}/compare/${{ steps.prod_version.outputs.prod_version }}...${{ github.sha }}"
           CHANGELOG: ${{ steps.changelog.outputs.changelog }}
           CHANGED_FILES: ${{ steps.files.outputs.files }}
+        with:
+          script: |
+            const fs = require('fs');
+            let body = fs.readFileSync('.github/ISSUE_TEMPLATE/BETA_TESTING.md', 'utf8');
+
+            // Strip YAML frontmatter
+            body = body.replace(/^---[\s\S]*?---\n*/, '');
+
+            const replacements = {
+              '{{ env.DEPLOYED_AT }}': process.env.DEPLOYED_AT,
+              '{{ env.COMMIT_SHA }}': process.env.COMMIT_SHA,
+              '{{ env.PRODUCTION_VERSION }}': process.env.PRODUCTION_VERSION,
+              '{{ env.AUTHOR }}': process.env.AUTHOR,
+              '{{ env.ACTION_URL }}': process.env.ACTION_URL,
+              '{{ env.DIFF_URL }}': process.env.DIFF_URL,
+              '{{ env.BUILD_INFO }}': process.env.BUILD_INFO,
+              '{{ env.CHANGELOG }}': process.env.CHANGELOG,
+              '{{ env.CHANGED_FILES }}': process.env.CHANGED_FILES
+            };
+
+            for (const [key, val] of Object.entries(replacements)) {
+              body = body.split(key).join(val || '');
+            }
+
+            const title = `🔨Beta Release : ${process.env.NEXT_VERSION}`;
+            const { data: openIssues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: ['beta-testing']
+            });
+
+            let issue;
+            if (openIssues.length > 0) {
+              issue = (await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: openIssues[0].number,
+                title,
+                body
+              })).data;
+            } else {
+              issue = (await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ['beta-testing'],
+                assignees: ['yogendra']
+              })).data;
+            }
+
+            core.setOutput('number', issue.number);
+            core.setOutput('url', issue.html_url);
       - name: 📢 Generate Summary
         id: summary
         run: |
