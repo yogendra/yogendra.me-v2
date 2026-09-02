@@ -39,6 +39,9 @@ jobs:
             type=raw,value=latest
             type=sha,format=short
 
+      - name: 📦 Install Task CLI
+        run: sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin v3.38.0
+
       - name: 📦 Build Container Image
         run: task builder:build IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/blog-builder:latest
 
