@@ -66,6 +66,9 @@ tasks:
       - |
         if [ -n "$YMEGHIO_PAT" ]; then
           git -C public/github config --local --unset-all http.https://github.com/.extraheader || true
+          for key in $(git -C public/github config --local --name-only --get-regexp '^includeif\.gitdir:' 2>/dev/null || true); do
+            git -C public/github config --local --unset-all "$key" || true
+          done
           git -C public/github remote set-url origin https://oauth2:$YMEGHIO_PAT@github.com/yogendra/yogendra.github.io.git
         fi
       - git -C public/github push --force origin HEAD:main
