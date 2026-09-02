@@ -33,6 +33,7 @@ jobs:
     permissions:
       contents: write
       issues: write
+      actions: write
     steps:
      
       - name: ⬇️ Checkout
@@ -41,7 +42,6 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
-          token: ${{ secrets.YMEGHIO_PAT }}
 
       - name: 🔓 Prepare cache directories
         run: |
@@ -86,6 +86,21 @@ jobs:
           git tag ${{ steps.next_version.outputs.next_version }} ${{ steps.approved_version.outputs.approved_version }}
           git push origin ${{ steps.next_version.outputs.next_version }}
 
+      - name: 🚀 Trigger Production Release
+        id: trigger_release
+        uses: actions/github-script@v9
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'release.yml',
+              ref: '${{ steps.next_version.outputs.next_version }}',
+              inputs: {
+                tag: '${{ steps.next_version.outputs.next_version }}'
+              }
+            });
+
       - name: 📢 Generate Summary
         id: summary
         run: |
@@ -93,5 +108,5 @@ jobs:
           echo "- **New Tag:** \`${{ steps.next_version.outputs.next_version }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- **Approved By:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Production release workflow has been triggered by the new tag." >> $GITHUB_STEP_SUMMARY
+          echo "Production release workflow has been triggered for ${{ steps.next_version.outputs.next_version }}." >> $GITHUB_STEP_SUMMARY
 

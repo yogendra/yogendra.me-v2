@@ -2,6 +2,3 @@
 	path = themes/hugo-clarity
 	url = https://github.com/chipzoller/hugo-clarity
 	branch = master
-[submodule "public/github"]
-	path = public/github
-	url = git@github.com:yogendra/yogendra.github.io.git

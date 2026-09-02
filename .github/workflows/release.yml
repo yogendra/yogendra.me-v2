@@ -6,10 +6,12 @@ on:
   push:
     tags:
       - 'v*'
-    paths:
-      - "!.devcontainer/**"
-      - "!.github/workflows/publish-devcontainer.yml"
-      - "**"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release Tag'
+        required: false
+
 jobs:
   publish:
     name: 🚀 Publish to Production
@@ -21,7 +23,15 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
+
+      - name: ⬇️ Checkout GitHub Pages Repo
+        id: checkout_pages
+        uses: actions/checkout@v7
+        with:
+          repository: yogendra/yogendra.github.io
           token: ${{ secrets.YMEGHIO_PAT }}
+          path: public/github
+          fetch-depth: 1
 
       - name: 🔓 Prepare cache directories
         run: |
