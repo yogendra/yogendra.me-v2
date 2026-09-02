@@ -1,0 +1,36 @@
+networks:
+  proxy:
+    external: true
+
+services:
+  blog-editor:
+    build:
+      context: .
+      dockerfile: editor.Dockerfile
+    image: ghcr.io/yogendra/yogendra.me-v2-editor:latest
+    container_name: blog-editor
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - DEFAULT_WORKSPACE=/workspace
+      - PROXY_DOMAIN=blog.hs.yogendra.me
+      - SUDO_PASSWORD=admin
+    volumes:
+      - .:/workspace
+      - /home/yogi/.config/code-server-blog:/config
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.blog-editor.rule=Host(`blog.hs.yogendra.me`)"
+      - "traefik.http.routers.blog-editor.entrypoints=websecure"
+      - "traefik.http.routers.blog-editor.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.blog-editor.middlewares=authelia@docker"
+      - "traefik.http.services.blog-editor.loadbalancer.server.port=8443"
+      - "homepage.group=Docs and Photos"
+      - "homepage.name=Blog Editor"
+      - "homepage.icon=vscode.svg"
+      - "homepage.href=https://blog.hs.yogendra.me"
+      - "homepage.description=VS Code Web Editor for yogendra.me"

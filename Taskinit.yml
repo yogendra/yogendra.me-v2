@@ -43,7 +43,10 @@ tasks:
         platforms: [darwin/arm64]
       - bash /tmp/miniconda.sh -b -p $HOME/miniconda
       - $HOME/miniconda/bin/conda config --set auto_update_conda false
-      - $HOME/miniconda/bin/conda config --remove channels defaults 2>/dev/null || true
+      - $HOME/miniconda/bin/conda config --add channels conda-forge
+      - $HOME/miniconda/bin/conda config --set channel_priority strict
+      - $HOME/miniconda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main 2>/dev/null || true
+      - $HOME/miniconda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r 2>/dev/null || true
       - $HOME/miniconda/bin/conda init bash
       - echo "Please restart your shell to use conda."
     status:
@@ -52,7 +55,7 @@ tasks:
   _install:python-env:
     internal: true
     cmds:
-      - conda env update -f environment.yml --prune --override-channels
+      - conda env update -f environment.yml --prune
     status:
       - test -d /usr/share/miniconda/envs/yogendra-me || test -d $HOME/miniconda/envs/yogendra-me || test -d $HOME/miniconda3/envs/yogendra-me || [ -n "$CONDA_PREFIX" -a -d "$CONDA_PREFIX" ] || (command -v conda >/dev/null 2>&1 && conda env list | grep -q yogendra-me)
 

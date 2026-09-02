@@ -384,38 +384,38 @@ tasks:
   builder:build:
     desc: Build the pre-baked builder Docker image
     vars:
-      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/blog-builder:latest"}}'
+      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-builder:latest"}}'
     cmds:
-      - docker build -t {{.IMAGE_TAG}} .
+      - docker build -t {{.IMAGE_TAG}} -f builder.Dockerfile .
 
   builder:test:
     desc: Test that all tools work inside the builder Docker image
     vars:
-      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/blog-builder:latest"}}'
+      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-builder:latest"}}'
     cmds:
       - |
         echo "Testing builder image tools..."
         docker run --rm {{.IMAGE_TAG}} bash -c "
           set -e
-          echo -n 'Task      : '; task --version
-          echo -n 'Hugo      : '; hugo version
-          echo -n 'Dart Sass : '; sass --version
-          echo -n 'Node.js   : '; node --version
-          echo -n 'NPM       : '; npm --version
-          echo -n 'Wrangler  : '; wrangler --version
-          echo -n 'Python    : '; python3 --version
-          echo -n 'Pygments  : '; pygmentize -V
-          echo -n 'Rst2html  : '; rst2html --version
+          echo -n 'Task       : '; task --version
+          echo -n 'Hugo       : '; hugo version
+          echo -n 'Dart Sass  : '; sass --version
+          echo -n 'Node.js    : '; node --version
+          echo -n 'NPM        : '; npm --version
+          echo -n 'Wrangler   : '; wrangler --version
+          echo -n 'Python     : '; python3 --version
+          echo -n 'Pygments   : '; pygmentize -V
+          echo -n 'Rst2html   : '; rst2html --version
           echo -n 'Asciidoctor: '; asciidoctor --version
-          echo -n 'Graphviz  : '; dot -V
-          echo -n 'Pandoc    : '; pandoc --version | head -n 1
+          echo -n 'Graphviz   : '; dot -V
+          echo -n 'Pandoc     : '; pandoc --version | head -n 1
         "
         echo "✅ All builder tools verified successfully!"
 
   builder:run:
     desc: Run task command inside the builder Docker container locally
     vars:
-      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/blog-builder:latest"}}'
+      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-builder:latest"}}'
       CMD: '{{.CLI_ARGS | default "build"}}'
     cmds:
       - docker run --rm -v {{.TASKFILE_DIR}}:/workspace -w /workspace {{.IMAGE_TAG}} task {{.CMD}}
@@ -423,15 +423,68 @@ tasks:
   builder:shell:
     desc: Open interactive shell inside the builder container
     vars:
-      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/blog-builder:latest"}}'
+      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-builder:latest"}}'
     cmds:
       - docker run --rm -it -v {{.TASKFILE_DIR}}:/workspace -w /workspace {{.IMAGE_TAG}} bash
 
   builder:publish:
     desc: Publish builder Docker image to GHCR
     vars:
-      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/blog-builder:latest"}}'
+      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-builder:latest"}}'
     cmds:
       - docker push {{.IMAGE_TAG}}
+
+  # ---------------------------------------------------------------------------
+  # Web VS Code Editor Lifecycle (blog.hs.yogendra.me)
+  # ---------------------------------------------------------------------------
+  editor:build:
+    desc: Build the Web VS Code Editor image
+    cmds:
+      - docker compose -f docker-compose.editor.yml build
+
+  editor:start:
+    desc: Start the Web VS Code Editor container with Traefik routing
+    cmds:
+      - mkdir -p /home/yogi/.config/code-server-blog
+      - docker compose -f docker-compose.editor.yml up -d
+      - echo "✅ Editor started! Accessible at https://blog.hs.yogendra.me"
+
+  editor:stop:
+    desc: Stop the Web VS Code Editor container
+    cmds:
+      - docker compose -f docker-compose.editor.yml down
+
+  editor:status:
+    desc: Check status of the Web VS Code Editor container
+    cmds:
+      - docker compose -f docker-compose.editor.yml ps
+
+  editor:logs:
+    desc: Follow logs of the Web VS Code Editor container
+    cmds:
+      - docker compose -f docker-compose.editor.yml logs -f
+
+  editor:log:
+    desc: Alias for editor:logs
+    cmds:
+      - task: editor:logs
+
+  editor:info:
+    desc: Display connection and routing info for the Web VS Code Editor
+    cmds:
+      - |
+        echo "=== Blog Web Editor Information ==="
+        echo "URL          : https://blog.hs.yogendra.me"
+        echo "Compose File : docker-compose.editor.yml"
+        echo "Container    : blog-editor"
+        echo "Auth         : Authelia (SSO via Traefik middleware)"
+        echo "Workspace    : /workspace (mapped to repository root)"
+        echo ""
+        docker compose -f docker-compose.editor.yml ps
+
+  editor:shell:
+    desc: Open interactive shell inside the Web VS Code Editor container
+    cmds:
+      - docker exec -it blog-editor bash
 
   
