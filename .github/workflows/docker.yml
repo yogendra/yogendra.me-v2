@@ -1,13 +1,11 @@
-name: 🐳 Build and Publish Builder Image
+name: 🐳 Build and Publish Runner Image
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'builder.Dockerfile'
-      - 'Taskinit.yml'
-      - 'environment.yml'
+      - 'runner.Dockerfile'
       - '.github/workflows/docker.yml'
   workflow_dispatch:
 
@@ -17,7 +15,7 @@ permissions:
 
 jobs:
   build-and-push:
-    name: 🏗️ Build & Push Container Image
+    name: 🏗️ Build & Push Runner Image
     runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout
@@ -34,19 +32,16 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository_owner }}/yogendra.me-v2-builder
+          images: ghcr.io/${{ github.repository_owner }}/yogendra.me-v2-runner
           tags: |
             type=raw,value=latest
             type=sha,format=short
 
-      - name: 📦 Install Task CLI
-        run: sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin v3.38.0
-
-      - name: 📦 Build Container Image
-        run: task builder:build IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/yogendra.me-v2-builder:latest
-
-      - name: 🧪 Test Container Image Tools
-        run: task builder:test IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/yogendra.me-v2-builder:latest
-
-      - name: 🚀 Publish Image to GHCR
-        run: task builder:publish IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/yogendra.me-v2-builder:latest
+      - name: 🏗️ Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: runner.Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

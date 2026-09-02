@@ -309,7 +309,7 @@ tasks:
     vars:
       RUNNER_NAME: '{{.RUNNER_NAME | default "homelab-runner"}}'
       RUNNER_CONTAINER: 'gh-runner-yogendra-me'
-      RUNNER_IMAGE: '{{.RUNNER_IMAGE | default "ghcr.io/yogendra/yogendra.me-v2-builder:latest"}}'
+      RUNNER_IMAGE: '{{.RUNNER_IMAGE | default "ghcr.io/yogendra/yogendra.me-v2-runner:latest"}}'
       REPO_URL: 'https://github.com/yogendra/yogendra.me-v2'
     cmds:
       - |
@@ -374,22 +374,22 @@ tasks:
         fi
 
   # ---------------------------------------------------------------------------
-  # Builder Container Lifecycle (Build, Test, Run, Publish)
+  # Runner Image Lifecycle (Build, Test, Shell, Publish)
   # ---------------------------------------------------------------------------
-  builder:build:
-    desc: Build the pre-baked builder Docker image
+  runner:image:build:
+    desc: Build the self-hosted runner Docker image
     vars:
-      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-builder:latest"}}'
+      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-runner:latest"}}'
     cmds:
-      - docker build -t {{.IMAGE_TAG}} -f builder.Dockerfile .
+      - docker build -t {{.IMAGE_TAG}} -f runner.Dockerfile .
 
-  builder:test:
-    desc: Test that all tools work inside the builder Docker image
+  runner:image:test:
+    desc: Test that all tools work inside the runner image
     vars:
-      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-builder:latest"}}'
+      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-runner:latest"}}'
     cmds:
       - |
-        echo "Testing builder image tools..."
+        echo "Testing runner image tools..."
         docker run --rm {{.IMAGE_TAG}} bash -c "
           set -e
           echo -n 'Task       : '; task --version
@@ -405,29 +405,22 @@ tasks:
           echo -n 'Graphviz   : '; dot -V
           echo -n 'Pandoc     : '; pandoc --version | head -n 1
         "
-        echo "✅ All builder tools verified successfully!"
+        echo "✅ All runner image tools verified!"
 
-  builder:run:
-    desc: Run task command inside the builder Docker container locally
+  runner:image:shell:
+    desc: Open interactive shell inside the runner image
     vars:
-      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-builder:latest"}}'
-      CMD: '{{.CLI_ARGS | default "build"}}'
-    cmds:
-      - docker run --rm -v {{.TASKFILE_DIR}}:/workspace -w /workspace {{.IMAGE_TAG}} task {{.CMD}}
-
-  builder:shell:
-    desc: Open interactive shell inside the builder container
-    vars:
-      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-builder:latest"}}'
+      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-runner:latest"}}'
     cmds:
       - docker run --rm -it -v {{.TASKFILE_DIR}}:/workspace -w /workspace {{.IMAGE_TAG}} bash
 
-  builder:publish:
-    desc: Publish builder Docker image to GHCR
+  runner:image:publish:
+    desc: Publish runner image to GHCR
     vars:
-      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-builder:latest"}}'
+      IMAGE_TAG: '{{.IMAGE_TAG | default "ghcr.io/yogendra/yogendra.me-v2-runner:latest"}}'
     cmds:
       - docker push {{.IMAGE_TAG}}
+
 
   # ---------------------------------------------------------------------------
   # Web VS Code Editor Lifecycle (blog.hs.yogendra.me)
