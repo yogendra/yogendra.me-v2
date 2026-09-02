@@ -3,47 +3,38 @@ FROM lscr.io/linuxserver/code-server:latest
 LABEL org.opencontainers.image.source="https://github.com/yogendra/yogendra.me-v2"
 LABEL org.opencontainers.image.description="VS Code in browser for yogendra.me blogging"
 
-# Allow abc user passwordless sudo for local dev flexibility
-RUN echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/abc && \
-    chmod 0440 /etc/sudoers.d/abc
+ENV DEBIAN_FRONTEND=noninteractive
+ENV HOME="/root"
+ENV PATH="/root/miniconda/bin:/root/miniconda/envs/yogendra-me/bin:/app/code-server/bin:/usr/local/bin:$PATH"
 
-# Install Hugo, Git, Task, Node, Python tools, and blog dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
-    git \
-    sudo \
-    build-essential \
-    ruby-asciidoctor \
-    asciidoctor \
-    graphviz \
-    pandoc \
-    python3 \
-    python3-pip \
-    python3-setuptools \
-    && rm -rf /var/lib/apt/lists/*
+# 1. Base tools, git safe directory, and passwordless sudo for abc user
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl git sudo \
+    && rm -rf /var/lib/apt/lists/* \
+    && echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/abc \
+    && chmod 0440 /etc/sudoers.d/abc \
+    && git config --system --add safe.directory /workspace
 
-# Install Task CLI
+# 2. Install Task CLI
 RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin v3.38.0
 
-# Install Hugo Extended & Dart Sass
-RUN curl -sSL "https://github.com/gohugoio/hugo/releases/download/v0.165.0/hugo_extended_0.165.0_linux-amd64.tar.gz" | \
-    tar -C /usr/local/bin -xz hugo && \
-    curl -sLJ "https://github.com/sass/dart-sass/releases/download/1.97.3/dart-sass-1.97.3-linux-x64.tar.gz" | \
-    tar -xz --strip-components=1 -C /usr/local/bin
+# 3. Use Taskfile & Taskinit.yml as the SINGLE source of truth
+WORKDIR /tmp/setup
+COPY Taskfile.yml Taskinit.yml environment.yml ./
+RUN task init && \
+    npm install -g wrangler && \
+    rm -rf /tmp/setup /var/lib/apt/lists/*
 
-# Install Python tools
-RUN pip3 install --no-cache-dir --break-system-packages docutils pygments rst2html
+# 4. Pre-install VS Code extensions for blogging
+RUN mkdir -p /config /app/code-server/extensions && \
+    chown -R abc:abc /config /app/code-server/extensions
 
-# Ensure git safe directory for mounted repo
-RUN git config --system --add safe.directory /workspace
-
-# Pre-install useful VS Code extensions for Markdown, Hugo, Mermaid, and Spellcheck
 USER abc
-RUN code-server --install-extension yzhang.markdown-all-in-one || true \
-    && code-server --install-extension bpruitt-goddard.mermaid-markdown-syntax-highlighting || true \
-    && code-server --install-extension bierner.markdown-preview-github-styles || true \
-    && code-server --install-extension streetsidesoftware.code-spell-checker || true \
-    && code-server --install-extension timonwong.shellcheck || true
+ENV HOME="/config"
+RUN /app/code-server/bin/code-server --extensions-dir /app/code-server/extensions --user-data-dir /config/data --install-extension yzhang.markdown-all-in-one \
+    && /app/code-server/bin/code-server --extensions-dir /app/code-server/extensions --user-data-dir /config/data --install-extension bpruitt-goddard.mermaid-markdown-syntax-highlighting \
+    && /app/code-server/bin/code-server --extensions-dir /app/code-server/extensions --user-data-dir /config/data --install-extension bierner.markdown-preview-github-styles \
+    && /app/code-server/bin/code-server --extensions-dir /app/code-server/extensions --user-data-dir /config/data --install-extension streetsidesoftware.code-spell-checker \
+    && /app/code-server/bin/code-server --extensions-dir /app/code-server/extensions --user-data-dir /config/data --install-extension timonwong.shellcheck
 
 USER root
 WORKDIR /workspace

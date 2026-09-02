@@ -1,0 +1,7 @@
+# Ignore everything by default
+**
+
+# Allow only files needed inside the container by COPY
+!Taskfile.yml
+!Taskinit.yml
+!environment.yml
