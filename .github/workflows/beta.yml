@@ -13,11 +13,6 @@ jobs:
   build-and-deploy:
     name: 🔨 Build and Deploy
     runs-on: ${{ fromJSON(vars.RUNNER_TYPE || '"ubuntu-latest"') }}
-    container:
-      image: ghcr.io/yogendra/yogendra.me-v2-builder:latest
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
     permissions:
       contents: write
       issues: write
@@ -29,8 +24,6 @@ jobs:
           submodules: true
           fetch-depth: 0
 
-      - name: ⚙️ Configure Git Safe Directory
-        run: git config --system --add safe.directory '*'
 
       - name: 📦 Cache Hugo Build Assets
         uses: actions/cache@v6
