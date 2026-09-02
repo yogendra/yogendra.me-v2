@@ -37,11 +37,16 @@ jobs:
      
       - name: ⬇️ Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: true
           fetch-depth: 0
           token: ${{ secrets.YMEGHIO_PAT }}
+
+      - name: 🔓 Prepare cache directories
+        run: |
+          sudo mkdir -p /usr/local/bin
+          sudo chown -R $USER:$USER /usr/local/bin
       - name: 📦 Cache Task CLI
         id: cache-task
         uses: actions/cache@v6

@@ -19,15 +19,15 @@ jobs:
     steps:
       - name: ⬇️ Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: true
           fetch-depth: 0
           
       - name: 🔓 Prepare cache directories
         run: |
-          sudo mkdir -p /var/cache/apt/archives /usr/local/bin/src ~/.cache
-          sudo chown -R $USER:$USER /var/cache/apt/archives /usr/local/bin ~/.cache
+          sudo mkdir -p /usr/local/bin ~/.cache ~/conda_pkgs_dir
+          sudo chown -R $USER:$USER /usr/local/bin ~/.cache ~/conda_pkgs_dir
 
       - name: 📦 Cache Task CLI
         id: cache-task
@@ -41,22 +41,35 @@ jobs:
         run: |
           sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin v3.38.0
 
-
-      - name: 📦 Cache NPM, Tools & Conda Pkgs
+      - name: 📦 Cache Tools & Dependencies
         uses: actions/cache@v6
         with:
           path: |
             ~/.npm
             ~/.cache/pip
-            ~/conda_pkgs_dir
-            /usr/share/miniconda/pkgs
             /usr/local/bin/hugo
             /usr/local/bin/sass
-            /usr/local/bin/src
-            /var/cache/apt/archives
-          key: ${{ runner.os }}-setup-${{ hashFiles('Taskinit.yml', 'environment.yml') }}
+          key: ${{ runner.os }}-tools-${{ hashFiles('Taskinit.yml') }}
           restore-keys: |
-            ${{ runner.os }}-setup-
+            ${{ runner.os }}-tools-
+
+      - name: 📦 Cache Conda packages
+        uses: actions/cache@v6
+        with:
+          path: ~/conda_pkgs_dir
+          key: ${{ runner.os }}-conda-${{ hashFiles('environment.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-conda-
+
+      - name: 📦 Cache Hugo Build Assets
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cache/hugo_cache
+            resources
+          key: ${{ runner.os }}-hugo-${{ hashFiles('assets/**', 'content/**', 'config/**') }}
+          restore-keys: |
+            ${{ runner.os }}-hugo-
 
       - name: 🐍 Setup Conda
         id: setup_conda
@@ -65,7 +78,7 @@ jobs:
           activate-environment: yogendra-me
           environment-file: environment.yml
           pkgs-dirs: ~/conda_pkgs_dir
-          auto-activate-base: false
+          auto-activate: false
           use-mamba: true
 
       - name: 🎬 Initialize Environment
@@ -118,7 +131,7 @@ jobs:
 
       - name: 🎟️ Create Testing Ticket
         id: create-issue
-        uses: JasonEtco/create-an-issue@v2.9.1
+        uses: JasonEtco/create-an-issue@v2.9.2
         with:
           filename: .github/ISSUE_TEMPLATE/BETA_TESTING.md
           update_existing: true
