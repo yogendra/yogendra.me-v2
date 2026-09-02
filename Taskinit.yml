@@ -52,7 +52,7 @@ tasks:
     cmds:
       - conda env update -f environment.yml --prune
     status:
-      - conda env list | grep -q yogendra-me
+      - test -d /usr/share/miniconda/envs/yogendra-me || test -d $HOME/miniconda/envs/yogendra-me || test -d $HOME/miniconda3/envs/yogendra-me || test -d $CONDA_PREFIX || (command -v conda >/dev/null 2>&1 && conda env list | grep -q yogendra-me)
 
   _install:go:
     internal: true
