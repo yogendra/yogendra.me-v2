@@ -76,14 +76,12 @@ jobs:
 
       - name: 🐍 Setup Conda
         id: setup_conda
-        uses: conda-incubator/setup-miniconda@v4
-        with:
-          activate-environment: yogendra-me
-          environment-file: ${{ steps.cache-conda.outputs.cache-hit != 'true' && 'environment.yml' || '' }}
-          pkgs-dirs: ~/conda_pkgs_dir
-          auto-activate: false
-          use-mamba: true
-          run-init: false
+        run: |
+          echo "/usr/share/miniconda/condabin" >> $GITHUB_PATH
+          echo "/usr/share/miniconda/envs/yogendra-me/bin" >> $GITHUB_PATH
+          if [ "${{ steps.cache-conda.outputs.cache-hit }}" != "true" ]; then
+            /usr/share/miniconda/condabin/conda env update --name yogendra-me --file environment.yml --prune
+          fi
 
       - name: 🎬 Initialize Environment
         id: init
