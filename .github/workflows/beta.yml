@@ -83,6 +83,7 @@ jobs:
           pkgs-dirs: ~/conda_pkgs_dir
           auto-activate: false
           use-mamba: true
+          run-init: false
 
       - name: 🎬 Initialize Environment
         id: init
