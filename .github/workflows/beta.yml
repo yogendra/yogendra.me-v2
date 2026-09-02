@@ -27,7 +27,7 @@ jobs:
       - name: 🔓 Prepare cache directories
         run: |
           sudo mkdir -p /usr/local/bin ~/.cache ~/conda_pkgs_dir
-          sudo chown -R $USER:$USER /usr/local/bin ~/.cache ~/conda_pkgs_dir
+          sudo chown -R $(id -u):$(id -g) /usr/local/bin ~/.cache ~/conda_pkgs_dir
 
       - name: 📦 Cache Task CLI
         id: cache-task
