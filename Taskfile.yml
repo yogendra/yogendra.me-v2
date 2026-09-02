@@ -272,4 +272,110 @@ tasks:
     silent: true
     cmds:
       - herdr --session blog
+
+  # ---------------------------------------------------------------------------
+  # CI Runner Selection & Variable Management
+  # ---------------------------------------------------------------------------
+  runner:use:github:
+    desc: Set CI runner to GitHub-hosted (ubuntu-latest)
+    cmds:
+      - gh variable set RUNNER_TYPE -b "ubuntu-latest"
+      - echo "✅ CI runner set to GitHub-hosted (ubuntu-latest)"
+
+  runner:use:homelab:
+    desc: Set CI runner to Self-Hosted (homelab)
+    cmds:
+      - gh variable set RUNNER_TYPE -b '["self-hosted", "homelab"]'
+      - echo "✅ CI runner set to Self-Hosted [\"self-hosted\", \"homelab\"]"
+
+  runner:status:
+    desc: Show current runner variable and runner status in GitHub & Docker
+    cmds:
+      - |
+        echo "=== GitHub Repository Variables ==="
+        gh variable list | grep RUNNER_TYPE || echo "RUNNER_TYPE is not set (defaults to ubuntu-latest)"
+        echo ""
+        echo "=== GitHub Self-Hosted Runners ==="
+        gh api repos/yogendra/yogendra.me-v2/actions/runners --jq '.runners[] | {id: .id, name: .name, os: .os, status: .status, busy: .busy, labels: [.labels[].name]}' 2>/dev/null || echo "No runners registered"
+        echo ""
+        echo "=== Local Docker Container Status ==="
+        docker ps -a --filter "name=gh-runner-yogendra-me" --format "table {{.Names}}\t{{.Status}}\t{{.Image}}"
+
+  # ---------------------------------------------------------------------------
+  # Self-Hosted Runner Local Docker CRUD
+  # ---------------------------------------------------------------------------
+  runner:create:
+    desc: Create and start a local self-hosted GitHub Actions runner in Docker
+    vars:
+      RUNNER_NAME: '{{.RUNNER_NAME | default "homelab-runner"}}'
+      RUNNER_CONTAINER: 'gh-runner-yogendra-me'
+      REPO_URL: 'https://github.com/yogendra/yogendra.me-v2'
+    cmds:
+      - |
+        echo "Fetching runner registration token from GitHub..."
+        TOKEN=$(gh api --method POST repos/yogendra/yogendra.me-v2/actions/runners/registration-token --jq .token)
+        if [ -z "$TOKEN" ]; then
+          echo "❌ Failed to retrieve runner registration token. Check 'gh auth status'."
+          exit 1
+        fi
+
+        echo "Cleaning up any existing container..."
+        docker rm -f {{.RUNNER_CONTAINER}} 2>/dev/null || true
+
+        echo "Launching runner container {{.RUNNER_CONTAINER}} (name: {{.RUNNER_NAME}})..."
+        docker run -d \
+          --name {{.RUNNER_CONTAINER}} \
+          --restart unless-stopped \
+          -e REPO_URL="{{.REPO_URL}}" \
+          -e RUNNER_NAME="{{.RUNNER_NAME}}" \
+          -e RUNNER_TOKEN="$TOKEN" \
+          -e RUNNER_LABELS="homelab,linux,x64" \
+          -v /var/run/docker.sock:/var/run/docker.sock \
+          my-young-runner:latest 2>/dev/null || \
+        docker run -d \
+          --name {{.RUNNER_CONTAINER}} \
+          --restart unless-stopped \
+          -e REPO_URL="{{.REPO_URL}}" \
+          -e RUNNER_NAME="{{.RUNNER_NAME}}" \
+          -e RUNNER_TOKEN="$TOKEN" \
+          -e RUNNER_LABELS="homelab,linux,x64" \
+          -v /var/run/docker.sock:/var/run/docker.sock \
+          ghcr.io/actions/actions-runner:latest \
+          bash -c './config.sh --url {{.REPO_URL}} --token '"$TOKEN"' --name {{.RUNNER_NAME}} --labels homelab,linux,x64 --unattended --replace && ./run.sh'
+
+        echo "✅ Runner container created and registering with GitHub!"
+
+  runner:start:
+    desc: Start stopped runner container
+    cmds:
+      - docker start gh-runner-yogendra-me
+
+  runner:stop:
+    desc: Stop runner container
+    cmds:
+      - docker stop gh-runner-yogendra-me
+
+  runner:logs:
+    desc: Tail runner container logs
+    cmds:
+      - docker logs -f gh-runner-yogendra-me
+
+  runner:delete:
+    desc: Stop, remove container and deregister runner from GitHub
+    vars:
+      RUNNER_NAME: '{{.RUNNER_NAME | default "homelab-runner"}}'
+      RUNNER_CONTAINER: 'gh-runner-yogendra-me'
+    cmds:
+      - |
+        docker rm -f {{.RUNNER_CONTAINER}} 2>/dev/null || true
+        echo "Looking up runner ID in GitHub..."
+        RUNNER_ID=$(gh api repos/yogendra/yogendra.me-v2/actions/runners --jq '.runners[] | select(.name=="{{.RUNNER_NAME}}") | .id' 2>/dev/null || true)
+        if [ -n "$RUNNER_ID" ]; then
+          echo "Deregistering runner ID $RUNNER_ID from GitHub..."
+          gh api --method DELETE repos/yogendra/yogendra.me-v2/actions/runners/$RUNNER_ID
+          echo "✅ Runner deregistered from GitHub."
+        else
+          echo "No registered runner found on GitHub with name {{.RUNNER_NAME}}."
+        fi
+
   

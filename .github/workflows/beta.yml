@@ -12,7 +12,7 @@ on:
 jobs:
   build-and-deploy:
     name: 🔨 Build and Deploy
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(vars.RUNNER_TYPE || '"ubuntu-latest"') }}
     permissions:
       contents: write
       issues: write
