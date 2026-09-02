@@ -120,4 +120,5 @@ With this pipeline:
 - **Research & Outlining**: Accelerated by AI prompts and structured briefs.
 - **Visuals**: Seamless Mermaid diagrams rendered natively by the Hugo Clarity theme.
 - **Staging**: Instant feedback at `https://blog.hs.yogendra.me` protected by Authelia SSO.
+- **Verification**: Automated beta quality checks on Cloudflare Pages before production rollout.
 - **Publishing**: Clean, automated CI/CD directly to `yogendra.me`.
