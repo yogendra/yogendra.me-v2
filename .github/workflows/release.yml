@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 1
 
       - name: ⚙️ Configure Git Safe Directory
-        run: git config --system --add safe.directory '*'
+        run: git config --add safe.directory '*'
 
       - name: 📦 Cache Hugo Build Assets
         uses: actions/cache@v6
