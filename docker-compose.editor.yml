@@ -20,6 +20,9 @@ services:
     volumes:
       - .:/workspace
       - /home/yogi/.config/code-server-blog:/config
+      - ~/.ssh:/config/.ssh
+      - ~/.gitconfig:/config/.gitconfig
+
     networks:
       - proxy
     labels:
