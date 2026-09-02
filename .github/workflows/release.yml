@@ -62,13 +62,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-tools-
 
-      - name: 📦 Cache Conda packages
+      - name: 📦 Cache Conda Environment & Packages
+        id: cache-conda
         uses: actions/cache@v6
         with:
-          path: ~/conda_pkgs_dir
-          key: ${{ runner.os }}-conda-${{ hashFiles('environment.yml') }}
+          path: |
+            /usr/share/miniconda/envs/yogendra-me
+            ~/conda_pkgs_dir
+          key: ${{ runner.os }}-conda-env-${{ hashFiles('environment.yml') }}
           restore-keys: |
-            ${{ runner.os }}-conda-
+            ${{ runner.os }}-conda-env-
 
       - name: 📦 Cache Hugo Build Assets
         uses: actions/cache@v6
