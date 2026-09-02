@@ -322,10 +322,12 @@ tasks:
         echo "Cleaning up any existing container..."
         docker rm -f {{.RUNNER_CONTAINER}} 2>/dev/null || true
 
-        echo "Launching runner container {{.RUNNER_CONTAINER}} (name: {{.RUNNER_NAME}})..."
+        DOCKER_GID=$(stat -c '%g' /var/run/docker.sock 2>/dev/null || echo 987)
+        echo "Launching runner container {{.RUNNER_CONTAINER}} (name: {{.RUNNER_NAME}}, docker GID: $DOCKER_GID)..."
         docker run -d \
           --name {{.RUNNER_CONTAINER}} \
           --restart unless-stopped \
+          --group-add "$DOCKER_GID" \
           -e REPO_URL="{{.REPO_URL}}" \
           -e RUNNER_NAME="{{.RUNNER_NAME}}" \
           -e RUNNER_TOKEN="$TOKEN" \
@@ -335,6 +337,7 @@ tasks:
         docker run -d \
           --name {{.RUNNER_CONTAINER}} \
           --restart unless-stopped \
+          --group-add "$DOCKER_GID" \
           -e REPO_URL="{{.REPO_URL}}" \
           -e RUNNER_NAME="{{.RUNNER_NAME}}" \
           -e RUNNER_TOKEN="$TOKEN" \
