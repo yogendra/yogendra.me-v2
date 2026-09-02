@@ -16,6 +16,8 @@ jobs:
   publish:
     name: 🚀 Publish to Production
     runs-on: ${{ fromJSON(vars.RUNNER_TYPE || '"ubuntu-latest"') }}
+    container:
+      image: ghcr.io/yogendra/yogendra.me-v2-builder:latest
     steps:
       - name: ⬇️ Checkout
         id: checkout
@@ -33,46 +35,6 @@ jobs:
           path: public/github
           fetch-depth: 1
 
-      - name: 🔓 Prepare cache directories
-        run: |
-          sudo mkdir -p /usr/local/bin ~/.cache ~/conda_pkgs_dir
-          sudo chown -R $(id -u):$(id -g) /usr/local/bin ~/.cache ~/conda_pkgs_dir
-
-      - name: 📦 Cache Task CLI
-        id: cache-task
-        uses: actions/cache@v6
-        with:
-          path: /usr/local/bin/task
-          key: ${{ runner.os }}-task-v3.38.0
-
-      - name: Install Task CLI if missing from cache
-        if: steps.cache-task.outputs.cache-hit != 'true'
-        run: |
-          sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin v3.38.0
-
-      - name: 📦 Cache Tools & Dependencies
-        uses: actions/cache@v6
-        with:
-          path: |
-            ~/.npm
-            ~/.cache/pip
-            /usr/local/bin/hugo
-            /usr/local/bin/sass
-          key: ${{ runner.os }}-tools-${{ hashFiles('Taskinit.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-tools-
-
-      - name: 📦 Cache Conda Environment & Packages
-        id: cache-conda
-        uses: actions/cache@v6
-        with:
-          path: |
-            /usr/share/miniconda/envs/yogendra-me
-            ~/conda_pkgs_dir
-          key: ${{ runner.os }}-conda-env-${{ hashFiles('environment.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-conda-env-
-
       - name: 📦 Cache Hugo Build Assets
         uses: actions/cache@v6
         with:
@@ -82,19 +44,6 @@ jobs:
           key: ${{ runner.os }}-hugo-${{ hashFiles('assets/**', 'content/**', 'config/**') }}
           restore-keys: |
             ${{ runner.os }}-hugo-
-
-      - name: 🐍 Setup Conda
-        id: setup_conda
-        run: |
-          echo "/usr/share/miniconda/condabin" >> $GITHUB_PATH
-          echo "/usr/share/miniconda/envs/yogendra-me/bin" >> $GITHUB_PATH
-          if [ "${{ steps.cache-conda.outputs.cache-hit }}" != "true" ]; then
-            /usr/share/miniconda/condabin/conda env update --name yogendra-me --file environment.yml --prune
-          fi
-
-      - name: 🎬 Initialize Environment
-        id: init
-        run: task init
 
       - name: 🧱 Build Pages
         id: build
