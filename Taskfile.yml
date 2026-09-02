@@ -324,6 +324,8 @@ tasks:
 
         DOCKER_GID=$(stat -c '%g' /var/run/docker.sock 2>/dev/null || echo 987)
         echo "Launching runner container {{.RUNNER_CONTAINER}} (name: {{.RUNNER_NAME}}, docker GID: $DOCKER_GID)..."
+        docker volume create gh-runner-work 2>/dev/null || true
+        docker volume create gh-runner-externals 2>/dev/null || true
         docker run -d \
           --name {{.RUNNER_CONTAINER}} \
           --restart unless-stopped \
@@ -333,6 +335,8 @@ tasks:
           -e RUNNER_TOKEN="$TOKEN" \
           -e RUNNER_LABELS="homelab,linux,x64" \
           -v /var/run/docker.sock:/var/run/docker.sock \
+          -v gh-runner-work:/home/runner/_work \
+          -v gh-runner-externals:/home/runner/externals \
           my-young-runner:latest 2>/dev/null || \
         docker run -d \
           --name {{.RUNNER_CONTAINER}} \
@@ -343,6 +347,8 @@ tasks:
           -e RUNNER_TOKEN="$TOKEN" \
           -e RUNNER_LABELS="homelab,linux,x64" \
           -v /var/run/docker.sock:/var/run/docker.sock \
+          -v gh-runner-work:/home/runner/_work \
+          -v gh-runner-externals:/home/runner/externals \
           ghcr.io/actions/actions-runner:latest \
           bash -c './config.sh --url {{.REPO_URL}} --token '"$TOKEN"' --name {{.RUNNER_NAME}} --labels homelab,linux,x64 --unattended --replace && ./run.sh'
 
