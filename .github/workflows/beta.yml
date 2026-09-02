@@ -15,6 +15,9 @@ jobs:
     runs-on: ${{ fromJSON(vars.RUNNER_TYPE || '"ubuntu-latest"') }}
     container:
       image: ghcr.io/yogendra/yogendra.me-v2-builder:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     permissions:
       contents: write
       issues: write
