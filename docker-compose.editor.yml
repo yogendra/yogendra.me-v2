@@ -17,6 +17,7 @@ services:
       - DEFAULT_WORKSPACE=/workspace
       - PROXY_DOMAIN=blog.hs.yogendra.me
       - SUDO_PASSWORD=admin
+      - VSCODE_PROXY_URI=https://{{port}}-blog-editor.hs.yogendra.me
     volumes:
       - .:/workspace
       - /home/yogi/.config/code-server-blog:/config
@@ -27,13 +28,23 @@ services:
       - proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.blog-editor.rule=Host(`blog.hs.yogendra.me`)"
+      # editor
+      - "traefik.http.routers.blog-editor.rule=Host(`blog-editor.hs.yogendra.me`)"
+      - "traefik.http.routers.blog-editor.service=blog-editor"
       - "traefik.http.routers.blog-editor.entrypoints=websecure"
       - "traefik.http.routers.blog-editor.tls.certresolver=letsencrypt"
       - "traefik.http.routers.blog-editor.middlewares=authelia@docker"
       - "traefik.http.services.blog-editor.loadbalancer.server.port=8443"
-      - "homepage.group=Docs and Photos"
+      # prewview
+      - "traefik.http.routers.blog-preview.rule=Host(`1313-blog-editor.hs.yogendra.me`)"
+      - "traefik.http.routers.blog-preview.service=blog-preview"
+      - "traefik.http.routers.blog-preview.entrypoints=websecure"
+      - "traefik.http.routers.blog-preview.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.blog-preview.middlewares=authelia@docker"
+      - "traefik.http.services.blog-preview.loadbalancer.server.port=1313"
+      # homepage settings      
+      - "homepage.group=Projects"
       - "homepage.name=Blog Editor"
       - "homepage.icon=vscode.svg"
-      - "homepage.href=https://blog.hs.yogendra.me"
+      - "homepage.href=https://blog-editor.hs.yogendra.me"
       - "homepage.description=VS Code Web Editor for yogendra.me"

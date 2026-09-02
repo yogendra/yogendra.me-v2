@@ -165,6 +165,13 @@ tasks:
       - task: stop
       - task: version
       - hugo --gc --enableGitInfo -DFE --cleanDestinationDir serve {{.CLI_ARGS}}
+  
+  run-in-contianer:
+    desc: Run local development server    
+    cmds:
+      - task: stop
+      - task: version
+      - hugo --gc --enableGitInfo -DFE --cleanDestinationDir --bind 0.0.0.0 -b https://1313-blog-editor.hs.yogendra.me/ --appendPort=false serve {{.CLI_ARGS}}
 
   logs:
     desc: Show local development server logs
@@ -435,7 +442,7 @@ tasks:
     cmds:
       - mkdir -p /home/yogi/.config/code-server-blog
       - docker compose -f docker-compose.editor.yml up -d
-      - echo "✅ Editor started! Accessible at https://blog.hs.yogendra.me"
+      - echo "✅ Editor started! Accessible at https://blog-editor.hs.yogendra.me"
 
   editor:stop:
     desc: Stop the Web VS Code Editor container
@@ -462,7 +469,7 @@ tasks:
     cmds:
       - |
         echo "=== Blog Web Editor Information ==="
-        echo "URL          : https://blog.hs.yogendra.me"
+        echo "URL          : https://blog-editor.hs.yogendra.me"
         echo "Compose File : docker-compose.editor.yml"
         echo "Container    : blog-editor"
         echo "Auth         : Authelia (SSO via Traefik middleware)"
@@ -475,4 +482,9 @@ tasks:
     cmds:
       - docker exec -it blog-editor bash
 
+  editor:restart:
+    desc: Restart editor
+    cmds:
+      - task: editor:stop
+      - task: editor:start
   
