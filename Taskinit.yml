@@ -3,7 +3,7 @@ version: '3'
 vars:
   LIB_DIR: "{{.TASKFILE_DIR}}/lib"
   DART_SASS_VERSION: "1.97.3"
-  HUGO_VERSION: "0.154.5"
+  HUGO_VERSION: "0.165.0"
 
 tasks:
   init:

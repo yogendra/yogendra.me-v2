@@ -1,7 +1,7 @@
 baseURL = 'http://127.0.0.1:1313'
 publishDir = "public/local"
 
-languageCode = 'en'
+locale = 'en'
 title = 'Chase Your Dreams'
 copyright = "Yogendra Rampuria"
 defaultContentLanguage = "en"

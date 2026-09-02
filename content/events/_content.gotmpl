@@ -1,4 +1,4 @@
-{{ range site.Data.events }}
+{{ range hugo.Data.events }}
   {{ $content := dict "mediaType" "text/markdown" "value" (default "" .description) }}
   
   {{/* Handle date parsing gracefully. If it fails, we use the string. */}}

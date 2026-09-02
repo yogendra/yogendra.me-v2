@@ -1,3 +1,4 @@
+defaultContentLanguage = "en"
 enableSearch = true
 customCSS = ["css/custom.css", "css/events.css"]
 customJS = ["js/custom.js"]

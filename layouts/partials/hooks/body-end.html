@@ -19,7 +19,7 @@
 
 <script>
   const v = document.createElement('span');
-  v.textContent = " | Version : {{ .Site.Data.version.version }} ";
+  v.textContent = " | Version : {{ hugo.Data.version.version }} ";
   const p = document.querySelector('footer p');
   p.append(v);
 
