@@ -88,7 +88,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v4
         with:
           activate-environment: yogendra-me
-          environment-file: environment.yml
+          environment-file: ${{ steps.cache-conda.outputs.cache-hit != 'true' && 'environment.yml' || '' }}
           pkgs-dirs: ~/conda_pkgs_dir
           auto-activate: false
           use-mamba: true

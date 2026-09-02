@@ -86,7 +86,11 @@ tasks:
           brew link -f --overwrite asciidoctor libtool graphviz
         platforms: [darwin]
       - cmd: |
-          sudo apt-get install -y --no-install-recommends asciidoctor graphviz pandoc || (sudo apt-get update && sudo apt-get install -y asciidoctor graphviz pandoc)
+          if [ "$GITHUB_ACTIONS" = "true" ]; then
+            sudo apt-get install -y --no-install-recommends asciidoctor || (sudo apt-get update && sudo apt-get install -y asciidoctor)
+          else
+            sudo apt-get install -y --no-install-recommends asciidoctor graphviz pandoc || (sudo apt-get update && sudo apt-get install -y asciidoctor graphviz pandoc)
+          fi
         platforms: [linux]
     status:
       - command -v asciidoctor >/dev/null 2>&1
